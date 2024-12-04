@@ -2,8 +2,7 @@ NAME = minishell
 
 SRC_DIR = srcs
 SRCS = $(addprefix $(SRC_DIR)/, \
-		minishell.c \
-		builtins_echo.c)
+		minishell.c)
 
 OBJ_DIR = objs
 OBJECTS	= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

@@ -6,12 +6,15 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:06:34 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/04 14:15:17 by eelaine          ###   ########.fr       */
+/*   Updated: 2024/12/04 14:36:58 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../incl/minishell.h"
 
 int	main(int ac, char **av, char **env)
 {
 	((void)ac, (void)av);
+	
 	return (0);
 }
