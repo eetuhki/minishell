@@ -8,7 +8,7 @@ OBJ_DIR = objs
 OBJECTS	= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -lreadline
 INCLUDES = -I./libft/incl -I./incl
 
 LIBFT_DIR = ./libft
@@ -27,7 +27,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 all: $(LIBFT) $(NAME)
 
 $(LIBFT):
-	@make -sC $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 
 $(NAME): $(OBJECTS)
 	@$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME)
@@ -36,12 +36,12 @@ $(NAME): $(OBJECTS)
 clean:
 	@$(RM) $(OBJ_DIR)
 	@echo "$(BLUE)Cleaned minishell object files$(END_COLOR)"
-	@make -sC $(LIBFT_DIR) clean
+	@make -C $(LIBFT_DIR) clean
 
 fclean:
 	@$(RM) $(NAME) $(OBJ_DIR)
 	@echo "$(BLUE)Fully cleaned minishell$(END_COLOR)"
-	@make -sC $(LIBFT_DIR) fclean
+	@make -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
