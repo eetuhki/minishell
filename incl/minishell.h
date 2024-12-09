@@ -6,7 +6,7 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:10:58 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/04 14:38:58 by eelaine          ###   ########.fr       */
+/*   Updated: 2024/12/09 14:27:12 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include "../libft/incl/libft.h"
 # include <errno.h>
 # include <fcntl.h>
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <stdio.h>
 # include <string.h>
 # include <sys/wait.h>
 

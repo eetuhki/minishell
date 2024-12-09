@@ -8,7 +8,7 @@ OBJ_DIR = objs
 OBJECTS	= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -lreadline
+CFLAGS = -Wall -Wextra -Werror
 INCLUDES = -I./libft/incl -I./incl
 
 LIBFT_DIR = ./libft
@@ -30,7 +30,7 @@ $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
 $(NAME): $(OBJECTS)
-	@$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) -lreadline $(OBJECTS) $(LIBFT) -o $(NAME)
 	@echo "$(GREEN)Minishell compiled$(END_COLOR)"
 
 clean:
