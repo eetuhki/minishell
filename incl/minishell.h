@@ -6,14 +6,13 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:10:58 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/11 14:13:27 by eelaine          ###   ########.fr       */
+/*   Updated: 2024/12/11 15:00:11 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/incl/libft.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
@@ -21,6 +20,10 @@
 # include <readline/readline.h>
 # include <string.h>
 # include <sys/wait.h>
+
+// custom headers & libraries
+# include "../libft/incl/libft.h"
+# include "macros.h"
 
 typedef enum e_symbol_type
 {
@@ -36,6 +39,7 @@ typedef enum e_symbol_type
 typedef struct s_mini
 {
 	char	*input;
+	char	**env;
 }	t_mini;
 
 t_mini	*g_mini;
