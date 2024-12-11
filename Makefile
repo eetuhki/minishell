@@ -2,6 +2,7 @@ NAME = minishell
 
 SRC_DIR = srcs
 SRCS = $(addprefix $(SRC_DIR)/, \
+		arg_check.c \
 		minishell.c)
 
 OBJ_DIR = objs
