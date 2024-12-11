@@ -6,7 +6,7 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:43:14 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/11 15:04:41 by eelaine          ###   ########.fr       */
+/*   Updated: 2024/12/11 15:18:05 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	env_count_variables(char **env)
 	return (i);
 }
 
-int	env_copy(char **env)
+int	env_copy(t_mini *mini, char **env)
 {
 	size_t	i;
 	size_t	env_count;
