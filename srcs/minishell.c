@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:06:34 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/10 17:21:36 by fsolomon         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:07:51 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	get_input(void)
 
 int	main(int ac, char **av, char **env)
 {
-	((void)ac, (void)av, (void)env);
+	(void)env;
+	arg_check(ac, av);
 	g_mini = ft_calloc(1, sizeof(t_mini));
 	if (!g_mini)
 		return (1);
