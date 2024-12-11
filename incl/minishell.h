@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:10:58 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/10 17:20:43 by fsolomon         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:13:27 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,7 @@ typedef struct s_mini
 }	t_mini;
 
 t_mini	*g_mini;
+
+void	arg_check(int ac, char **av);
+
 #endif
