@@ -5,7 +5,8 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		arg_check.c \
 		env_copy.c \
 		free.c \
-		minishell.c)
+		minishell.c\
+		builtin_functions.c)
 
 OBJ_DIR = objs
 OBJECTS	= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
