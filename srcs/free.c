@@ -6,13 +6,13 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:48:58 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/12 10:06:53 by eelaine          ###   ########.fr       */
+/*   Updated: 2024/12/12 12:44:27 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-// free any 2d array (e.g. env copy)
+// frees a 2d char array (e.g. the copy of env)
 void	free_arr(char **arr)
 {
 	size_t	i;
@@ -24,4 +24,14 @@ void	free_arr(char **arr)
 		i++;
 	}
 	free(arr);
+}
+
+// frees a * of any type if not NULL and sets it to NULL
+void	free_ptr(void *ptr)
+{
+	if (ptr)
+	{
+		free(ptr);
+		ptr = NULL;
+	}
 }
