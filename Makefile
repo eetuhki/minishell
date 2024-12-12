@@ -3,6 +3,8 @@ NAME = minishell
 SRC_DIR = srcs
 SRCS = $(addprefix $(SRC_DIR)/, \
 		arg_check.c \
+		env_copy.c \
+		free.c \
 		minishell.c)
 
 OBJ_DIR = objs

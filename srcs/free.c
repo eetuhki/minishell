@@ -1,45 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_copy.c                                         :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 14:43:14 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/12 09:55:28 by eelaine          ###   ########.fr       */
+/*   Created: 2024/12/12 09:48:58 by eelaine           #+#    #+#             */
+/*   Updated: 2024/12/12 09:50:23 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-size_t	env_count_variables(char **env)
+void	free_arr(char **arr)
 {
 	size_t	i;
 
 	i = 0;
-	while (env && env[i])
-		i++;
-	return (i);
-}
-
-int	env_copy(t_mini *mini, char **env)
-{
-	size_t	i;
-	size_t	env_count;
-
-	env_count = env_count_variables(env) + 1;
-	mini->env = ft_calloc(env_count, (sizeof * mini->env));
-	if (!mini->env)
-		return (FAIL);
-	i = -1;
-	while (env[++i])
+	while (arr[i])
 	{
-		mini->env = ft_strdup(env[i]);
-		if (!mini->env[i])
-		{
-			free_arr(mini->env);
-			return (FAIL);
-		}
+		free(arr[i]);
+		i++;
 	}
-	return (SUCCESS);
+	free(arr);
 }
