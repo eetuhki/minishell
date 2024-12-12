@@ -6,7 +6,7 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:10:58 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/12 09:54:37 by eelaine          ###   ########.fr       */
+/*   Updated: 2024/12/12 13:08:50 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ void	arg_check(int ac, char **av);
 // env_copy.c
 int		env_copy(t_mini *mini, char **env);
 size_t	env_count_variables(char **env);
+
+// env_shlvl.c
+int		env_shlvl(t_mini *mini);
+
+// env_utils.c
+char	*env_get_var(t_mini *mini, char *var);
 
 // free.c
 void	free_arr(char **arr);
