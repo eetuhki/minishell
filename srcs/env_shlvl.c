@@ -1,37 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   env_shlvl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 09:48:58 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/12 12:44:27 by eelaine          ###   ########.fr       */
+/*   Created: 2024/12/12 11:56:05 by eelaine           #+#    #+#             */
+/*   Updated: 2024/12/12 14:44:16 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-// frees a 2d char array (e.g. the copy of env)
-void	free_arr(char **arr)
+int	env_shlvl(t_mini *mini)
 {
-	size_t	i;
+	char	*shlvl;
+	int		new_lvl;
 
-	i = 0;
-	while (arr[i])
+	shlvl = env_get_var(mini, "SHLVL");
+	printf("\nenv_shlvl: shlvl: %s\n", shlvl);
+	if (!shlvl)
+		return (env_set_var(mini, "SHLVL", "1"));
+	new_lvl = ft_atoi(shlvl) + 1;
+	if (new_lvl > 999)
+		new_lvl = 1;
+	shlvl = ft_itoa(new_lvl);
+	if (!shlvl)
+		return (FAIL);
+	if (!env_set_var(mini, "SHLVL", shlvl))
 	{
-		free(arr[i]);
-		i++;
+		free_ptr(shlvl);
+		return (FAIL);
 	}
-	free(arr);
+	free_ptr(shlvl);
+	return (SUCCESS);
 }
 
-// frees a * of any type if not NULL and sets it to NULL
-void	free_ptr(void *ptr)
-{
-	if (ptr)
-	{
-		free(ptr);
-		ptr = NULL;
-	}
-}

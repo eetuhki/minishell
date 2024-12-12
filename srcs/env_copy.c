@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_copy.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:43:14 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/12 12:21:28 by fsolomon         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:37:34 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ int	env_copy(t_mini *mini, char **env)
 			return (FAIL);
 		}
 	}
+	ft_env(mini);
+	env_shlvl(mini);
 	return (SUCCESS);
 }

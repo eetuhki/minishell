@@ -4,6 +4,8 @@ SRC_DIR = srcs
 SRCS = $(addprefix $(SRC_DIR)/, \
 		arg_check.c \
 		env_copy.c \
+		env_shlvl.c \
+		env_utils.c \
 		free.c \
 		minishell.c\
 		builtin_functions.c)
