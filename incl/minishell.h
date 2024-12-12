@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:10:58 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/12 09:54:37 by eelaine          ###   ########.fr       */
+/*   Updated: 2024/12/12 12:34:45 by fsolomon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ typedef struct s_mini
 	char	**env;
 }	t_mini;
 
-t_mini	*g_mini;
-
 // arg_check.c
 void	arg_check(int ac, char **av);
 
@@ -53,5 +51,5 @@ size_t	env_count_variables(char **env);
 
 // free.c
 void	free_arr(char **arr);
-
+void	ft_env(t_mini *mini);
 #endif

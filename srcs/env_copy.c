@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_copy.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:43:14 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/12 10:11:09 by eelaine          ###   ########.fr       */
+/*   Updated: 2024/12/12 12:21:28 by fsolomon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	env_copy(t_mini *mini, char **env)
 	i = -1;
 	while (env[++i])
 	{
-		mini->env = ft_strdup(env[i]);
+		mini->env[i] = ft_strdup(env[i]);
 		if (!mini->env[i])
 		{
 			free_arr(mini->env);
