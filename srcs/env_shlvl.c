@@ -6,7 +6,7 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:56:05 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/12 13:06:33 by eelaine          ###   ########.fr       */
+/*   Updated: 2024/12/12 14:44:16 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	env_shlvl(t_mini *mini)
 	char	*shlvl;
 	int		new_lvl;
 
-	shlvl = env_get_var(mini->env, "SHLVL");
-	printf("env_shlvl: shlvl: %s", shlvl);
+	shlvl = env_get_var(mini, "SHLVL");
+	printf("\nenv_shlvl: shlvl: %s\n", shlvl);
 	if (!shlvl)
 		return (env_set_var(mini, "SHLVL", "1"));
 	new_lvl = ft_atoi(shlvl) + 1;
