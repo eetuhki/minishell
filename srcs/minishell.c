@@ -3,29 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:06:34 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/12 10:01:54 by eelaine          ###   ########.fr       */
+/*   Updated: 2024/12/12 12:34:19 by fsolomon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-void	get_input(void)
+void	get_input(t_mini *mini)
 {
-	g_mini->input = readline("mini> ");
-	if (!g_mini->input)
+	mini->input = readline("mini> ");
+	if (!mini->input)
 		exit(0);
+}
+void	init_mini(t_mini *mini)
+{
+	mini->env = NULL;
+	mini->input = NULL;
 }
 
 int	main(int ac, char **av, char **env)
 {
+	t_mini	*mini;
 	arg_check(ac, av);
-	g_mini = ft_calloc(1, sizeof(t_mini));
-	if (!g_mini)
+	mini = ft_calloc(1, sizeof(t_mini));
+	if (!mini)
 		return (1);
-	env_copy(g_mini, env);
-	get_input();
+	init_mini(mini);
+	env_copy(mini, env);
+	get_input(mini);
 	return (0);
 }
