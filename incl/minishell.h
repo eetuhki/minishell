@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:10:58 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/12 12:34:45 by fsolomon         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:15:15 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ void	arg_check(int ac, char **av);
 // env_copy.c
 int		env_copy(t_mini *mini, char **env);
 size_t	env_count_variables(char **env);
+
+// env_shlvl.c
+int		env_shlvl(t_mini *mini);
+
+// env_utils.c
+char	*env_get_var(t_mini *mini, char *var);
 
 // free.c
 void	free_arr(char **arr);
