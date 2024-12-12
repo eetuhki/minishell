@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:10:58 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/12 14:38:53 by eelaine          ###   ########.fr       */
+/*   Updated: 2024/12/12 16:43:34 by fsolomon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ char	*env_get_var(t_mini *mini, char *var);
 
 // free.c
 void	free_arr(char **arr);
-void	free_ptr(void *ptr);
-void	ft_env(t_mini *mini);
+
+// builtin functions
+void	ft_env(t_mini *mini, int fd);
+void	ft_pwd(int fd);
 #endif
