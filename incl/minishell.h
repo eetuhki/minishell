@@ -6,7 +6,7 @@
 /*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:10:58 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/12 12:34:45 by fsolomon         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:27:09 by fsolomon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,8 @@ size_t	env_count_variables(char **env);
 
 // free.c
 void	free_arr(char **arr);
-void	ft_env(t_mini *mini);
+
+// builtin functions
+void	ft_env(t_mini *mini, int fd);
+void	ft_pwd(int fd);
 #endif
