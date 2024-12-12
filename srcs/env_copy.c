@@ -6,12 +6,13 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:43:14 by eelaine           #+#    #+#             */
-/*   Updated: 2024/12/12 09:55:28 by eelaine          ###   ########.fr       */
+/*   Updated: 2024/12/12 10:11:09 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
+// counts the env variable lines
 size_t	env_count_variables(char **env)
 {
 	size_t	i;
@@ -22,6 +23,7 @@ size_t	env_count_variables(char **env)
 	return (i);
 }
 
+// copies the env into a 2d array for later use and frees the array if copy fails
 int	env_copy(t_mini *mini, char **env)
 {
 	size_t	i;
