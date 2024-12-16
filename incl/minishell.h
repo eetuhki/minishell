@@ -45,8 +45,11 @@ char	*env_get_var(t_mini *mini, char *var);
 
 // free.c
 void	free_arr(char **arr);
+void	free_ptr(void *ptr);
 
 // builtin functions
+void	handle_builtin(t_mini *mini);
 void	ft_env(t_mini *mini, int fd);
 void	ft_pwd(int fd);
+void	ft_cd(t_mini *mini, char *path);
 #endif

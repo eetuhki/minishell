@@ -21,6 +21,10 @@ int	main(int ac, char **av, char **env)
 		return (1);
 	init_mini(mini);
 	env_copy(mini, env);
-	get_input(mini);
+	while (1)
+	{
+		get_input(mini);
+		handle_builtin(mini);
+	}
 	return (0);
 }

@@ -31,7 +31,7 @@ int	env_copy(t_mini *mini, char **env)
 			return (FAIL);
 		}
 	}
-	ft_env(mini);
+	ft_env(mini, STDOUT);
 	env_shlvl(mini);
 	return (SUCCESS);
 }

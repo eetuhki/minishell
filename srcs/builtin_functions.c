@@ -25,3 +25,44 @@ void	ft_pwd(int fd)
 		free(curr_dir);
 	}
 }
+void	ft_cd(t_mini *mini, char *path)
+{
+	char *home;
+
+	if (!path || *path == '\0')
+	{
+		home = env_get_var(mini, "HOME");
+		if (!home)
+		{
+			ft_putstr_fd("mini: cd: HOME not set\n", 2);
+			return;
+		}
+		path = home;
+	}
+	if (chdir(path) != 0)
+	{
+		ft_putstr_fd("mini: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n", 2);
+	}
+}
+
+void	handle_builtin(t_mini *mini)
+{
+	if (!mini || !mini->input || *(mini->input) == '\0')
+		return;
+
+	char **cmd_arr;
+	cmd_arr = ft_split(mini->input, ' ');
+	if (!cmd_arr || !cmd_arr[0])
+	{
+		free_arr(cmd_arr);
+		return;
+	}
+	if (ft_strncmp(cmd_arr[0], "cd", 3) == 0)
+		return(ft_cd(mini, cmd_arr[1]));
+	if (ft_strncmp(cmd_arr[0], "pwd", 4) == 0)
+		return(ft_pwd(STDOUT));
+}

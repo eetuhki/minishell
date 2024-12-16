@@ -5,6 +5,8 @@ void	free_arr(char **arr)
 {
 	size_t	i;
 
+	if (!arr)
+		return ;
 	i = 0;
 	while (arr[i])
 	{
