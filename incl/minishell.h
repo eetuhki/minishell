@@ -3,6 +3,7 @@
 
 # include <errno.h>
 # include <fcntl.h>
+# include <limits.h>
 # include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -41,7 +42,10 @@ size_t	env_count_variables(char **env);
 int		env_shlvl(t_mini *mini);
 
 // env_utils.c
+int		env_find_index(t_mini *mini, char *var);
 char	*env_get_var(t_mini *mini, char *var);
+char	**env_realloc(t_mini *mini, int size);
+int		env_set_var(t_mini *mini, char *var, char *new_val);
 
 // free.c
 void	free_arr(char **arr);
