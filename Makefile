@@ -36,7 +36,7 @@ $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
 $(NAME): $(OBJECTS)
-	@$(CC) $(CFLAGS) -lreadline $(OBJECTS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME) -lreadline
 	@echo "$(GREEN)Minishell compiled$(END_COLOR)"
 
 clean:
