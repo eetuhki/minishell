@@ -56,4 +56,6 @@ void	handle_builtin(t_mini *mini);
 void	ft_env(t_mini *mini, int fd);
 void	ft_pwd(int fd);
 void	ft_cd(t_mini *mini, char *path);
+void	update_env_vars(t_mini *mini);
+
 #endif
