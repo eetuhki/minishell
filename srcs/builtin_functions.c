@@ -25,6 +25,7 @@ void	ft_pwd(int fd)
 		free(curr_dir);
 	}
 }
+
 void	ft_cd(t_mini *mini, char *path)
 {
 	char *home;
@@ -46,7 +47,9 @@ void	ft_cd(t_mini *mini, char *path)
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 2);
+		return ;
 	}
+	update_env_vars(mini);
 }
 
 void	handle_builtin(t_mini *mini)
@@ -65,4 +68,6 @@ void	handle_builtin(t_mini *mini)
 		return(ft_cd(mini, cmd_arr[1]));
 	if (ft_strncmp(cmd_arr[0], "pwd", 4) == 0)
 		return(ft_pwd(STDOUT));
+	if (ft_strncmp(cmd_arr[0], "env", 4) == 0)
+		return(ft_env(mini, STDOUT));
 }
