@@ -3,7 +3,7 @@
 void	ft_env(t_mini *mini, int fd)
 {
 	char	**env;
-	
+
 	env = mini->env;
 	while (*env)
 	{
@@ -52,6 +52,34 @@ void	ft_cd(t_mini *mini, char *path)
 	update_env_vars(mini);
 }
 
+int valid_key(char *cmd_arg)
+{
+	int	i;
+	char *equals_sign;
+
+	i = 0;
+	if ((cmd_arg[i] != '_') && !ft_isalpha(cmd_arg[i]))
+		return (0);
+	i++;
+	equals_sign = ft_strchr(cmd_arg, '=');
+	while (cmd_arg[i] && (equals_sign == NULL || &cmd_arg[i] < equals_sign))
+	{
+		if(cmd_arg[i] != '_' && !ft_isalnum(cmd_arg[i]))
+			return (0);
+		i++;
+	}
+	return(1);
+}
+
+void ft_export(t_mini *mini, char *cmd_arg)
+{
+	mini->input = mini->input;
+	if (!cmd_arg || *cmd_arg == '\0')
+		printf("env in alphabetical order coming soon...\n");
+	else if (!valid_key(cmd_arg))
+		printf("mini: export: %s: not a valid identifier\n", cmd_arg);
+}
+
 void	handle_builtin(t_mini *mini)
 {
 	if (!mini || !mini->input || *(mini->input) == '\0')
@@ -70,4 +98,6 @@ void	handle_builtin(t_mini *mini)
 		return(ft_pwd(STDOUT));
 	if (ft_strncmp(cmd_arr[0], "env", 4) == 0)
 		return(ft_env(mini, STDOUT));
+	if (ft_strncmp(cmd_arr[0], "export", 7) == 0)
+		return(ft_export(mini, cmd_arr[1]));
 }
