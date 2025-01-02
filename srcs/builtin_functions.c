@@ -73,11 +73,32 @@ int valid_key(char *cmd_arg)
 
 void ft_export(t_mini *mini, char *cmd_arg)
 {
-	mini->input = mini->input;
+	char	*key;
+	char	*value;
+
 	if (!cmd_arg || *cmd_arg == '\0')
 		printf("env in alphabetical order coming soon...\n");
 	else if (!valid_key(cmd_arg))
 		printf("mini: export: %s: not a valid identifier\n", cmd_arg);
+	else
+	{
+		key = extract_key(cmd_arg);
+		value = extract_value(cmd_arg);
+		if (env_find_index(mini, key) == -1)
+		{
+			if (add_env_pair(mini, key, value) == FAIL)
+				printf("mini: export: Failed to export %s\n", key);
+		}
+		else
+		{
+			if (env_set_var(mini, key, value) == FAIL)
+			{
+				ft_putstr_fd("mini: export: Failed to update", 2);
+				ft_putstr_fd(key, 2);
+				ft_putstr_fd("\n", 2);
+			}
+		}
+	}
 }
 
 void	handle_builtin(t_mini *mini)
