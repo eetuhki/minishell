@@ -1,5 +1,22 @@
 #include "../incl/minishell.h"
 
+// check if env var key is valid: first character must be alpha or _, the rest alpha, num or _. Return: SUCCESS or FAIL
+int	env_is_key_valid(char *var)
+{
+	int	i;
+
+	if (!ft_isalpha(var[0]) && var[0] != '_')
+		return (FAIL);
+	i = 1;
+	while (var[i])
+	{
+		if (!ft_isalnum(var[i]) && var[i] != '_')
+			return (FAIL);
+		i++;
+	}
+	return (SUCCESS);
+}
+
 // returns the values for a given env variable, returns NULL if fail
 char	*env_get_var(t_mini *mini, char *var)
 {

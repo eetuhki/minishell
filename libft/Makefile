@@ -6,7 +6,7 @@
 #    By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 10:06:24 by eelaine           #+#    #+#              #
-#    Updated: 2024/10/24 14:05:31 by eelaine          ###   ########.fr        #
+#    Updated: 2025/01/02 15:14:56 by eelaine          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ LIBFT_SRCS = $(addprefix $(LIBFTDIR),\
 				ft_isascii.c \
 				ft_isdigit.c \
 				ft_isprint.c \
+				ft_isspace.c \
 				ft_itoa.c \
 				ft_lstadd_back.c \
 				ft_lstadd_front.c \
