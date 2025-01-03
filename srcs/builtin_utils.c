@@ -72,13 +72,15 @@ int	add_env_pair(t_mini *mini, char *key, char *value)
 	temp = ft_strjoin(key, "=");
 	if (!temp)
 		return (FAIL);
-	new_pair = ft_strjoin(temp, value);
+	if (value != NULL)
+		new_pair = ft_strjoin(temp, value);
+	else 
+		new_pair = ft_strdup(temp);
 	free_ptr(temp);
 	if (!new_pair)
 		return(FAIL);
 	new_env[count] = new_pair;
 	new_env[count + 1] = NULL;
-	//free_arr(mini->env);
 	mini->env = new_env;
 	return (SUCCESS);
 }
