@@ -12,6 +12,9 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		minishell.c \
 		syntax.c \
 		syntax_error.c \
+		syntax_pipes.c \
+		syntax_quotes.c \
+		syntax_redir.c \
 		syntax_utils.c)
 
 OBJ_DIR = objs

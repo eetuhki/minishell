@@ -10,6 +10,8 @@ void	init_mini(t_mini *mini)
 {
 	mini->env = NULL;
 	mini->input = NULL;
+	mini->redir_count = 0;
+	mini->redir_open = 0;
 }
 
 int	main(int ac, char **av, char **env)
@@ -25,8 +27,7 @@ int	main(int ac, char **av, char **env)
 	{
 		get_input(mini);
 		handle_builtin(mini);
-		if (syntax_check(mini->input) == FAIL)
-			exit(0);
+		syntax_check(mini);
 	}
-	return (0);
+	return (SUCCESS);
 }
