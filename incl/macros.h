@@ -8,8 +8,11 @@
 # define CMD_NOT_FOUND 127
 
 // delimiter definitions
-# define DELIMITERS " \t|<>'\""
-# define WHITE_SPACE " \t"
+# define DELIMITERS " |\t<>\'\""
+# define QUOTES "\'\""
+# define DQUOTE '\"'
+# define SQUOTE '\''
+# define WHITE_SPACE " \t\n"
 
 // file descriptors
 # define STDIN 0

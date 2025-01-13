@@ -27,6 +27,8 @@ typedef enum e_symbol_type
 
 typedef struct s_mini
 {
+	int		redir_open;
+	int		redir_count;
 	char	*input;
 	char	**env;
 }	t_mini;
@@ -61,6 +63,14 @@ void	update_env_vars(t_mini *mini);
 
 // syntax
 int		input_is_whitespace(char *input);
-int		syntax_check(char *input);
-void	syntax_print_error(char token);
+int		invalid_chars(t_mini *mini, char input, char direction);
+char	*redir_special_chars(char direction);
+size_t	skip_quotes(char *input);
+void	syntax_check(t_mini *mini);
+void	syntax_fail(t_mini *mini);
+int		syntax_pipes(t_mini *mini);
+int		syntax_print_error(char token);
+int		syntax_quotes(t_mini *mini);
+int		syntax_redir(t_mini *mini, char direction);
+int		validate_redir(t_mini *mini, char input, char direction);
 #endif
