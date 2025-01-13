@@ -25,6 +25,8 @@ int	main(int ac, char **av, char **env)
 	{
 		get_input(mini);
 		handle_builtin(mini);
+		if (syntax_check(mini->input) == FAIL)
+			exit(0);
 	}
 	return (0);
 }

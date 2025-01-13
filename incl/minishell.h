@@ -44,6 +44,7 @@ int		env_shlvl(t_mini *mini);
 // env_utils.c
 int		env_find_index(t_mini *mini, char *var);
 char	*env_get_var(t_mini *mini, char *var);
+int		env_is_key_valid(char *var);
 char	**env_realloc(t_mini *mini, int size);
 int		env_set_var(t_mini *mini, char *var, char *new_val);
 
@@ -63,4 +64,8 @@ char	*extract_key(char *cmd_arg);
 char	*extract_value(char *cmd_arg);
 int		add_env_pair(t_mini *mini, char *key, char *value);
 
+// syntax
+int		input_is_whitespace(char *input);
+int		syntax_check(char *input);
+void	syntax_print_error(char token);
 #endif

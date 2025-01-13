@@ -3,13 +3,16 @@ NAME = minishell
 SRC_DIR = srcs
 SRCS = $(addprefix $(SRC_DIR)/, \
 		arg_check.c \
+		builtin_functions.c \
+		builtin_utils.c \
 		env_copy.c \
 		env_shlvl.c \
 		env_utils.c \
 		free.c \
-		minishell.c\
-		builtin_functions.c\
-		builtin_utils.c)
+		minishell.c \
+		syntax.c \
+		syntax_error.c \
+		syntax_utils.c)
 
 OBJ_DIR = objs
 OBJECTS	= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
