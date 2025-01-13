@@ -57,7 +57,12 @@ void	handle_builtin(t_mini *mini);
 void	ft_env(t_mini *mini, int fd);
 void	ft_pwd(int fd);
 void	ft_cd(t_mini *mini, char *path);
+
+// builtin_utils.c
 void	update_env_vars(t_mini *mini);
+char	*extract_key(char *cmd_arg);
+char	*extract_value(char *cmd_arg);
+int		add_env_pair(t_mini *mini, char *key, char *value);
 
 // syntax
 int		input_is_whitespace(char *input);
