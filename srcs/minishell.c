@@ -5,6 +5,7 @@ void	get_input(t_mini *mini)
 	mini->input = readline("mini> ");
 	if (!mini->input)
 		exit(0);
+	addhistory(mini);
 }
 
 void	init_mini(t_mini *mini)
@@ -31,7 +32,6 @@ int	main(int ac, char **av, char **env)
 		get_input(mini);
 		handle_builtin(mini);
 		syntax_check(mini);
-		addhistory(mini);
 	}
 	return (SUCCESS);
 }
