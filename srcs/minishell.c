@@ -6,10 +6,12 @@ void	get_input(t_mini *mini)
 	if (!mini->input)
 		exit(0);
 }
+
 void	init_mini(t_mini *mini)
 {
 	mini->env = NULL;
 	mini->input = NULL;
+	mini->prev_input = NULL;
 	mini->redir_count = 0;
 	mini->redir_open = 0;
 }
@@ -17,6 +19,7 @@ void	init_mini(t_mini *mini)
 int	main(int ac, char **av, char **env)
 {
 	t_mini	*mini;
+
 	arg_check(ac, av);
 	mini = ft_calloc(1, sizeof(t_mini));
 	if (!mini)
@@ -28,6 +31,7 @@ int	main(int ac, char **av, char **env)
 		get_input(mini);
 		handle_builtin(mini);
 		syntax_check(mini);
+		addhistory(mini);
 	}
 	return (SUCCESS);
 }

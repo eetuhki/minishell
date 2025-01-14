@@ -1,7 +1,8 @@
 #include "../incl/minishell.h"
 
-// validates syntax for pipes: pipe can't be the first character or followed by another pipe ('||')
-// or at the end, returns SUCCESS or FAIL (while printing syntax error message)
+// validates syntax for pipes: pipe can't be the first character or followed by 
+// another pipe ('||') or at the end, returns SUCCESS or FAIL 
+// (while printing syntax error message)
 int	syntax_pipes(t_mini *mini)
 {
 	size_t	i;

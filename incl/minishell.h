@@ -30,8 +30,12 @@ typedef struct s_mini
 	int		redir_open;
 	int		redir_count;
 	char	*input;
+	char	*prev_input;
 	char	**env;
 }	t_mini;
+
+// add_history.c
+void	addhistory(t_mini *mini);
 
 // arg_check.c
 void	arg_check(int ac, char **av);
@@ -68,7 +72,7 @@ int		add_env_pair(t_mini *mini, char *key, char *value);
 
 // syntax
 int		input_is_whitespace(char *input);
-int		invalid_chars(t_mini *mini, char input, char direction);
+int		invalid_chars(t_mini *mini, size_t i, char direction);
 char	*redir_special_chars(char direction);
 size_t	skip_quotes(char *input);
 void	syntax_check(t_mini *mini);
@@ -77,5 +81,5 @@ int		syntax_pipes(t_mini *mini);
 int		syntax_print_error(char token);
 int		syntax_quotes(t_mini *mini);
 int		syntax_redir(t_mini *mini, char direction);
-int		validate_redir(t_mini *mini, char input, char direction);
+int		validate_redir(t_mini *mini, size_t i, char direction);
 #endif

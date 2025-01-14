@@ -9,10 +9,11 @@
 
 // delimiter definitions
 # define DELIMITERS " |\t<>\'\""
+# define REDIRS "<>"
 # define QUOTES "\'\""
 # define DQUOTE '\"'
 # define SQUOTE '\''
-# define WHITE_SPACE " \t\n"
+# define WHITE_SPACE " \t\n\v\r\f"
 
 // file descriptors
 # define STDIN 0
