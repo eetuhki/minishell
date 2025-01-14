@@ -1,6 +1,7 @@
 #include "../incl/minishell.h"
 
-// check if input is only whitespace or not, returns 1 if nothing but whitespace, else 0
+// check if input is only whitespace or not, 
+// returns 1 if nothing but whitespace, else 0
 int	input_is_whitespace(char *input)
 {
 	int	i;
