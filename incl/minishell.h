@@ -32,6 +32,7 @@ typedef struct s_mini
 	char	*input;
 	char	*prev_input;
 	char	**env;
+	int		exit_code;
 }	t_mini;
 
 // add_history.c
@@ -61,6 +62,7 @@ void	free_ptr(void *ptr);
 // builtin functions
 void	handle_builtin(t_mini *mini);
 void	ft_env(t_mini *mini, int fd);
+void	ft_exit(t_mini *mini, char **args);
 void	ft_pwd(int fd);
 void	ft_cd(t_mini *mini, char *path);
 

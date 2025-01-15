@@ -4,6 +4,7 @@ SRC_DIR = srcs
 SRCS = $(addprefix $(SRC_DIR)/, \
 		add_history.c \
 		arg_check.c \
+		builtin_exit.c \
 		builtin_functions.c \
 		builtin_utils.c \
 		env_copy.c \

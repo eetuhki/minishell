@@ -121,4 +121,6 @@ void	handle_builtin(t_mini *mini)
 		return(ft_env(mini, STDOUT));
 	if (ft_strncmp(cmd_arr[0], "export", 7) == 0)
 		return(ft_export(mini, cmd_arr[1]));
+	if (ft_strncmp(cmd_arr[0], "exit", 4) == 0)
+		return(ft_exit(mini, cmd_arr));
 }
