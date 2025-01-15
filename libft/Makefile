@@ -6,7 +6,7 @@
 #    By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 10:06:24 by eelaine           #+#    #+#              #
-#    Updated: 2025/01/14 10:21:53 by eelaine          ###   ########.fr        #
+#    Updated: 2025/01/15 14:21:06 by eelaine          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ INCL = incl
 LIBFT_SRCS = $(addprefix $(LIBFTDIR),\
 				ft_abs.c \
 				ft_atoi.c \
+				ft_atol.c \
+				ft_atoll.c \
 				ft_bzero.c \
 				ft_calloc.c \
 				ft_isalnum.c \

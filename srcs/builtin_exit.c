@@ -1,0 +1,60 @@
+#include "../incl/minishell.h"
+
+static int	num_only(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (!ft_isdigit(str[i]))
+			return (FAIL);
+		i++;
+	}
+	return (SUCCESS);
+}
+
+static void	arg_not_num(t_mini *mini, char *arg)
+{
+	ft_putstr_fd("mini: exit: ", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd("numeric argument required\n", 2);
+	free_ptr(mini);
+	rl_clear_history();
+	exit(2);
+}
+
+static long	check_exit_code(t_mini *mini, char *arg)
+{
+	long	exit_code;
+
+	exit_code = 0;
+	exit_code = ft_atol(arg);
+	if ((exit_code == 0 || exit_code == -1) && ft_strcmp(arg, ft_itoa(exit_code)))
+		arg_not_num(mini, arg);
+	return (exit_code);
+}
+
+void	ft_exit(t_mini *mini, char **args)
+{
+	long	exit_code;
+
+	exit_code = 0;
+	ft_putstr_fd("exit\n", 0);
+	if (!args[1])
+		exit_code = mini->exit_code;
+	if (args[1] && num_only(args[1]) == FAIL)
+		arg_not_num(mini, args[1]);
+	else if (args[1] && args[2])
+	{
+		ft_putstr_fd("mini: exit: too many arguments\n", 2);
+		mini->exit_code = 1;
+		return;
+	}
+	else if (args[1] && !args[2])
+		exit_code = check_exit_code(mini, args[1]);
+	free_arr(args);
+	rl_clear_history();
+	exit(exit_code);
+}
