@@ -1,5 +1,6 @@
 #include "../incl/minishell.h"
 
+// validate that the argument consists of numbers only
 static int	num_only(char *str)
 {
 	size_t	i;
@@ -14,6 +15,7 @@ static int	num_only(char *str)
 	return (SUCCESS);
 }
 
+// print error message if argument is not num (or overflowing LONG)
 static void	arg_not_num(t_mini *mini, char *arg)
 {
 	ft_putstr_fd("mini: exit: ", 2);
@@ -25,17 +27,18 @@ static void	arg_not_num(t_mini *mini, char *arg)
 	exit(2);
 }
 
+// convert the char arg to long, if atol overflows send to arg_not_num
 static long	check_exit_code(t_mini *mini, char *arg)
 {
 	long	exit_code;
 
-	exit_code = 0;
 	exit_code = ft_atol(arg);
 	if ((exit_code == 0 || exit_code == -1) && ft_strcmp(arg, ft_itoa(exit_code)))
 		arg_not_num(mini, arg);
 	return (exit_code);
 }
 
+// handle built-in exit, check if there's more than 1 argument
 void	ft_exit(t_mini *mini, char **args)
 {
 	long	exit_code;
