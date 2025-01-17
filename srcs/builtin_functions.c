@@ -7,8 +7,13 @@ void	ft_env(t_mini *mini, int fd)
 	env = mini->env;
 	while (*env)
 	{
-		ft_putstr_fd(*env++, fd);
-		ft_putstr_fd("\n", fd);
+		if (ft_strchr(*env, '='))
+		{
+			ft_putstr_fd(*env++, fd);
+			ft_putstr_fd("\n", fd);
+		}
+		else
+			env++;
 	}
 }
 
@@ -75,18 +80,24 @@ void ft_export(t_mini *mini, char *cmd_arg)
 {
 	char	*key;
 	char	*value;
+	int		env_var_index;
 
 	if (!cmd_arg || *cmd_arg == '\0')
-		printf("env in alphabetical order coming soon...\n");
-	else if (!valid_key(cmd_arg))
-		printf("mini: export: %s: not a valid identifier\n", cmd_arg);
-	else
+		return (print_export(mini));
+	if (!valid_key(cmd_arg))
 	{
-		key = extract_key(cmd_arg);
-		value = extract_value(cmd_arg);
-		if (env_find_index(mini, key) == -1)
+		printf("mini: export: %s: not a valid identifier\n", cmd_arg);
+		return ;
+	}
+	key = extract_key(cmd_arg);
+	value = extract_value(cmd_arg);
+	env_var_index = env_find_index(mini, key);
+
+	if (ft_strchr(cmd_arg, '='))
+	{
+		if (env_var_index == -1)
 		{
-			if (add_env_pair(mini, key, value) == FAIL)
+			if (add_env_pair(mini, key, value, true) == FAIL)
 				printf("mini: export: Failed to export %s\n", key);
 		}
 		else
@@ -98,6 +109,11 @@ void ft_export(t_mini *mini, char *cmd_arg)
 				ft_putstr_fd("\n", 2);
 			}
 		}
+	}
+	else if (env_var_index == -1)
+	{
+		if (add_env_pair(mini, key, value, false) == FAIL)
+			printf("mini: export: Failed to export %s\n", key);
 	}
 }
 

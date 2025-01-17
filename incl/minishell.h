@@ -9,6 +9,7 @@
 # include <readline/readline.h>
 # include <string.h>
 # include <sys/wait.h>
+# include <stdbool.h>
 
 // custom headers & libraries
 # include "../libft/incl/libft.h"
@@ -68,7 +69,8 @@ void	ft_cd(t_mini *mini, char *path);
 void	update_env_vars(t_mini *mini);
 char	*extract_key(char *cmd_arg);
 char	*extract_value(char *cmd_arg);
-int		add_env_pair(t_mini *mini, char *key, char *value);
+int		add_env_pair(t_mini *mini, char *key, char *value, bool has_value);
+void	print_export(t_mini *mini);
 
 // syntax
 int		input_is_whitespace(char *input);
