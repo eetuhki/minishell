@@ -33,7 +33,7 @@ void	ft_pwd(int fd)
 
 void	ft_cd(t_mini *mini, char *path)
 {
-	char *home;
+	char	*home;
 
 	if (!path || *path == '\0')
 	{
@@ -41,7 +41,7 @@ void	ft_cd(t_mini *mini, char *path)
 		if (!home)
 		{
 			ft_putstr_fd("mini: cd: HOME not set\n", 2);
-			return;
+			return ;
 		}
 		path = home;
 	}
@@ -57,84 +57,24 @@ void	ft_cd(t_mini *mini, char *path)
 	update_env_vars(mini);
 }
 
-int valid_key(char *cmd_arg)
-{
-	int	i;
-	char *equals_sign;
-
-	i = 0;
-	if ((cmd_arg[i] != '_') && !ft_isalpha(cmd_arg[i]))
-		return (0);
-	i++;
-	equals_sign = ft_strchr(cmd_arg, '=');
-	while (cmd_arg[i] && (equals_sign == NULL || &cmd_arg[i] < equals_sign))
-	{
-		if(cmd_arg[i] != '_' && !ft_isalnum(cmd_arg[i]))
-			return (0);
-		i++;
-	}
-	return(1);
-}
-
-void ft_export(t_mini *mini, char *cmd_arg)
-{
-	char	*key;
-	char	*value;
-	int		env_var_index;
-
-	if (!cmd_arg || *cmd_arg == '\0')
-		return (print_export(mini));
-	if (!valid_key(cmd_arg))
-	{
-		printf("mini: export: %s: not a valid identifier\n", cmd_arg);
-		return ;
-	}
-	key = extract_key(cmd_arg);
-	value = extract_value(cmd_arg);
-	env_var_index = env_find_index(mini, key);
-
-	if (ft_strchr(cmd_arg, '='))
-	{
-		if (env_var_index == -1)
-		{
-			if (add_env_pair(mini, key, value, true) == FAIL)
-				printf("mini: export: Failed to export %s\n", key);
-		}
-		else
-		{
-			if (env_set_var(mini, key, value) == FAIL)
-			{
-				ft_putstr_fd("mini: export: Failed to update", 2);
-				ft_putstr_fd(key, 2);
-				ft_putstr_fd("\n", 2);
-			}
-		}
-	}
-	else if (env_var_index == -1)
-	{
-		if (add_env_pair(mini, key, value, false) == FAIL)
-			printf("mini: export: Failed to export %s\n", key);
-	}
-}
-
 void	handle_builtin(t_mini *mini)
 {
-	if (!mini || !mini->input || *(mini->input) == '\0')
-		return;
+	char	**cmd_arr;
 
-	char **cmd_arr;
+	if (!mini || !mini->input || *(mini->input) == '\0')
+		return ;
 	cmd_arr = ft_split(mini->input, ' ');
 	if (!cmd_arr || !cmd_arr[0])
 	{
 		free_arr(cmd_arr);
-		return;
+		return ;
 	}
 	if (ft_strncmp(cmd_arr[0], "cd", 3) == 0)
-		return(ft_cd(mini, cmd_arr[1]));
+		return (ft_cd(mini, cmd_arr[1]));
 	if (ft_strncmp(cmd_arr[0], "pwd", 4) == 0)
-		return(ft_pwd(STDOUT));
+		return (ft_pwd(STDOUT));
 	if (ft_strncmp(cmd_arr[0], "env", 4) == 0)
-		return(ft_env(mini, STDOUT));
+		return (ft_env(mini, STDOUT));
 	if (ft_strncmp(cmd_arr[0], "export", 7) == 0)
-		return(ft_export(mini, cmd_arr[1]));
+		return (ft_export(mini, cmd_arr[1]));
 }
