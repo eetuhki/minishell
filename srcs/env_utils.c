@@ -48,7 +48,8 @@ int	env_find_index(t_mini *mini, char *var)
 	int		i;
 	char	*path;
 
-	path = ft_strjoin(var, "=");
+	//path = ft_strjoin(var, "=");
+	path = ft_strdup(var);
 	if (!path)
 		return (-1);
 	i = 0;
