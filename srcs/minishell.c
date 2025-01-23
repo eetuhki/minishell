@@ -13,6 +13,7 @@ void	init_mini(t_mini *mini)
 	mini->env = NULL;
 	mini->input = NULL;
 	mini->prev_input = NULL;
+	mini->exit_code = 0;
 	mini->redir_count = 0;
 	mini->redir_open = 0;
 }
