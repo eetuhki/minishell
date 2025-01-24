@@ -2,6 +2,8 @@
 
 void	get_input(t_mini *mini)
 {
+	if (isatty(fileno(stdin)))
+		sig_init();
 	mini->input = readline("mini> ");
 	if (!mini->input)
 		exit(0);
