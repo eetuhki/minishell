@@ -7,6 +7,7 @@
 # include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <string.h>
 # include <sys/wait.h>
 # include <stdbool.h>
@@ -79,6 +80,10 @@ char	*extract_key(char *cmd_arg);
 char	*extract_value(char *cmd_arg);
 int		add_env_pair(t_mini *mini, char *key, char *value, bool has_value);
 void    sort_env(char **env_copy, ssize_t size);
+
+// signals
+void	sig_init(void);
+void	sig_handler_sigint(int sig);
 
 // syntax
 int		input_is_whitespace(char *input);
