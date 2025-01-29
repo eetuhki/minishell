@@ -6,7 +6,7 @@
 #    By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 10:06:24 by eelaine           #+#    #+#              #
-#    Updated: 2025/01/15 14:21:06 by eelaine          ###   ########.fr        #
+#    Updated: 2025/01/29 11:19:42 by eelaine          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ LIBFT_SRCS = $(addprefix $(LIBFTDIR),\
 				ft_split.c \
 				ft_strcmp.c \
 				ft_strchr.c \
+				ft_strcpy.c \
 				ft_strdup.c \
 				ft_striteri.c \
 				ft_strjoin.c \

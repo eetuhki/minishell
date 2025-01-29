@@ -33,7 +33,8 @@ static long	check_exit_code(t_mini *mini, char *arg)
 	long	exit_code;
 
 	exit_code = ft_atol(arg);
-	if ((exit_code == 0 || exit_code == -1) && ft_strcmp(arg, ft_itoa(exit_code)))
+	if ((exit_code == 0 || exit_code == -1)
+		&& ft_strcmp(arg, ft_itoa(exit_code)))
 		arg_not_num(mini, arg);
 	return (exit_code);
 }
@@ -53,7 +54,7 @@ void	ft_exit(t_mini *mini, char **args)
 	{
 		ft_putstr_fd("mini: exit: too many arguments\n", 2);
 		mini->exit_code = 1;
-		return;
+		return ;
 	}
 	else if (args[1] && !args[2])
 		exit_code = check_exit_code(mini, args[1]);

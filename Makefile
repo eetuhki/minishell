@@ -14,6 +14,9 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		env_utils.c \
 		free.c \
 		minishell.c \
+		parser.c \
+		parser_quotes.c \
+		parser_split_cmds.c \
 		signal.c \
 		syntax.c \
 		syntax_error.c \

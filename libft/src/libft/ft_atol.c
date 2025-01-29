@@ -6,7 +6,7 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:33:19 by eelaine           #+#    #+#             */
-/*   Updated: 2025/01/15 15:07:38 by eelaine          ###   ########.fr       */
+/*   Updated: 2025/01/29 14:32:50 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ DESCRIPTION
 */
 long	ft_atol(const char *str)
 {
-    int		sign;
+	int		sign;
 	long	number;
 	long	check;
 

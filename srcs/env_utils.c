@@ -1,6 +1,7 @@
 #include "../incl/minishell.h"
 
-// check if env var key is valid: first character must be alpha or _, the rest alpha, num or _. Return: SUCCESS or FAIL
+// check if env var key is valid: first character must be alpha or _, 
+// the rest alpha, num or _. Return: SUCCESS or FAIL
 int	env_is_key_valid(char *var)
 {
 	int	i;
@@ -48,7 +49,6 @@ int	env_find_index(t_mini *mini, char *var)
 	int		i;
 	char	*path;
 
-	//path = ft_strjoin(var, "=");
 	path = ft_strdup(var);
 	if (!path)
 		return (-1);

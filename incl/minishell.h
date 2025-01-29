@@ -27,14 +27,23 @@ typedef enum e_symbol_type
 	S_QUOTE,
 }	t_symbol_type;
 
+typedef struct s_cmd
+{
+	char	*cmd_name;
+	char	*og_str;
+}	t_cmd;
+
 typedef struct s_mini
 {
+	t_cmd	**cmds;
 	int		redir_open;
 	int		redir_count;
+	int		pipes;
 	char	*input;
 	char	*prev_input;
 	char	**env;
 	int		exit_code;
+	int		cmd_count;
 }	t_mini;
 
 // add_history.c
@@ -79,7 +88,17 @@ char	**copy_env(char **env, ssize_t count);
 char	*extract_key(char *cmd_arg);
 char	*extract_value(char *cmd_arg);
 int		add_env_pair(t_mini *mini, char *key, char *value, bool has_value);
-void    sort_env(char **env_copy, ssize_t size);
+void	sort_env(char **env_copy, ssize_t size);
+
+// parsing
+int		check_quotes(char *input, int limiter);
+int		count_pipes(t_mini *mini);
+int		handle_individual_cmd(t_mini *mini, t_cmd *cmd, int start, int end);
+void	init_cmd_elements(t_cmd *cmd);
+int		init_cmd_structs(t_mini *mini);
+int		parser(t_mini *mini);
+char	*skip_whitespace(char *og_str);
+int		split_cmds(t_mini *mini);
 
 // signals
 void	sig_init(void);

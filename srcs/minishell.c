@@ -18,6 +18,8 @@ void	init_mini(t_mini *mini)
 	mini->exit_code = 0;
 	mini->redir_count = 0;
 	mini->redir_open = 0;
+	mini->cmd_count = 0;
+	mini->pipes = 0;
 }
 
 int	main(int ac, char **av, char **env)
@@ -35,6 +37,7 @@ int	main(int ac, char **av, char **env)
 		get_input(mini);
 		handle_builtin(mini);
 		syntax_check(mini);
+		parser(mini);
 	}
 	return (SUCCESS);
 }
