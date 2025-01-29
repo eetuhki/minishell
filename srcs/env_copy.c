@@ -11,7 +11,8 @@ size_t	env_count_variables(char **env)
 	return (i);
 }
 
-// copies the env into a 2d array for later use and frees the array if copy fails
+// copies the env into a 2d array for later use and frees the array 
+// if copy fails
 int	env_copy(t_mini *mini, char **env)
 {
 	size_t	i;

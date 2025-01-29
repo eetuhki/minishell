@@ -22,4 +22,3 @@ int	env_shlvl(t_mini *mini)
 	free_ptr(shlvl);
 	return (SUCCESS);
 }
-
