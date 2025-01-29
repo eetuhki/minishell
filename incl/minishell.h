@@ -29,6 +29,7 @@ typedef enum e_symbol_type
 
 typedef struct s_cmd
 {
+	int		cmd_num;
 	char	*cmd_name;
 	char	*og_str;
 }	t_cmd;
@@ -43,7 +44,6 @@ typedef struct s_mini
 	char	*prev_input;
 	char	**env;
 	int		exit_code;
-	int		cmd_count;
 }	t_mini;
 
 // add_history.c

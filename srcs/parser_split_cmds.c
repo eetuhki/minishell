@@ -60,6 +60,7 @@ int	split_cmds(t_mini *mini)
 	{
 		if (mini->input[i] == '|' && !check_quotes(mini->input, i))
 		{
+			mini->cmds[cmd_num]->cmd_num = cmd_num;
 			if (handle_individual_cmd(mini, mini->cmds[cmd_num], start, i))
 				return (FAIL);
 			start = i + 1;
@@ -67,6 +68,7 @@ int	split_cmds(t_mini *mini)
 		}
 		i++;
 	}
+	mini->cmds[cmd_num]->cmd_num = cmd_num;
 	if (handle_individual_cmd(mini, mini->cmds[cmd_num], start, i))
 		return (FAIL);
 	return (SUCCESS);
