@@ -7,11 +7,13 @@ int	parse_cmds(t_mini *mini)
 	i = 0;
 	while (mini->cmds[i])
 	{
-		if (parse_individual_cmd(mini, mini->cmds[i]) == FAIL)
+		/* if (parse_individual_cmd(mini, mini->cmds[i]) == FAIL)
 		{
 			mini->exit_code = 1;
 			return (FAIL);
-		}
+		} */
+		expand_var(mini, mini->cmds[i]->og_str, &mini->cmds[i]->expd_str);
+		printf("The expanded var %s\n", mini->cmds[i]->expd_str);
 		i++;
 	}
 	return (SUCCESS);
@@ -23,6 +25,7 @@ void	init_cmd_elements(t_cmd *cmd)
 	cmd->cmd_name = NULL;
 	cmd->og_str = NULL;
 	cmd->cmd_num = 0;
+	cmd->expd_str = NULL;
 }
 
 // allocates memory and initialises command structs for each command
@@ -73,7 +76,7 @@ int	parser(t_mini *mini)
 		return (FAIL);
 	if (split_cmds(mini))
 		return (FAIL);
-	if (parse_cmds(mini));
+	if (parse_cmds(mini))
 		return (FAIL);
 	return (SUCCESS);
 }
