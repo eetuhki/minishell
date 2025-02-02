@@ -12,8 +12,8 @@ int	parse_cmds(t_mini *mini)
 			mini->exit_code = 1;
 			return (FAIL);
 		} */
-		expand_var(mini, mini->cmds[i]->og_str, &mini->cmds[i]->expd_str);
-		printf("The expanded var %s\n", mini->cmds[i]->expd_str);
+		expand_variables(mini, mini->cmds[i]->og_str, &mini->cmds[i]->expd_str);
+		printf("The expanded var = %s\n", mini->cmds[i]->expd_str);
 		i++;
 	}
 	return (SUCCESS);

@@ -127,5 +127,5 @@ int		syntax_redir(t_mini *mini, char direction);
 int		validate_redir(t_mini *mini, size_t i, char direction);
 
 // variable expansion
-void	expand_var(t_mini *mini, char *str, char **expanded);
+void	expand_variables(t_mini *mini, char *str, char **expanded);
 #endif
