@@ -35,14 +35,13 @@ typedef struct s_cmd
 	char	*expd_str;
 }	t_cmd;
 
-typedef struct s_xpnd
+typedef struct s_expansion
 {
-	bool	sq_open;
-	bool	dq_open;
-	char	*var;
-	char	*value;
-	char	*xp_str;
-} t_xpnd;
+	bool	in_single_quote;
+	bool	in_double_quote;
+	char	*env_value;
+	char	*expanded_str;
+} t_expansion;
 
 typedef struct s_mini
 {
@@ -128,5 +127,5 @@ int		syntax_redir(t_mini *mini, char direction);
 int		validate_redir(t_mini *mini, size_t i, char direction);
 
 // variable expansion
-void expand_var(t_mini *mini, char *cmd, char **expanded);
+void	expand_var(t_mini *mini, char *str, char **expanded);
 #endif
