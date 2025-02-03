@@ -32,7 +32,16 @@ typedef struct s_cmd
 	int		cmd_num;
 	char	*cmd_name;
 	char	*og_str;
+	char	*expd_str;
 }	t_cmd;
+
+typedef struct s_expansion
+{
+	bool	in_single_quote;
+	bool	in_double_quote;
+	char	*env_value;
+	char	*expanded_str;
+} t_expansion;
 
 typedef struct s_mini
 {
@@ -116,4 +125,14 @@ int		syntax_print_error(char token);
 int		syntax_quotes(t_mini *mini);
 int		syntax_redir(t_mini *mini, char direction);
 int		validate_redir(t_mini *mini, size_t i, char direction);
+
+// variable expansion
+void	expand_variables(t_mini *mini, char *str, char **expanded);
+
+// variable expansion utils
+int		xp_init(t_expansion *xp);
+void	extract_env_var_name(char *input, char *var_name, int size);
+bool	update_quote_flags(t_expansion *xp, char input);
+int		expand_exit_status(t_mini *mini, t_expansion *xp, char **input);
+
 #endif
