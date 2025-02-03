@@ -128,4 +128,11 @@ int		validate_redir(t_mini *mini, size_t i, char direction);
 
 // variable expansion
 void	expand_variables(t_mini *mini, char *str, char **expanded);
+
+// variable expansion utils
+int		xp_init(t_expansion *xp);
+void	extract_env_var_name(char *input, char *var_name, int size);
+bool	update_quote_flags(t_expansion *xp, char input);
+int		expand_exit_status(t_mini *mini, t_expansion *xp, char **input);
+
 #endif

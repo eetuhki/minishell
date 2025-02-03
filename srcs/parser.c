@@ -13,7 +13,8 @@ int	parse_cmds(t_mini *mini)
 			return (FAIL);
 		} */
 		expand_variables(mini, mini->cmds[i]->og_str, &mini->cmds[i]->expd_str);
-		printf("The expanded var = %s\n", mini->cmds[i]->expd_str);
+		if (mini->cmds[i]->expd_str != NULL && mini->cmds[i]->expd_str[0] != '\0')
+			printf("The expanded var = %s\n", mini->cmds[i]->expd_str);
 		i++;
 	}
 	return (SUCCESS);

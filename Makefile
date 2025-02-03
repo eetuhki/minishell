@@ -24,7 +24,8 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		syntax_quotes.c \
 		syntax_redir.c \
 		syntax_utils.c \
-		expand_var.c)
+		expansion.c \
+		expansion_utils.c)
 
 OBJ_DIR = objs
 OBJECTS	= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
