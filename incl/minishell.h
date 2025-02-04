@@ -29,7 +29,9 @@ typedef enum e_symbol_type
 
 typedef enum e_type
 {
-	WORD,
+	ARG,
+	BUILTIN,
+	CMD,
 	REDIR_IN,
 	REDIR_OUT,
 	HEREDOC,
@@ -117,10 +119,12 @@ int		add_env_pair(t_mini *mini, char *key, char *value, bool has_value);
 void	sort_env(char **env_copy, ssize_t size);
 
 // parsing
+void	check_for_builtins(t_token *token);
 int		check_quotes(char *input, int limiter);
-void	check_redir(t_token *token);
+int		cmd_is_full_path(t_mini *mini, char *cmd);
 int		count_pipes(t_mini *mini);
 int		count_tokens(t_cmd *cmd);
+void	err_cmd_is_dir(char *cmd);
 void	init_cmd_elements(t_cmd *cmd);
 int		init_cmd_structs(t_mini *mini);
 void	init_token_elements(t_token *token);
@@ -130,7 +134,10 @@ int		parse_cmds(t_mini *mini);
 char	*skip_whitespace(char *og_str);
 int		split_cmds(t_mini *mini);
 int		split_tokens(t_cmd *cmd);
-int     tokenize_individual_cmd(t_cmd *cmd);
+int     tokenize_cmd_segment(t_mini *mini, t_cmd *cmd);
+void	tokenize_cmd(t_mini *mini, t_token *token);
+void	tokenize_redir(t_token *token);
+int		validate_cmd(t_mini *mini, char *cmd);
 
 // signals
 void	sig_init(void);

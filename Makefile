@@ -12,6 +12,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		env_copy.c \
 		env_shlvl.c \
 		env_utils.c \
+		error.c \
 		free.c \
 		minishell.c \
 		parser.c \
@@ -26,7 +27,9 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		syntax_pipes.c \
 		syntax_quotes.c \
 		syntax_redir.c \
-		syntax_utils.c)
+		syntax_utils.c \
+		tokenize_cmd.c \
+		tokenize_redir.c)
 
 OBJ_DIR = objs
 OBJECTS	= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
