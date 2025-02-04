@@ -43,6 +43,7 @@ int	tokenize_individual_cmd(t_cmd *cmd)
 		{
 			printf("cmd->tokens[i].content:%s\n", cmd->tokens[i].content);
 			check_redir(&cmd->tokens[i]);
+			check_cmd()
 		}
 		i++;
 	}
