@@ -1,28 +1,13 @@
 #include "../incl/minishell.h"
 
-int	parse_cmds(t_mini *mini)
-{
-	int	i;
-
-	i = 0;
-	while (mini->cmds[i])
-	{
-		if (parse_individual_cmd(mini, mini->cmds[i]) == FAIL)
-		{
-			mini->exit_code = 1;
-			return (FAIL);
-		}
-		i++;
-	}
-	return (SUCCESS);
-}
-
 // init values for command struct elements
 void	init_cmd_elements(t_cmd *cmd)
 {
 	cmd->cmd_name = NULL;
 	cmd->og_str = NULL;
 	cmd->cmd_num = 0;
+	cmd->i = 0;
+	cmd->token_count = 0;
 }
 
 // allocates memory and initialises command structs for each command
@@ -33,7 +18,7 @@ int	init_cmd_structs(t_mini *mini)
 
 	i = 0;
 	cmd_count = count_pipes(mini) + 1;
-	mini->cmds = ft_calloc(cmd_count, sizeof(t_cmd));
+	mini->cmds = ft_calloc(cmd_count + 1, sizeof(t_cmd));
 	if (!mini->cmds)
 		return (FAIL);
 	while (i < cmd_count)
@@ -73,7 +58,7 @@ int	parser(t_mini *mini)
 		return (FAIL);
 	if (split_cmds(mini))
 		return (FAIL);
-	if (parse_cmds(mini));
+	if (parse_cmds(mini))
 		return (FAIL);
 	return (SUCCESS);
 }

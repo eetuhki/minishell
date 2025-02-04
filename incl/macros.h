@@ -20,4 +20,8 @@
 # define STDOUT 1
 # define STDERR 2
 
+// heredoc tmp
+# define TMP_PATH "/tmp/heredoc"
+# define TMP_EXT ".tmp"
+
 #endif

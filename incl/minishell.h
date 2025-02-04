@@ -27,9 +27,35 @@ typedef enum e_symbol_type
 	S_QUOTE,
 }	t_symbol_type;
 
+typedef enum e_type
+{
+	WORD,
+	REDIR_IN,
+	REDIR_OUT,
+	HEREDOC,
+	APPEND,
+	UNKNOWN,
+}	t_type;
+
+typedef struct	s_token
+{
+	t_type	type;
+	char	*content;
+}	t_token;
+
+/* typedef struct	s_redir
+{
+	char	*file;
+	int		type;
+	bool	expand;
+}	t_redir; */
+
 typedef struct s_cmd
 {
+	t_token	*tokens;
 	int		cmd_num;
+	int		i;
+	int		token_count;
 	char	*cmd_name;
 	char	*og_str;
 }	t_cmd;
@@ -92,13 +118,19 @@ void	sort_env(char **env_copy, ssize_t size);
 
 // parsing
 int		check_quotes(char *input, int limiter);
+void	check_redir(t_token *token);
 int		count_pipes(t_mini *mini);
-int		handle_individual_cmd(t_mini *mini, t_cmd *cmd, int start, int end);
+int		count_tokens(t_cmd *cmd);
 void	init_cmd_elements(t_cmd *cmd);
 int		init_cmd_structs(t_mini *mini);
+void	init_token_elements(t_token *token);
+int		init_tokens(t_cmd *cmd);
 int		parser(t_mini *mini);
+int		parse_cmds(t_mini *mini);
 char	*skip_whitespace(char *og_str);
 int		split_cmds(t_mini *mini);
+int		split_tokens(t_cmd *cmd);
+int     tokenize_individual_cmd(t_cmd *cmd);
 
 // signals
 void	sig_init(void);

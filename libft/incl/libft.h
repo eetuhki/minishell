@@ -6,7 +6,7 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:09:16 by eelaine           #+#    #+#             */
-/*   Updated: 2025/01/29 14:29:47 by eelaine          ###   ########.fr       */
+/*   Updated: 2025/02/03 15:22:50 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int			ft_atoi(const char *str);
 void		*ft_calloc(size_t count, size_t size);
 void		*ft_realloc(void *ptr, size_t size);
 char		*ft_strdup(const char *s1);
+char		*ft_strndup(const char *s, size_t n);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strpbrk(const char *s, const char *accept);
