@@ -1,5 +1,6 @@
 #include "../incl/minishell.h"
 
+/*
 int	parse_cmds(t_mini *mini)
 {
 	int	i;
@@ -11,14 +12,14 @@ int	parse_cmds(t_mini *mini)
 		{
 			mini->exit_code = 1;
 			return (FAIL);
-		} */
+		}
 		expand_variables(mini, mini->cmds[i]->og_str, &mini->cmds[i]->expd_str);
 		if (mini->cmds[i]->expd_str != NULL && mini->cmds[i]->expd_str[0] != '\0')
 			printf("The expanded var = %s\n", mini->cmds[i]->expd_str);
 		i++;
 	}
 	return (SUCCESS);
-}
+}*/
 
 // init values for command struct elements
 void	init_cmd_elements(t_cmd *cmd)
@@ -26,6 +27,8 @@ void	init_cmd_elements(t_cmd *cmd)
 	cmd->cmd_name = NULL;
 	cmd->og_str = NULL;
 	cmd->cmd_num = 0;
+	cmd->i = 0;
+	cmd->token_count = 0;
 	cmd->expd_str = NULL;
 }
 
@@ -37,7 +40,7 @@ int	init_cmd_structs(t_mini *mini)
 
 	i = 0;
 	cmd_count = count_pipes(mini) + 1;
-	mini->cmds = ft_calloc(cmd_count, sizeof(t_cmd));
+	mini->cmds = ft_calloc(cmd_count + 1, sizeof(t_cmd));
 	if (!mini->cmds)
 		return (FAIL);
 	while (i < cmd_count)

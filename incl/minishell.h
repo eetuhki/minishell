@@ -27,9 +27,37 @@ typedef enum e_symbol_type
 	S_QUOTE,
 }	t_symbol_type;
 
+typedef enum e_type
+{
+	ARG,
+	BUILTIN,
+	CMD,
+	REDIR_IN,
+	REDIR_OUT,
+	HEREDOC,
+	APPEND,
+	UNKNOWN,
+}	t_type;
+
+typedef struct	s_token
+{
+	t_type	type;
+	char	*content;
+}	t_token;
+
+/* typedef struct	s_redir
+{
+	char	*file;
+	int		type;
+	bool	expand;
+}	t_redir; */
+
 typedef struct s_cmd
 {
+	t_token	*tokens;
 	int		cmd_num;
+	int		i;
+	int		token_count;
 	char	*cmd_name;
 	char	*og_str;
 	char	*expd_str;
@@ -100,14 +128,25 @@ int		add_env_pair(t_mini *mini, char *key, char *value, bool has_value);
 void	sort_env(char **env_copy, ssize_t size);
 
 // parsing
+void	check_for_builtins(t_token *token);
 int		check_quotes(char *input, int limiter);
+int		cmd_is_full_path(t_mini *mini, char *cmd);
 int		count_pipes(t_mini *mini);
-int		handle_individual_cmd(t_mini *mini, t_cmd *cmd, int start, int end);
+int		count_tokens(t_cmd *cmd);
+void	err_cmd_is_dir(char *cmd);
 void	init_cmd_elements(t_cmd *cmd);
 int		init_cmd_structs(t_mini *mini);
+void	init_token_elements(t_token *token);
+int		init_tokens(t_cmd *cmd);
 int		parser(t_mini *mini);
+int		parse_cmds(t_mini *mini);
 char	*skip_whitespace(char *og_str);
 int		split_cmds(t_mini *mini);
+int		split_tokens(t_cmd *cmd);
+int     tokenize_cmd_segment(t_mini *mini, t_cmd *cmd);
+void	tokenize_cmd(t_mini *mini, t_token *token);
+void	tokenize_redir(t_token *token);
+int		validate_cmd(t_mini *mini, char *cmd);
 
 // signals
 void	sig_init(void);

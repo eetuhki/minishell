@@ -12,11 +12,15 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		env_copy.c \
 		env_shlvl.c \
 		env_utils.c \
+		error.c \
 		free.c \
 		minishell.c \
 		parser.c \
+		parser_cmds.c \
 		parser_quotes.c \
 		parser_split_cmds.c \
+		parser_split_tokens.c \
+		parser_tokens.c \
 		signal.c \
 		syntax.c \
 		syntax_error.c \
@@ -24,6 +28,8 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		syntax_quotes.c \
 		syntax_redir.c \
 		syntax_utils.c \
+		tokenize_cmd.c \
+		tokenize_redir.c \
 		expansion.c \
 		expansion_utils.c)
 
