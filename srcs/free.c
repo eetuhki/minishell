@@ -25,3 +25,15 @@ void	free_ptr(void *ptr)
 		ptr = NULL;
 	}
 }
+
+// frees a * of any type if not NULL and sets it to NULL
+// returns FAIL
+int	free_ptr_fail(void *ptr)
+{
+	if (ptr)
+	{
+		free(ptr);
+		ptr = NULL;
+	}
+	return (FAIL);
+}
