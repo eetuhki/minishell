@@ -86,6 +86,7 @@ typedef struct s_mini
 	char	*prev_input;
 	char	**env;
 	int		exit_code;
+	char    ***cmds_tbl;
 }	t_mini;
 
 // add_history.c
@@ -187,4 +188,6 @@ void	extract_env_var_name(char *input, char *var_name, int size);
 bool	update_quote_flags(t_expansion *xp, char input);
 int		expand_exit_status(t_mini *mini, t_expansion *xp, char **input);
 
+// command execution
+int	prep_exec(t_mini *mini);
 #endif

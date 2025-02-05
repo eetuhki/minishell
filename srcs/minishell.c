@@ -19,6 +19,7 @@ void	init_mini(t_mini *mini)
 	mini->redir_count = 0;
 	mini->redir_open = 0;
 	mini->pipes = 0;
+	mini->cmds_tbl = NULL;
 }
 
 int	main(int ac, char **av, char **env)
@@ -37,6 +38,7 @@ int	main(int ac, char **av, char **env)
 		handle_builtin(mini);
 		syntax_check(mini);
 		parser(mini);
+		prep_exec(mini);
 	}
 	return (SUCCESS);
 }
