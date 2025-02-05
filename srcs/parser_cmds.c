@@ -3,17 +3,21 @@
 // checks whether a token is a redir, filename/delimiter after a redir or if it's 
 // the first token we validate if it's a command/builtin. in every other case we 
 // assign token type ARG
-void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token, int i)
+void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token)
 {
 	tokenize_redir(token);
 	tokenize_in_out(token, cmd->token_count);
-	if (i == 0 && !token->type)
+	if (!token->type && !cmd->cmd_found)
 	{
-		check_for_builtins(token);
-		tokenize_cmd(mini, token);
+		check_for_builtins(cmd, token);
+		tokenize_cmd(mini, cmd, token);
 	}
-	else if (!token->type)
+	if (!token->type)
+	{
 		token->type = ARG;
+		if (!cmd->cmd_found)
+			err_cmd_not_found(token->content);
+	}
 }
 
 // initializes and splits the tokens and then runs the tokens
@@ -32,7 +36,8 @@ int	tokenize_cmd_string(t_mini *mini, t_cmd *cmd)
 	while (i < cmd->token_count)
 	{
 		if (cmd->tokens[i].content && !cmd->tokens[i].type)
-			assign_token_types(mini, cmd, &cmd->tokens[i], i);
+			assign_token_types(mini, cmd, &cmd->tokens[i]);
+		printf("token: %s type: %d cmd_found: %d\n", cmd->tokens[i].content, cmd->tokens[i].type, cmd->cmd_found);
 		i++;
 	}
 	return (SUCCESS);

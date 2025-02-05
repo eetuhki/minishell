@@ -1,8 +1,8 @@
 #include "../incl/minishell.h"
 
-void	check_for_builtins(t_token *token)
+void	check_for_builtins(t_cmd *cmd, t_token *token)
 {
-	if (!token->content || token->type)
+	if (!token->content || token->type || cmd->cmd_found)
 		return ;
 	if (!ft_strcmp(token->content, "echo") || !ft_strcmp(token->content, "cd")
 		|| !ft_strcmp(token->content, "pwd") || !ft_strcmp(token->content, "export")
@@ -10,6 +10,7 @@ void	check_for_builtins(t_token *token)
 		|| !ft_strcmp(token->content, "env"))
 	{
 		token->type = BUILTIN;
+		cmd->cmd_found = true;
 	}
 }
 
@@ -75,12 +76,12 @@ int	validate_cmd(t_mini *mini, char *cmd)
 
 // we check if the token is referring to a valid command (or is the full path)
 // we then either assign type CMD to the token or return.
-void	tokenize_cmd(t_mini *mini, t_token *token)
+void	tokenize_cmd(t_mini *mini, t_cmd *cmd, t_token *token)
 {
 	int	i;
 
 	i = 0;
-	if (!token->content || token->type)
+	if (!token->content || token->type || cmd->cmd_found)
 		return ;
 	if (ft_strchr(token->content, '/'))
 	{
@@ -90,4 +91,5 @@ void	tokenize_cmd(t_mini *mini, t_token *token)
 	if (validate_cmd(mini, token->content) == FAIL)
 		return ;
 	token->type = CMD;
+	cmd->cmd_found = true;
 }

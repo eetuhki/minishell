@@ -30,6 +30,7 @@ void	init_cmd_elements(t_cmd *cmd)
 	cmd->i = 0;
 	cmd->token_count = 0;
 	cmd->expd_str = NULL;
+	cmd->cmd_found = false;
 }
 
 // allocates memory and initialises command structs for each command
