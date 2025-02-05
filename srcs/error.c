@@ -10,3 +10,13 @@ void err_cmd_is_dir(char *cmd)
 		ft_putstr_fd("Is a directory\n", 2);
 	}
 }
+
+void	err_cmd_not_found(char *cmd)
+{
+	if (cmd)
+	{
+		ft_putstr_fd("Command '", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd("' not found\n", 2);
+	}
+}
