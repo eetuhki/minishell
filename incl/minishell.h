@@ -16,7 +16,7 @@
 # include "../libft/incl/libft.h"
 # include "macros.h"
 
-typedef enum e_symbol_type
+/* typedef enum e_symbol_type
 {
 	PIPE,
 	INFILE,
@@ -25,17 +25,21 @@ typedef enum e_symbol_type
 	OR,
 	D_QUOTE,
 	S_QUOTE,
-}	t_symbol_type;
+}	t_symbol_type; */
 
 typedef enum e_type
 {
 	ARG,
 	BUILTIN,
 	CMD,
+	INFILE,
+	OUTFILE,
 	REDIR_IN,
 	REDIR_OUT,
 	HEREDOC,
+	LIMITER,
 	APPEND,
+	APP_OUT,
 	UNKNOWN,
 }	t_type;
 
@@ -106,6 +110,7 @@ int		env_set_var(t_mini *mini, char *var, char *new_val);
 // free.c
 void	free_arr(char **arr);
 void	free_ptr(void *ptr);
+int		free_ptr_fail(void *ptr);
 
 // builtin functions
 void	handle_builtin(t_mini *mini);
@@ -128,6 +133,7 @@ int		add_env_pair(t_mini *mini, char *key, char *value, bool has_value);
 void	sort_env(char **env_copy, ssize_t size);
 
 // parsing
+void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token, int i);
 void	check_for_builtins(t_token *token);
 int		check_quotes(char *input, int limiter);
 int		cmd_is_full_path(t_mini *mini, char *cmd);
@@ -143,8 +149,10 @@ int		parse_cmds(t_mini *mini);
 char	*skip_whitespace(char *og_str);
 int		split_cmds(t_mini *mini);
 int		split_tokens(t_cmd *cmd);
+int		split_tokens_fail(t_token *token);
 int     tokenize_cmd_segment(t_mini *mini, t_cmd *cmd);
 void	tokenize_cmd(t_mini *mini, t_token *token);
+void	tokenize_in_out(t_token *token, int token_count);
 void	tokenize_redir(t_token *token);
 int		validate_cmd(t_mini *mini, char *cmd);
 

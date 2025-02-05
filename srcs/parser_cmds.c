@@ -1,33 +1,44 @@
 #include "../incl/minishell.h"
 
+// checks whether a token is a redir, filename/delimiter after a redir or if it's 
+// the first token we validate if it's a command/builtin. in every other case we 
+// assign token type ARG
+void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token, int i)
+{
+	tokenize_redir(token);
+	tokenize_in_out(token, cmd->token_count);
+	if (i == 0 && !token->type)
+	{
+		check_for_builtins(token);
+		tokenize_cmd(mini, token);
+	}
+	else if (!token->type)
+		token->type = ARG;
+}
+
+// initializes and splits the tokens and then runs the tokens
+// one-by-one in a while loop and assigns the token types to every token  
 int	tokenize_cmd_string(t_mini *mini, t_cmd *cmd)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	if (!cmd || !cmd->og_str)
 		return (FAIL);
 	if (init_tokens(cmd))
 		return (FAIL);
 	if (split_tokens(cmd))
 		return (FAIL);
-	while (++i < cmd->token_count)
+	while (i < cmd->token_count)
 	{
 		if (cmd->tokens[i].content && !cmd->tokens[i].type)
-		{
-			tokenize_redir(&cmd->tokens[i]);
-			if (i == 0 && !cmd->tokens[i].type)
-			{
-				check_for_builtins(&cmd->tokens[i]);
-				tokenize_cmd(mini, &cmd->tokens[i]);
-			}
-			else if (!cmd->tokens[i].type)
-				cmd->tokens[i].type = ARG;
-		}
+			assign_token_types(mini, cmd, &cmd->tokens[i], i);
+		i++;
 	}
 	return (SUCCESS);
 }
 
+// goes through the command segments one-by-one in a while loop
 int	parse_cmds(t_mini *mini)
 {
 	int	i;

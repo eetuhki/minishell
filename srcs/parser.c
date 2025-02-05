@@ -8,7 +8,7 @@ int	parse_cmds(t_mini *mini)
 	i = 0;
 	while (mini->cmds[i])
 	{
-		/* if (parse_individual_cmd(mini, mini->cmds[i]) == FAIL)
+		if (parse_individual_cmd(mini, mini->cmds[i]) == FAIL)
 		{
 			mini->exit_code = 1;
 			return (FAIL);
@@ -47,10 +47,7 @@ int	init_cmd_structs(t_mini *mini)
 	{
 		mini->cmds[i] = malloc(sizeof(t_cmd));
 		if (!mini->cmds[i])
-		{
-			free_ptr(mini);
-			return (FAIL);
-		}
+			return (free_ptr_fail(mini));
 		init_cmd_elements(mini->cmds[i]);
 		i++;
 	}

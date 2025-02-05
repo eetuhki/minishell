@@ -1,5 +1,12 @@
 #include "../incl/minishell.h"
 
+int	split_tokens_fail(t_token *token)
+{
+	ft_putstr_fd("Failed to store token to token struct.\n", 2);
+	free_ptr(token->content);
+	return (FAIL);
+}
+
 // splits whitespace delimited characters to tokens
 int	split_tokens(t_cmd *cmd)
 {
@@ -21,11 +28,7 @@ int	split_tokens(t_cmd *cmd)
 			i++;
 		cmd->tokens[index].content = ft_strndup(&cmd->og_str[start], i - start);
 		if (!cmd->tokens[index].content)
-		{
-			ft_putstr_fd("Failed to store token to token struct.\n", 2);
-			free_ptr(cmd->tokens[index].content);
-			return (FAIL);
-		}
+			return (split_tokens_fail(&cmd->tokens[index]));
 		index++;
 	}
 	return (SUCCESS);
