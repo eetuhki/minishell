@@ -1,5 +1,69 @@
 #include "../incl/minishell.h"
 
+static char *get_path_var(char **env)
+{
+	char *path;
+	char *ptr_path;
+	int	i;
+
+	i = 0;
+	path = NULL;
+	if(!env)
+		return (NULL);
+	while (env[i])
+	{
+		ptr_path = ft_strnstr(env[i], "PATH=" , 5);
+		if (ptr_path)
+		{
+			path = ft_substr(env[i], 5, ft_strlen(ptr_path));
+			break;
+		}
+		i++;
+	}
+	return (path);
+}
+
+char *get_full_cmd_path(char *cmd, char **env)
+{
+    char *path_var;
+    char **paths;
+    char *full_path;
+	char *temp;
+    int i;
+
+	i = 0;
+    if (!cmd || !env)
+        return (NULL);
+    path_var = get_path_var(env);
+    if (!path_var || path_var[0] == '\0')
+        return (NULL);
+
+    paths = ft_split(path_var, ':');
+    if (!paths)
+        return (NULL);
+
+	while (paths[i])
+	{
+		temp =  ft_strjoin(paths[i], "/");
+		if (!temp)
+			return (NULL);
+	 	full_path = ft_strjoin(temp, cmd);
+		free_ptr(temp);
+		if (!full_path)
+			return (NULL);
+
+		if (access(full_path, F_OK) == 0)
+        {
+            free_arr(paths);
+            return (full_path);
+        }
+        free(full_path);
+		i++;
+	}
+    free_arr(paths);
+    return (NULL);
+}
+
 int	count_cmd_args(t_cmd *cmd)
 {
 	int	i;
@@ -20,12 +84,15 @@ int	count_cmd_args(t_cmd *cmd)
 	}
 	return (count);
 }
-char	**build_cmd_table(t_cmd *cmd)
+
+char	**build_cmd_table(t_cmd *cmd, char **env)
 {
 	int		arg_count;
 	char	**cmd_table;
 	int		i;
 	int		j;
+	char	*full_path;
+
 
 	if (!cmd || !cmd->tokens || cmd->token_count == 0)
         return (NULL);
@@ -34,13 +101,21 @@ char	**build_cmd_table(t_cmd *cmd)
 	if (!cmd_table)
 		return (NULL);
 
+	int t = 0;
+	while (t < cmd->token_count)
+	{
+    	printf("Token[%d] = %s and TYPE= %d \n", t, cmd->tokens[t].content, cmd->tokens[t].type);
+		t++;
+	}
+
 	i = 0;
 	j = 0;
+	printf("cmd->token_count = %d \n", cmd->token_count);
 	while (i < cmd->token_count)
 	{
 		if (cmd->tokens[i].type == CMD || cmd->tokens[i].type == BUILTIN || cmd->tokens[i].type == ARG)
 		{
-			if (cmd->tokens[i].content != NULL)
+			if (cmd->tokens[i].content != NULL/*  && *cmd->tokens[i].content != '\0' */)
 			{
 				cmd_table[j] = ft_strdup(cmd->tokens[i].content);
 				if (!cmd_table[j])
@@ -48,17 +123,25 @@ char	**build_cmd_table(t_cmd *cmd)
                 	ft_putstr_fd("mini: exec: memory allocation failed\n", 2);
                		return (NULL);
             	}
+				j++;
 			}
-			j++;
 		}
 		i++;
 	}
 	cmd_table[j] = NULL;
 
-	int k;
-	k = 0;
-	while ( k < arg_count)
-		printf("End of cmd_table = %s \n", cmd_table[k++]);
+	if (cmd_table && cmd_table[0] && cmd->tokens[0].type == CMD)
+	{
+		printf("\ncmd_table[0] before full path = %s \n", cmd_table[0]);
+		full_path = get_full_cmd_path(cmd_table[0], env);
+		//if its null do nathing if not replace with full path!
+		if (full_path)
+		{
+			free_ptr(cmd_table[0]);
+			cmd_table[0] = full_path;
+		}
+		printf("cmd_table[0] after fullpath = %s \n", cmd_table[0]);
+	}
 	return (cmd_table);
 }
 
@@ -79,11 +162,27 @@ int	prep_exec(t_mini *mini)
 	i = 0;
     while (i < cmds_in_pipe)
 	{
-        mini->cmds_tbl[i] = build_cmd_table(mini->cmds[i]);
+        mini->cmds_tbl[i] = build_cmd_table(mini->cmds[i], mini->env);
 		if (!mini->cmds_tbl[i])
+		{
+			free_cmds_tbl(mini->cmds_tbl);
 			return (FAIL);
+		}
         i++;
     }
     mini->cmds_tbl[i] = NULL;
+
+	int k;
+	k = 0;
+	while (k < cmds_in_pipe && mini->cmds_tbl && mini->cmds_tbl[k])
+	{
+		int j = 0;
+		while (mini->cmds_tbl[k][j])
+		{
+			printf("CMD_TABLE [%d] = %s \n", k, mini->cmds_tbl[k][j]);
+			j++;
+		}
+		k++;
+	}
 	return (SUCCESS);
 }
