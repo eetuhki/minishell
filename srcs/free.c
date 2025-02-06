@@ -37,3 +37,24 @@ int	free_ptr_fail(void *ptr)
 	}
 	return (FAIL);
 }
+
+// frees a pointer to char ** and sets it to NULL
+void	free_cmds_tbl(char ***cmds_tbl)
+{
+	size_t	i;
+
+	if (!cmds_tbl)
+		return;
+
+	i = 0;
+	while (cmds_tbl[i])
+	{
+		free_arr(cmds_tbl[i]);
+		i++;
+	}
+	if (cmds_tbl)
+	{
+		free(cmds_tbl);
+		cmds_tbl = NULL;
+	}
+}

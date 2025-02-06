@@ -113,6 +113,7 @@ int		env_set_var(t_mini *mini, char *var, char *new_val);
 void	free_arr(char **arr);
 void	free_ptr(void *ptr);
 int		free_ptr_fail(void *ptr);
+void	free_cmds_tbl(char ***cmds_tbl);
 
 // builtin functions
 void	handle_builtin(t_mini *mini);
@@ -189,5 +190,5 @@ bool	update_quote_flags(t_expansion *xp, char input);
 int		expand_exit_status(t_mini *mini, t_expansion *xp, char **input);
 
 // command execution
-int	prep_exec(t_mini *mini);
+int		prep_exec(t_mini *mini);
 #endif
