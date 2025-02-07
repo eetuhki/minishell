@@ -37,7 +37,6 @@ int	tokenize_cmd_string(t_mini *mini, t_cmd *cmd)
 	{
 		if (cmd->tokens[i].content && !cmd->tokens[i].type)
 			assign_token_types(mini, cmd, &cmd->tokens[i]);
-		printf("token: %s type: %d cmd_found: %d\n", cmd->tokens[i].content, cmd->tokens[i].type, cmd->cmd_found);
 		i++;
 	}
 	return (SUCCESS);

@@ -1,5 +1,52 @@
 #include "../incl/minishell.h"
 
+void	skip_space(t_cmd *cmd)
+{
+	while (cmd->og_str[cmd->i] && ft_isspace(cmd->og_str[cmd->i]))
+		cmd->i++;
+}
+
+static int	store_redir(t_cmd *cmd, t_token *token)
+{
+	int	start;
+
+	if (is_redir(cmd->og_str[cmd->i]))
+	{
+		start = cmd->i;
+		if (is_redir(cmd->og_str[cmd->i])
+			&& is_redir(cmd->og_str[cmd->i + 1]))
+			cmd->i++;
+		cmd->i++;
+		token[token->index].content
+			= ft_strndup(&cmd->og_str[start], cmd->i - start);
+		if (!token->content)
+			return (split_tokens_fail(&cmd->tokens[token->index]));
+		token->index++;
+	}
+	return (SUCCESS);
+}
+
+static int	store_word(t_cmd *cmd, t_token *token)
+{
+	int	start;
+
+	if (cmd->og_str[cmd->i] && !ft_isspace(cmd->og_str[cmd->i])
+		&& !check_quotes(cmd->og_str, cmd->i))
+	{
+		start = cmd->i;
+		while (cmd->og_str[cmd->i] && !ft_isspace(cmd->og_str[cmd->i])
+			&& !is_redir(cmd->og_str[cmd->i])
+				&& !check_quotes(cmd->og_str, cmd->i))
+			cmd->i++;
+		token[token->index].content
+			= ft_strndup(&cmd->og_str[start], cmd->i - start);
+		if (!token->content)
+			return (split_tokens_fail(&cmd->tokens[token->index]));
+		token->index++;
+	}
+	return (SUCCESS);
+}
+
 int	split_tokens_fail(t_token *token)
 {
 	ft_putstr_fd("Failed to store token to token struct.\n", 2);
@@ -10,26 +57,17 @@ int	split_tokens_fail(t_token *token)
 // splits whitespace delimited characters to tokens
 int	split_tokens(t_cmd *cmd)
 {
-	int	i;
-	int	start;
-	int	index;
-
-	i = 0;
-	start = 0;
-	index = 0;
-	while (cmd->og_str[i])
+	cmd->i = 0;
+	while (cmd->og_str[cmd->i])
 	{
-		while (cmd->og_str[i] && ft_isspace(cmd->og_str[i]))
-			i++;
-		if (!cmd->og_str[i])
+		skip_space(cmd);
+		if (!cmd->og_str)
 			break;
-		start = i;
-		while (cmd->og_str[i] && (!ft_isspace(cmd->og_str[i]) || check_quotes(cmd->og_str, i)))
-			i++;
-		cmd->tokens[index].content = ft_strndup(&cmd->og_str[start], i - start);
-		if (!cmd->tokens[index].content)
-			return (split_tokens_fail(&cmd->tokens[index]));
-		index++;
+		if (store_redir(cmd, cmd->tokens) == FAIL)
+			return (FAIL);
+		skip_space(cmd);
+		if (store_word(cmd, cmd->tokens) == FAIL)
+			return (FAIL);
 	}
 	return (SUCCESS);
 }
