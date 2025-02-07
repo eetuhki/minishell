@@ -1,8 +1,16 @@
 #include "../incl/minishell.h"
 
+bool	is_redir(int c)
+{
+	if (ft_strchr(REDIRS, c))
+		return (true);
+	return (false);
+}
+
 void	init_token_elements(t_token *token)
 {
 	token->type = 0;
+	token->index = 0;
 	token->content = NULL;
 }
 
@@ -15,8 +23,15 @@ int	count_tokens(t_cmd *cmd)
 	token_count = 0;
 	while (cmd->og_str[i])
 	{
+		if (is_redir(cmd->og_str[i]))
+		{
+			token_count++;
+			i++;
+			if (is_redir(cmd->og_str[i]))
+				i++;
+		}
 		if (!ft_isspace(cmd->og_str[i]) && (ft_isspace(cmd->og_str[i + 1])
-			|| ft_isspace(cmd->og_str[i + 1] == '\0'))
+			|| !cmd->og_str[i + 1] || is_redir(cmd->og_str[i + 1]))
 				&& !check_quotes(cmd->og_str, i))
 			token_count++;
 		i++;
