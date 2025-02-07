@@ -23,45 +23,47 @@ static char *get_path_var(char **env)
 	return (path);
 }
 
-char *get_full_cmd_path(char *cmd, char **env)
+char	*get_valid_cmd_path(char **paths, char *cmd)
 {
-    char *path_var;
-    char **paths;
-    char *full_path;
-	char *temp;
-    int i;
+	int		i;
+	char	*temp;
+	char	*full_path;
 
 	i = 0;
-    if (!cmd || !env)
-        return (NULL);
-    path_var = get_path_var(env);
-    if (!path_var || path_var[0] == '\0')
-        return (NULL);
-
-    paths = ft_split(path_var, ':');
-    if (!paths)
-        return (NULL);
-
-	while (paths[i])
+	while(paths[i])
 	{
 		temp =  ft_strjoin(paths[i], "/");
 		if (!temp)
 			return (NULL);
-	 	full_path = ft_strjoin(temp, cmd);
+		full_path = ft_strjoin(temp, cmd);
 		free_ptr(temp);
 		if (!full_path)
 			return (NULL);
-
 		if (access(full_path, F_OK) == 0)
-        {
-            free_arr(paths);
-            return (full_path);
-        }
-        free(full_path);
+			return (full_path);
+		free_ptr(full_path);
 		i++;
 	}
+	return (NULL);
+}
+
+char *get_full_cmd_path(char *cmd, char **env)
+{
+    char	*path_var;
+    char	**paths;
+    char	*full_path;
+
+    if(!cmd || !env)
+        return (NULL);
+    path_var = get_path_var(env);
+    if(!path_var || path_var[0] == '\0')
+        return (NULL);
+    paths = ft_split(path_var, ':');
+    if(!paths)
+		return (NULL);
+	full_path = get_valid_cmd_path(paths, cmd);
     free_arr(paths);
-    return (NULL);
+    return (full_path);
 }
 
 int	count_cmd_args(t_cmd *cmd)
@@ -81,18 +83,62 @@ int	count_cmd_args(t_cmd *cmd)
 				count++;
 		}
 		i++;
-	}
+	}                                         
 	return (count);
 }
 
+int	fill_cmd_table(t_cmd *cmd, char	**cmd_table)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < cmd->token_count)
+	{
+		if (cmd->tokens[i].type == CMD || cmd->tokens[i].type == BUILTIN 
+			|| cmd->tokens[i].type == ARG)
+		{
+			if (cmd->tokens[i].content != NULL)
+			{
+				cmd_table[j] = ft_strdup(cmd->tokens[i].content);
+				if (!cmd_table[j])
+				{
+                	ft_putstr_fd("mini: exec: memory allocation failed\n", 2);
+               		return (FAIL);
+            	}
+				j++;
+			}
+		}
+		i++;
+	}
+	cmd_table[j] = NULL;
+	return (SUCCESS);
+}
+
+void check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env)
+{
+	char	*full_path;
+
+	full_path = NULL;
+    if (cmd_table && cmd_table[0] && cmd->tokens[0].type == CMD)
+    {
+		printf("\ncmd_table[0] before full path = %s\n", cmd_table[0]);
+        full_path = get_full_cmd_path(cmd_table[0], env);
+        if (full_path)
+        {
+            free_ptr(cmd_table[0]);
+            cmd_table[0] = full_path;
+        }
+		printf("cmd_table[0] after fullpath = %s\n", cmd_table[0]);
+    }
+}
+
+// returns cmd_table or NULL
 char	**build_cmd_table(t_cmd *cmd, char **env)
 {
 	int		arg_count;
 	char	**cmd_table;
-	int		i;
-	int		j;
-	char	*full_path;
-
 
 	if (!cmd || !cmd->tokens || cmd->token_count == 0)
         return (NULL);
@@ -101,47 +147,15 @@ char	**build_cmd_table(t_cmd *cmd, char **env)
 	if (!cmd_table)
 		return (NULL);
 
-	int t = 0;
+/* 	int t = 0;
 	while (t < cmd->token_count)
 	{
     	printf("Token[%d] = %s and TYPE= %d \n", t, cmd->tokens[t].content, cmd->tokens[t].type);
 		t++;
-	}
-
-	i = 0;
-	j = 0;
-	printf("cmd->token_count = %d \n", cmd->token_count);
-	while (i < cmd->token_count)
-	{
-		if (cmd->tokens[i].type == CMD || cmd->tokens[i].type == BUILTIN || cmd->tokens[i].type == ARG)
-		{
-			if (cmd->tokens[i].content != NULL/*  && *cmd->tokens[i].content != '\0' */)
-			{
-				cmd_table[j] = ft_strdup(cmd->tokens[i].content);
-				if (!cmd_table[j])
-				{
-                	ft_putstr_fd("mini: exec: memory allocation failed\n", 2);
-               		return (NULL);
-            	}
-				j++;
-			}
-		}
-		i++;
-	}
-	cmd_table[j] = NULL;
-
-	if (cmd_table && cmd_table[0] && cmd->tokens[0].type == CMD)
-	{
-		printf("\ncmd_table[0] before full path = %s \n", cmd_table[0]);
-		full_path = get_full_cmd_path(cmd_table[0], env);
-		//if its null do nathing if not replace with full path!
-		if (full_path)
-		{
-			free_ptr(cmd_table[0]);
-			cmd_table[0] = full_path;
-		}
-		printf("cmd_table[0] after fullpath = %s \n", cmd_table[0]);
-	}
+	} */ 
+	if(fill_cmd_table(cmd, cmd_table) == FAIL)
+		return (NULL);
+	check_full_cmd_path(cmd_table, cmd, env);
 	return (cmd_table);
 }
 
