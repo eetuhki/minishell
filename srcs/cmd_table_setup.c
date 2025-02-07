@@ -31,7 +31,8 @@ static int	fill_cmd_table(t_cmd *cmd, char	**cmd_table)
 	while (i < cmd->token_count)
 	{
 		if ((cmd->tokens[i].type == CMD || cmd->tokens[i].type == BUILTIN
-			|| cmd->tokens[i].type == ARG) && cmd->tokens[i].content != NULL)
+			|| cmd->tokens[i].type == ARG) && cmd->tokens[i].content != NULL
+			&& !input_is_whitespace(cmd->tokens[i].content))
 		{
 			cmd_table[j] = ft_strdup(cmd->tokens[i].content);
 			if (!cmd_table[j])
@@ -60,6 +61,12 @@ static char	**build_cmd_table(t_cmd *cmd, char **env)
 		return (NULL);
 	if(fill_cmd_table(cmd, cmd_table) == FAIL)
 		return (NULL);
+	int t = 0;
+	while (t < cmd->token_count)
+	{
+    	printf("Token[%d] = %s and TYPE= %d \n", t, cmd->tokens[t].content, cmd->tokens[t].type);
+		t++;
+	}
 	check_full_cmd_path(cmd_table, cmd, env);
 	return (cmd_table);
 }
@@ -90,5 +97,17 @@ int	prepare_cmd_table(t_mini *mini)
         i++;
     }
     mini->cmds_tbl[i] = NULL;
+	int k;
+	k = 0;
+	while (k < cmds_in_pipe && mini->cmds_tbl && mini->cmds_tbl[k])
+	{
+		int j = 0;
+		while (mini->cmds_tbl[k][j])
+		{
+			printf("CMD_TABLE [%d] = %s \n", k, mini->cmds_tbl[k][j]);
+			j++;
+		}
+		k++;
+	}
 	return (SUCCESS);
 }
