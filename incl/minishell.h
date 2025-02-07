@@ -46,6 +46,7 @@ typedef enum e_type
 typedef struct	s_token
 {
 	t_type	type;
+	int		index;
 	char	*content;
 }	t_token;
 
@@ -149,10 +150,15 @@ void	init_cmd_elements(t_cmd *cmd);
 int		init_cmd_structs(t_mini *mini);
 void	init_token_elements(t_token *token);
 int		init_tokens(t_cmd *cmd);
+bool	is_redir(int c);
 int		parser(t_mini *mini);
 int		parse_cmds(t_mini *mini);
 char	*skip_whitespace(char *og_str);
+int		skip_redir(char *str, int i);
+void	skip_space(t_cmd *cmd);
+int		skip_word(char *str, int i);
 int		split_cmds(t_mini *mini);
+int		split_redir(char *str, int i);
 int		split_tokens(t_cmd *cmd);
 int		split_tokens_fail(t_token *token);
 int     tokenize_cmd_segment(t_mini *mini, t_cmd *cmd);
