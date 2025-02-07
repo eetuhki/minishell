@@ -189,6 +189,10 @@ void	extract_env_var_name(char *input, char *var_name, int size);
 bool	update_quote_flags(t_expansion *xp, char input);
 int		expand_exit_status(t_mini *mini, t_expansion *xp, char **input);
 
-// command execution
-int		prep_exec(t_mini *mini);
+// command_table_setup.c
+int		prepare_cmd_table(t_mini *mini);
+
+// cmd_path_finder.c
+void check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env);
+
 #endif
