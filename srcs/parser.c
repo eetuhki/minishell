@@ -80,5 +80,7 @@ int	parser(t_mini *mini)
 		return (FAIL);
 	if (parse_cmds(mini))
 		return (FAIL);
+	/* if (handle_heredocs(mini));
+		return (FAIL); */
 	return (SUCCESS);
 }
