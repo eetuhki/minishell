@@ -87,6 +87,7 @@ typedef struct s_mini
 	char	*prev_input;
 	char	**env;
 	int		exit_code;
+	char    ***cmds_tbl;
 }	t_mini;
 
 // add_history.c
@@ -113,6 +114,7 @@ int		env_set_var(t_mini *mini, char *var, char *new_val);
 void	free_arr(char **arr);
 void	free_ptr(void *ptr);
 int		free_ptr_fail(void *ptr);
+void	free_cmds_tbl(char ***cmds_tbl);
 
 // builtin functions
 void	handle_builtin(t_mini *mini);
@@ -193,5 +195,11 @@ int		xp_init(t_expansion *xp);
 void	extract_env_var_name(char *input, char *var_name, int size);
 bool	update_quote_flags(t_expansion *xp, char input);
 int		expand_exit_status(t_mini *mini, t_expansion *xp, char **input);
+
+// command_table_setup.c
+int		prepare_cmd_table(t_mini *mini);
+
+// cmd_path_finder.c
+void check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env);
 
 #endif
