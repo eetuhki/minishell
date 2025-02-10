@@ -3,13 +3,14 @@
 static int	count_cmd_args(t_cmd *cmd)
 {
 	int	i;
-	int count;
+	int	count;
 
 	i = 0;
 	count = 0;
 	while (i < cmd->token_count)
 	{
-		if (cmd->tokens[i].content != NULL)
+		if (cmd->tokens[i].content != NULL
+			&& !input_is_whitespace(cmd->tokens[i].content))
 		{
 			if (cmd->tokens[i].type == CMD || cmd->tokens[i].type == BUILTIN)
 				count++;
@@ -31,15 +32,15 @@ static int	fill_cmd_table(t_cmd *cmd, char	**cmd_table)
 	while (i < cmd->token_count)
 	{
 		if ((cmd->tokens[i].type == CMD || cmd->tokens[i].type == BUILTIN
-			|| cmd->tokens[i].type == ARG) && cmd->tokens[i].content != NULL
+				|| cmd->tokens[i].type == ARG) && cmd->tokens[i].content != NULL
 			&& !input_is_whitespace(cmd->tokens[i].content))
 		{
 			cmd_table[j] = ft_strdup(cmd->tokens[i].content);
 			if (!cmd_table[j])
 			{
-                ft_putstr_fd("mini: exec: memory allocation failed\n", 2);
-               	return (FAIL);
-            }
+				ft_putstr_fd("mini: exec: memory allocation failed\n", 2);
+				return (FAIL);
+			}
 			j++;
 		}
 		i++;
@@ -54,26 +55,20 @@ static char	**build_cmd_table(t_cmd *cmd, char **env)
 	char	**cmd_table;
 
 	if (!cmd || !cmd->tokens || cmd->token_count == 0)
-        return (NULL);
+		return (NULL);
 	arg_count = count_cmd_args(cmd);
-	cmd_table = malloc(sizeof (char*) * (arg_count + 1));
+	cmd_table = malloc(sizeof (char *) * (arg_count + 1));
 	if (!cmd_table)
 		return (NULL);
-	if(fill_cmd_table(cmd, cmd_table) == FAIL)
+	if (fill_cmd_table(cmd, cmd_table) == FAIL)
 		return (NULL);
-	int t = 0;
-	while (t < cmd->token_count)
-	{
-    	printf("Token[%d] = %s and TYPE= %d \n", t, cmd->tokens[t].content, cmd->tokens[t].type);
-		t++;
-	}
 	check_full_cmd_path(cmd_table, cmd, env);
 	return (cmd_table);
 }
 
 int	prepare_cmd_table(t_mini *mini)
 {
-	int cmds_in_pipe;
+	int	cmds_in_pipe;
 	int	i;
 
 	cmds_in_pipe = 0;
@@ -86,28 +81,16 @@ int	prepare_cmd_table(t_mini *mini)
 		return (FAIL);
 	}
 	i = 0;
-    while (i < cmds_in_pipe)
+	while (i < cmds_in_pipe)
 	{
-        mini->cmds_tbl[i] = build_cmd_table(mini->cmds[i], mini->env);
+		mini->cmds_tbl[i] = build_cmd_table(mini->cmds[i], mini->env);
 		if (!mini->cmds_tbl[i])
 		{
 			free_cmds_tbl(mini->cmds_tbl);
 			return (FAIL);
 		}
-        i++;
-    }
-    mini->cmds_tbl[i] = NULL;
-	int k;
-	k = 0;
-	while (k < cmds_in_pipe && mini->cmds_tbl && mini->cmds_tbl[k])
-	{
-		int j = 0;
-		while (mini->cmds_tbl[k][j])
-		{
-			printf("CMD_TABLE [%d] = %s \n", k, mini->cmds_tbl[k][j]);
-			j++;
-		}
-		k++;
+		i++;
 	}
+	mini->cmds_tbl[i] = NULL;
 	return (SUCCESS);
 }
