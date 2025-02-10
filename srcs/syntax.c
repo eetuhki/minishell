@@ -3,6 +3,8 @@
 void	syntax_fail(t_mini *mini)
 {
 	free_ptr(mini->input);
+	ft_putendl_fd("program exited from function: syntax_fail", 2);
+	exit (SUCCESS);
 }
 
 // validate input syntax before proceeding to tokenization, 
