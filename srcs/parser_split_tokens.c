@@ -14,7 +14,7 @@ static int	store_redir(t_cmd *cmd, t_token *token)
 	{
 		start = cmd->i;
 		if (is_redir(cmd->og_str[cmd->i])
-			&& is_redir(cmd->og_str[cmd->i + 1]))
+			&& (cmd->og_str[cmd->i + 1] && is_redir(cmd->og_str[cmd->i + 1])))
 			cmd->i++;
 		cmd->i++;
 		token[token->index].content
@@ -25,6 +25,7 @@ static int	store_redir(t_cmd *cmd, t_token *token)
 	}
 	return (SUCCESS);
 }
+
 
 static int	store_word(t_cmd *cmd, t_token *token)
 {
@@ -47,6 +48,7 @@ static int	store_word(t_cmd *cmd, t_token *token)
 	return (SUCCESS);
 }
 
+// prints error message and frees the given token str, returns FAIL
 int	split_tokens_fail(t_token *token)
 {
 	ft_putstr_fd("Failed to store token to token struct.\n", 2);
