@@ -16,7 +16,7 @@ void	syntax_check(t_mini *mini)
 	if (ft_strpbrk(mini->input, DELIMITERS))
 	{
 		if (input_is_whitespace(mini->input))
-			ft_printf("input is whitespace\n");
+			ft_printf("mini: input is whitespace\n");
 		if (ft_strchr(mini->input, '|') && syntax_pipes(mini))
 			syntax_fail(mini);
 		if (ft_strpbrk(mini->input, QUOTES) && syntax_quotes(mini))
