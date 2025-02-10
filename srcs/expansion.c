@@ -87,14 +87,14 @@ static int	handle_dollar_sign(t_mini *mini, t_expansion *xp, char **input)
 // Single quotes prevent expansion, while double quotes allow it.
 // Tracks nested and multiple quotes properly.
 // The expanded result is copied to the expanded pointer.
-void	expand_variables(t_mini *mini, char *str, char **expanded)
+void	expand_variables(t_mini *mini, char **str)
 {
 	t_expansion	xp;
 	char		*input;
 
 	if (xp_init(&xp) == FAIL)
 		return ;
-	input = str;
+	input = *str;
 	while (*input)
 	{
 		if (update_quote_flags(&xp, *input))
@@ -112,5 +112,9 @@ void	expand_variables(t_mini *mini, char *str, char **expanded)
 			return ;
 		input++;
 	}
-	*expanded = xp.expanded_str;
+	printf("BEFORE expand str %s\n", *str);
+	if (*str)
+		free_ptr(*str);
+    *str = xp.expanded_str;
+	printf("AFTER expand str %s\n", *str);
 }

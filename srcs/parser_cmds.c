@@ -43,6 +43,25 @@ int	tokenize_cmd_string(t_mini *mini, t_cmd *cmd)
 	return (SUCCESS);
 }
 
+void expand_tokens(t_mini *mini, t_cmd *cmd)
+{
+    int    i;
+    char *ptr;
+
+    i = 0;
+    while (cmd && cmd->tokens && cmd->tokens[i].content != NULL && !input_is_whitespace(cmd->tokens[i].content))
+    {
+        ptr = ft_strchr(cmd->tokens[i].content, '$');
+        if (ptr && cmd->tokens[i].type != LIMITER)
+        {
+           // temp = cmd->tokens[i].content;
+            printf("we have a dollar %s\n", cmd->tokens[i].content);
+            expand_variables(mini, &cmd->tokens[i].content);
+        }
+        i++;
+    }
+}
+
 // goes through the command segments one-by-one in a while loop
 int	parse_cmds(t_mini *mini)
 {
@@ -53,6 +72,7 @@ int	parse_cmds(t_mini *mini)
 	{
 		if (tokenize_cmd_string(mini, mini->cmds[i]) == FAIL)
 			return (FAIL);
+		expand_tokens(mini, mini->cmds[i]);
 		i++;
 	}
 	return (SUCCESS);
