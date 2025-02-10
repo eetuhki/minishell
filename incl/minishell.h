@@ -174,6 +174,7 @@ void	sig_handler_sigint(int sig);
 // syntax
 int		input_is_whitespace(char *input);
 int		invalid_chars(t_mini *mini, size_t i, char direction);
+int		pipe_is_whitespace(char *input, int i);
 char	*redir_special_chars(char direction);
 size_t	skip_quotes(char *input);
 void	syntax_check(t_mini *mini);

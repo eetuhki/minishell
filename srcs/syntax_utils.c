@@ -1,5 +1,19 @@
 #include "../incl/minishell.h"
 
+// checks whether the content following a pipe is whitespace only
+// returns true if whitespace, false if the command segment has
+// other content as well.
+int	pipe_is_whitespace(char *input, int i)
+{
+	while (input[i + 1] != '\0' && input[i + 1] != '|')
+	{
+		i++;
+		if (!ft_isspace(input[i]))
+			return (false);
+	}
+	return (true);
+}
+
 // check if input is only whitespace or not, 
 // returns 1 if nothing but whitespace, else 0
 int	input_is_whitespace(char *input)
