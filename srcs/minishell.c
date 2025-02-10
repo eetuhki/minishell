@@ -19,6 +19,7 @@ void	init_mini(t_mini *mini)
 	mini->redir_count = 0;
 	mini->redir_open = 0;
 	mini->pipes = 0;
+	mini->heredoc_expand = true;
 	mini->cmds_tbl = NULL;
 }
 

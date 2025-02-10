@@ -32,7 +32,7 @@ int	count_tokens(t_cmd *cmd)
 		}
 		if (!ft_isspace(cmd->og_str[i]) && (ft_isspace(cmd->og_str[i + 1])
 			|| !cmd->og_str[i + 1] || is_redir(cmd->og_str[i + 1]))
-				&& !check_quotes(cmd->og_str, i))
+				&& !check_quotes(cmd->og_str, i + 1))
 			token_count++;
 		i++;
 	}

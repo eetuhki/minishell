@@ -82,6 +82,7 @@ typedef struct s_mini
 	t_cmd	**cmds;
 	int		redir_open;
 	int		redir_count;
+	bool	heredoc_expand;
 	int		pipes;
 	char	*input;
 	char	*prev_input;
@@ -138,6 +139,9 @@ char	*extract_key(char *cmd_arg);
 char	*extract_value(char *cmd_arg);
 int		add_env_pair(t_mini *mini, char *key, char *value, bool has_value);
 void	sort_env(char **env_copy, ssize_t size);
+
+// heredocs
+int		handle_heredocs(t_mini *mini);
 
 // parsing
 void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token);
