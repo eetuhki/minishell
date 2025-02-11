@@ -66,7 +66,6 @@ typedef struct s_cmd
 	bool	cmd_found;
 	char	*cmd_name;
 	char	*og_str;
-	char	*expd_str;
 }	t_cmd;
 
 typedef struct s_expansion
@@ -192,18 +191,18 @@ int		syntax_redir(t_mini *mini, char direction);
 int		validate_redir(t_mini *mini, size_t i, char direction);
 
 // variable expansion
-void	expand_variables(t_mini *mini, char *str, char **expanded);
+int		expand_variables(t_mini *mini, char **str);
 
 // variable expansion utils
 int		xp_init(t_expansion *xp);
 void	extract_env_var_name(char *input, char *var_name, int size);
 bool	update_quote_flags(t_expansion *xp, char input);
 int		expand_exit_status(t_mini *mini, t_expansion *xp, char **input);
+void	copy_expantion_res(char **str, t_expansion xp);
 
 // command_table_setup.c
 int		prepare_cmd_table(t_mini *mini);
 
 // cmd_path_finder.c
-void check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env);
-
+void	check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env);
 #endif
