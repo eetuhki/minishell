@@ -86,14 +86,14 @@ static int	handle_dollar_sign(t_mini *mini, t_expansion *xp, char **input)
 // Expands environment variables in the given string while handling quotes.
 // Single quotes prevent expansion, while double quotes allow it.
 // Tracks nested and multiple quotes properly.
-// The expanded result is copied to the expanded pointer.
-void	expand_variables(t_mini *mini, char **str)
+// The expanded result is copied to the str pointer.
+int	expand_variables(t_mini *mini, char **str)
 {
 	t_expansion	xp;
 	char		*input;
 
 	if (xp_init(&xp) == FAIL)
-		return ;
+		return (FAIL);
 	input = *str;
 	while (*input)
 	{
@@ -105,16 +105,13 @@ void	expand_variables(t_mini *mini, char **str)
 		if (*input == '$' && !xp.in_single_quote)
 		{
 			if (handle_dollar_sign(mini, &xp, &input) == FAIL)
-				return ;
+				return (FAIL);
 			continue ;
 		}
 		if (append_char_to_expansion(&xp, *input) == FAIL)
-			return ;
+			return (FAIL);
 		input++;
 	}
-	printf("BEFORE expand str %s\n", *str);
-	if (*str)
-		free_ptr(*str);
-    *str = xp.expanded_str;
-	printf("AFTER expand str %s\n", *str);
+	copy_expantion_res(str, xp);
+	return (SUCCESS);
 }
