@@ -66,7 +66,6 @@ typedef struct s_cmd
 	bool	cmd_found;
 	char	*cmd_name;
 	char	*og_str;
-	char	*expd_str;
 }	t_cmd;
 
 typedef struct s_expansion

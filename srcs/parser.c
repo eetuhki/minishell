@@ -29,7 +29,6 @@ void	init_cmd_elements(t_cmd *cmd)
 	cmd->cmd_num = 0;
 	cmd->i = 0;
 	cmd->token_count = 0;
-	cmd->expd_str = NULL;
 	cmd->cmd_found = false;
 }
 
