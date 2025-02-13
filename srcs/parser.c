@@ -25,6 +25,8 @@ int	parse_cmds(t_mini *mini)
 void	init_cmd_elements(t_cmd *cmd)
 {
 	cmd->cmd_name = NULL;
+	cmd->heredoc_name = NULL;
+	cmd->heredoc_index = 0;
 	cmd->og_str = NULL;
 	cmd->cmd_num = 0;
 	cmd->i = 0;
@@ -79,7 +81,7 @@ int	parser(t_mini *mini)
 		return (FAIL);
 	if (parse_cmds(mini))
 		return (FAIL);
-	/* if (handle_heredocs(mini));
-		return (FAIL); */
+	if (handle_heredocs(mini))
+		return (FAIL);
 	return (SUCCESS);
 }
