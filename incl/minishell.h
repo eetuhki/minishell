@@ -65,6 +65,8 @@ typedef struct s_cmd
 	int		token_count;
 	bool	cmd_found;
 	char	*cmd_name;
+	char	*heredoc_name;
+	int		heredoc_index;
 	char	*og_str;
 	char	*expd_str;
 }	t_cmd;
@@ -141,7 +143,11 @@ int		add_env_pair(t_mini *mini, char *key, char *value, bool has_value);
 void	sort_env(char **env_copy, ssize_t size);
 
 // heredocs
+char	*get_filename(t_cmd *cmd);
+int		get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token);
 int		handle_heredocs(t_mini *mini);
+void	check_fd(int fd);
+void	trim_limiter(t_token *token);
 
 // parsing
 void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token);
