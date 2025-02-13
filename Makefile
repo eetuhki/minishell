@@ -16,6 +16,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		error.c \
 		free.c \
 		heredocs.c \
+		heredocs_utils.c \
 		minishell.c \
 		parser.c \
 		parser_cmds.c \
