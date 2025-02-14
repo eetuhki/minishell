@@ -20,6 +20,10 @@
 # define STDOUT 1
 # define STDERR 2
 
+// fd index
+# define READ 0
+# define WRITE 1
+
 // heredoc tmp
 # define TMP_PATH "/tmp/heredoc"
 # define TMP_EXT ".tmp"

@@ -27,6 +27,7 @@ void	init_cmd_elements(t_cmd *cmd)
 	cmd->cmd_name = NULL;
 	cmd->heredoc_name = NULL;
 	cmd->heredoc_index = 0;
+	cmd->hd_fd = -1;
 	cmd->og_str = NULL;
 	cmd->cmd_num = 0;
 	cmd->i = 0;

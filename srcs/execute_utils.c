@@ -31,13 +31,20 @@ int	is_there_type(t_mini *mini, int type)
 	return (false);
 }
 
-/* int	builtin_only(t_mini *mini, t_cmd *cmd)
+int	builtin_only(t_mini *mini, t_cmd *cmd)
 {
 	int	i;
 
 	i = 0;
-	if (cmd->tokens[i].type)
-} */
+	while (cmd->tokens[i].content)
+	{
+		if (cmd->tokens[i].type != BUILTIN && cmd->tokens[i].type != ARG
+			&& cmd->cmd_found)
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 int	cmd_table_size(t_mini *mini)
 {

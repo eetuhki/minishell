@@ -40,7 +40,6 @@ typedef enum e_type
 	LIMITER,
 	APPEND,
 	APP_OUT,
-	UNKNOWN,
 }	t_type;
 
 typedef struct	s_token
@@ -67,6 +66,7 @@ typedef struct s_cmd
 	char	*cmd_name;
 	char	*heredoc_name;
 	int		heredoc_index;
+	int		hd_fd;
 	char	*og_str;
 }	t_cmd;
 
@@ -142,6 +142,7 @@ int		add_env_pair(t_mini *mini, char *key, char *value, bool has_value);
 void	sort_env(char **env_copy, ssize_t size);
 
 // execution
+int		builtin_only(t_mini *mini, t_cmd *cmd);
 int		check_pid(pid_t pid);
 int		cmd_table_size(t_mini *mini);
 void	execute(t_mini *mini);
