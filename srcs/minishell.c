@@ -36,7 +36,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		get_input(mini);
-		handle_builtin(mini);
+		//handle_builtin(mini, 0);
 		syntax_check(mini);
 		parser(mini);
 		prepare_cmd_table(mini);

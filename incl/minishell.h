@@ -67,6 +67,8 @@ typedef struct s_cmd
 	char	*heredoc_name;
 	int		heredoc_index;
 	int		hd_fd;
+	int		in_file;
+	int		out_file;
 	char	*og_str;
 }	t_cmd;
 
@@ -148,6 +150,7 @@ int		cmd_table_size(t_mini *mini);
 void	execute(t_mini *mini);
 void	exec_no_pipes(t_mini *mini);
 int		is_there_type(t_mini *mini, int type);
+int		process_cmd_files(t_mini *mini);
 int		wait_single_child(t_mini *mini, pid_t pid, int *status);
 
 // heredocs

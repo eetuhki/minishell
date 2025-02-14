@@ -33,6 +33,8 @@ void	init_cmd_elements(t_cmd *cmd)
 	cmd->i = 0;
 	cmd->token_count = 0;
 	cmd->cmd_found = false;
+	cmd->in_file = -1;
+	cmd->out_file = -1;
 }
 
 // allocates memory and initialises command structs for each command
@@ -84,5 +86,7 @@ int	parser(t_mini *mini)
 		return (FAIL);
 	if (handle_heredocs(mini))
 		return (FAIL);
+	if (process_cmd_files(mini))
+		return(FAIL);
 	return (SUCCESS);
 }
