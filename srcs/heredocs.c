@@ -86,4 +86,3 @@ int	handle_heredocs(t_mini *mini)
 	}
 	return (SUCCESS);
 }
-

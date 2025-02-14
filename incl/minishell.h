@@ -119,7 +119,7 @@ int		free_ptr_fail(void *ptr);
 void	free_cmds_tbl(char ***cmds_tbl);
 
 // builtin functions
-void	handle_builtin(t_mini *mini);
+void	handle_builtin(t_mini *mini, int i);
 void	ft_env(t_mini *mini, int fd);
 void	ft_exit(t_mini *mini, char **args);
 void	ft_pwd(int fd);
@@ -140,6 +140,14 @@ char	*extract_key(char *cmd_arg);
 char	*extract_value(char *cmd_arg);
 int		add_env_pair(t_mini *mini, char *key, char *value, bool has_value);
 void	sort_env(char **env_copy, ssize_t size);
+
+// execution
+int		check_pid(pid_t pid);
+int		cmd_table_size(t_mini *mini);
+void	execute(t_mini *mini);
+void	exec_no_pipes(t_mini *mini);
+int		is_there_type(t_mini *mini, int type);
+int		wait_single_child(t_mini *mini, pid_t pid, int *status);
 
 // heredocs
 char	*get_filename(t_cmd *cmd);

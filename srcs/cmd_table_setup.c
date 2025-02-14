@@ -98,7 +98,7 @@ int	prepare_cmd_table(t_mini *mini)
 		i++;
 	}
 	mini->cmds_tbl[i] = NULL;
-	/* int k = 0;
+	int k = 0;
     while (k < cmds_in_pipe && mini->cmds_tbl[k])
     {
         printf("CMD_TABLE[%d] exists\n", k);
@@ -113,6 +113,6 @@ int	prepare_cmd_table(t_mini *mini)
         }
 
         k++;
-    } */
+    }
 	return (SUCCESS);
 }

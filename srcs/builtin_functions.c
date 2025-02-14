@@ -57,16 +57,22 @@ void	ft_cd(t_mini *mini, char *path)
 	update_env_vars(mini);
 }
 
-void	handle_builtin(t_mini *mini)
+void	handle_builtin(t_mini *mini, int i)
 {
 	char	**cmd_arr;
 
-	if (!mini || !mini->input || *(mini->input) == '\0')
+	/* if (!mini || !mini->input || *(mini->input) == '\0')
 		return ;
 	cmd_arr = ft_split(mini->input, ' ');
 	if (!cmd_arr || !cmd_arr[0])
 	{
 		free_arr(cmd_arr);
+		return ;
+	} */
+	cmd_arr = mini->cmds_tbl[i];
+	if (!cmd_arr || !cmd_arr[0])
+	{
+		// free_arr(cmd_arr);
 		return ;
 	}
 	if (ft_strncmp(cmd_arr[0], "cd", 3) == 0)
