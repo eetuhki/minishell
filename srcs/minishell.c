@@ -40,6 +40,7 @@ int	main(int ac, char **av, char **env)
 		parser(mini);
 		prepare_cmd_table(mini);
 		handle_builtin(mini, 0);
+		execute(mini);
 	}
 	return (SUCCESS);
 }

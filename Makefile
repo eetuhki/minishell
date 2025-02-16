@@ -10,12 +10,16 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		builtin_export.c \
 		builtin_export_utils.c \
 		builtin_utils.c \
+		close.c \
 		cmd_path_finder.c \
 		cmd_table_setup.c \
 		env_copy.c \
 		env_shlvl.c \
 		env_utils.c \
 		error.c \
+		execute.c \
+		execute_utils.c \
+		execute_wait.c \
 		expansion.c \
 		expansion_utils.c \
 		free.c \

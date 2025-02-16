@@ -11,15 +11,15 @@ int	check_pid(pid_t pid)
 	return (pid);
 }
 
-int	is_there_type(t_mini *mini, int type)
+int	is_there_type(t_mini *mini, t_type type)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	j = 0;
 	while (mini->cmds[i])
 	{
+		j = 0;
 		while (mini->cmds[i]->tokens[j].content)
 		{
 			if (mini->cmds[i]->tokens[j].type == type)
@@ -31,7 +31,7 @@ int	is_there_type(t_mini *mini, int type)
 	return (false);
 }
 
-int	builtin_only(t_mini *mini, t_cmd *cmd)
+int	builtin_only(t_cmd *cmd)
 {
 	int	i;
 
