@@ -10,10 +10,14 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		builtin_export.c \
 		builtin_export_utils.c \
 		builtin_utils.c \
+		cmd_path_finder.c \
+		cmd_table_setup.c \
 		env_copy.c \
 		env_shlvl.c \
 		env_utils.c \
 		error.c \
+		expansion.c \
+		expansion_utils.c \
 		free.c \
 		heredocs.c \
 		heredocs_utils.c \
@@ -24,6 +28,8 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		parser_split_cmds.c \
 		parser_split_tokens.c \
 		parser_tokens.c \
+		process_cmd_files.c \
+		print_export.c \
 		signal.c \
 		syntax.c \
 		syntax_error.c \
@@ -32,12 +38,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		syntax_redir.c \
 		syntax_utils.c \
 		tokenize_cmd.c \
-		tokenize_redir.c \
-		expansion.c \
-		expansion_utils.c \
-		cmd_table_setup.c \
-		cmd_path_finder.c \
-		process_cmd_files.c)
+		tokenize_redir.c)
 
 OBJ_DIR = objs
 OBJECTS	= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
