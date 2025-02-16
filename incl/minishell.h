@@ -126,7 +126,7 @@ void	handle_builtin(t_mini *mini, int i);
 void	ft_env(t_mini *mini, int fd);
 void	ft_exit(t_mini *mini, char **args);
 void	ft_pwd(int fd);
-void	ft_cd(t_mini *mini, char *path);
+void	ft_cd(t_mini *mini, char **cmd_args);
 
 // builtin_echo.c
 void	ft_echo(char **args);
