@@ -1,7 +1,7 @@
 #include "../incl/minishell.h"
 
 // checks whether a token is a redir, filename/delimiter after a redir or if it's
-// the first token we validate if it's a command/builtin. in every other case we 
+// the first token we validate if it's a command/builtin. in every other case we
 // assign token type ARG
 void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token)
 {
@@ -21,7 +21,7 @@ void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token)
 }
 
 // initializes and splits the tokens and then runs the tokens
-// one-by-one in a while loop and assigns the token types to every token  
+// one-by-one in a while loop and assigns the token types to every token
 int	tokenize_cmd_string(t_mini *mini, t_cmd *cmd)
 {
 	int	i;
@@ -46,14 +46,12 @@ int	tokenize_cmd_string(t_mini *mini, t_cmd *cmd)
 int expand_tokens(t_mini *mini, t_cmd *cmd)
 {
     int		i;
-    char	*ptr;
 
     i = 0;
     while (cmd && cmd->tokens && cmd->tokens[i].content != NULL
 		&& !input_is_whitespace(cmd->tokens[i].content))
     {
-        ptr = ft_strchr(cmd->tokens[i].content, '$');
-        if (ptr && cmd->tokens[i].type != LIMITER)
+        if (cmd->tokens[i].type != LIMITER)
         {
             if (expand_variables(mini, &cmd->tokens[i].content) == FAIL)
 				return (FAIL);

@@ -46,7 +46,11 @@ static void	print_variable(char *env_var)
 		printf("=\"");
 		j++;
 		while (env_var[j] != '\0')
+		{
+			if (env_var[j] == '"' || env_var[j] == '$')
+				printf("%s", "\\");
 			printf("%c", env_var[j++]);
+		}
 		printf("\"");
 	}
 	printf("\n");
