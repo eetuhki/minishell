@@ -163,7 +163,7 @@ int		check_pid(pid_t pid);
 int		cmd_table_size(t_mini *mini);
 void	execute(t_mini *mini);
 void	exec_no_pipes(t_mini *mini);
-int		is_there_type(t_mini *mini, t_type type);
+int		is_there_type(t_mini *mini, t_type type, int i);
 int		process_cmd_files(t_mini *mini);
 int		wait_multi(t_mini *mini);
 int		wait_single(t_mini *mini, pid_t pid, int *status);

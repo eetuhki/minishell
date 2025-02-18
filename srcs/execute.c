@@ -5,6 +5,9 @@ void	exec_command(t_mini *mini, char **cmds)
 	printf("\nTHE cmd here in exec stage %s\n", cmds[0]);
 	if (!cmds || !cmds[0])
 		exit(1);
+	ft_putstr_fd("commant to exec:", 2);
+	ft_putstr_fd(cmds[0], 2);
+	ft_putstr_fd("\n", 2);
 	if (execve(cmds[0], cmds, mini->env) == -1)
 	{
 		printf("mini : execve fail\n");
@@ -33,6 +36,7 @@ void	exec_no_pipes(t_mini *mini)
 	pid_t	pid;
 	int		status;
 
+	printf("cmds[0][0]:%s\n", mini->cmds_tbl[0][0]);
 	if (builtin_only(mini->cmds[0]))
 	{
 		handle_builtin(mini, 0);
@@ -60,7 +64,7 @@ void	child_process(t_mini *mini, int	*fd, int i)
     }
 	close(fd[0]);
 	handle_redirs(mini->cmds[i]);
-	if (is_there_type(mini, BUILTIN))
+	if (is_there_type(mini, BUILTIN, i))
 		handle_builtin(mini, i);
 	else
 		exec_command(mini, mini->cmds_tbl[i]);
@@ -160,7 +164,7 @@ void	exec_with_pipes(t_mini *mini)
 
             handle_redirs(mini->cmds[i]); // Handle file redirections
 
-            if (is_there_type(mini, BUILTIN))
+            if (is_there_type(mini, BUILTIN, i))
                 handle_builtin(mini, i);
             else
                 exec_command(mini, mini->cmds_tbl[i]);

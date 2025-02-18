@@ -11,13 +11,11 @@ int	check_pid(pid_t pid)
 	return (pid);
 }
 
-int	is_there_type(t_mini *mini, t_type type)
+int	is_there_type(t_mini *mini, t_type type, int i)
 {
-	int	i;
 	int	j;
 
-	i = 0;
-	while (mini->cmds[i])
+	if (mini->cmds[i])
 	{
 		j = 0;
 		while (mini->cmds[i]->tokens[j].content)
@@ -26,24 +24,30 @@ int	is_there_type(t_mini *mini, t_type type)
 				return (true);
 			j++;
 		}
-		i++;
 	}
 	return (false);
 }
 
 int	builtin_only(t_cmd *cmd)
 {
-	int	i;
-
-	i = 0;
-	while (cmd->tokens[i].content)
+	//$VAR after expansion is cat but type = arg
+	if (!ft_strcmp(cmd->tokens[0].content, "echo") || !ft_strcmp(cmd->tokens[0].content, "cd")
+		|| !ft_strcmp(cmd->tokens[0].content, "pwd") || !ft_strcmp(cmd->tokens[0].content, "export")
+		|| !ft_strcmp(cmd->tokens[0].content, "exit") || !ft_strcmp(cmd->tokens[0].content, "unset")
+		|| !ft_strcmp(cmd->tokens[0].content, "env"))
 	{
+		return (true);
+	}
+	return (false);
+ 	/* if (cmd->tokens[0].content)
+	{
+		printf("cmd->tokens[i].content")
 		if (cmd->tokens[i].type != BUILTIN && cmd->tokens[i].type != ARG
 			&& cmd->cmd_found)
 			return (false);
 		i++;
 	}
-	return (true);
+	return (true); */
 }
 
 int	cmd_table_size(t_mini *mini)
