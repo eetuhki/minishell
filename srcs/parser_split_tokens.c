@@ -35,14 +35,15 @@ static int	store_word(t_cmd *cmd, t_token *token)
 	if (cmd->og_str[cmd->i] && !ft_isspace(cmd->og_str[cmd->i]))
 	{
 		start = cmd->i;
-		while (cmd->og_str[cmd->i] && !ft_isspace(cmd->og_str[cmd->i])
-			&& !is_redir(cmd->og_str[cmd->i]))
+		while (cmd->og_str[cmd->i] && (check_quotes(cmd->og_str, cmd->i)
+			|| !ft_isspace(cmd->og_str[cmd->i]))
+				&& !is_redir(cmd->og_str[cmd->i]))
 			cmd->i++;
 		token[token->index].content
 			= ft_strndup(&cmd->og_str[start], cmd->i - start);
 		if (!token->content)
 			return (split_tokens_fail(&cmd->tokens[token->index]));
-		// printf("store_word: token:%s i:%d token[%d]\n", token[token->index].content, cmd->i, token->index);
+		printf("store_word: token:%s i:%d token[%d]\n", token[token->index].content, cmd->i, token->index);
 		token->index++;
 	}
 	return (SUCCESS);
