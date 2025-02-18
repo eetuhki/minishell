@@ -92,6 +92,7 @@ typedef struct s_mini
 	char	**env;
 	int		exit_code;
 	char    ***cmds_tbl;
+	pid_t	*pids;
 }	t_mini;
 
 // add_history.c
@@ -149,18 +150,23 @@ int		add_env_pair(t_mini *mini, char *key, char *value, bool has_value);
 // command_table_setup.c
 int		prepare_cmd_table(t_mini *mini);
 
+// close.c
+void	close_fds(int *fd);
+void	close_fd(int fd);
+
 // cmd_path_finder.c
 void	check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env);
 
 // execution
-int		builtin_only(t_mini *mini, t_cmd *cmd);
+int		builtin_only(t_cmd *cmd);
 int		check_pid(pid_t pid);
 int		cmd_table_size(t_mini *mini);
 void	execute(t_mini *mini);
 void	exec_no_pipes(t_mini *mini);
-int		is_there_type(t_mini *mini, int type);
+int		is_there_type(t_mini *mini, t_type type);
 int		process_cmd_files(t_mini *mini);
-int		wait_single_child(t_mini *mini, pid_t pid, int *status);
+int		wait_multi(t_mini *mini);
+int		wait_single(t_mini *mini, pid_t pid, int *status);
 
 // heredocs
 char	*get_filename(t_cmd *cmd);
