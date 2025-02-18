@@ -21,6 +21,7 @@ void	init_mini(t_mini *mini)
 	mini->pipes = 0;
 	mini->heredoc_expand = true;
 	mini->cmds_tbl = NULL;
+	mini->pids = NULL;
 }
 
 int	main(int ac, char **av, char **env)
@@ -36,10 +37,11 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		get_input(mini);
-		handle_builtin(mini);
 		syntax_check(mini);
 		parser(mini);
 		prepare_cmd_table(mini);
+		//handle_builtin(mini, 0);
+		execute(mini);
 	}
 	return (SUCCESS);
 }

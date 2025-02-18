@@ -22,11 +22,10 @@ char	*get_filename(t_cmd *cmd)
 
 int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 {
-	int		heredoc_fd;
 	char	*line;
 
-	heredoc_fd = open(cmd->heredoc_name, O_RDWR | O_EXCL | O_CREAT, 0600);
-	check_fd(heredoc_fd);
+	cmd->hd_fd = open(cmd->heredoc_name, O_RDWR | O_EXCL | O_CREAT, 0600);
+	check_fd(cmd->hd_fd);
 	while (1)
 	{
 		write(0, "> ", 2);
@@ -38,7 +37,7 @@ int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 		}
 		if (mini->heredoc_expand == true)
 			expand_variables(mini, &line);
-		ft_putstr_fd(line, heredoc_fd);
+		ft_putstr_fd(line, cmd->hd_fd);
 		free_ptr(line);
 	}
 	mini->heredoc_expand = false;
@@ -86,4 +85,3 @@ int	handle_heredocs(t_mini *mini)
 	}
 	return (SUCCESS);
 }
-

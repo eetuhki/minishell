@@ -40,7 +40,6 @@ typedef enum e_type
 	LIMITER,
 	APPEND,
 	APP_OUT,
-	UNKNOWN,
 }	t_type;
 
 typedef struct	s_token
@@ -67,6 +66,9 @@ typedef struct s_cmd
 	char	*cmd_name;
 	char	*heredoc_name;
 	int		heredoc_index;
+	int		hd_fd;
+	int		in_file;
+	int		out_file;
 	char	*og_str;
 }	t_cmd;
 
@@ -90,6 +92,7 @@ typedef struct s_mini
 	char	**env;
 	int		exit_code;
 	char    ***cmds_tbl;
+	pid_t	*pids;
 }	t_mini;
 
 // add_history.c
@@ -115,31 +118,55 @@ int		env_set_var(t_mini *mini, char *var, char *new_val);
 // free.c
 void	free_arr(char **arr);
 void	free_ptr(void *ptr);
+void	free_str(char **ptr);
 int		free_ptr_fail(void *ptr);
 void	free_cmds_tbl(char ***cmds_tbl);
 
 // builtin functions
-void	handle_builtin(t_mini *mini);
+void	handle_builtin(t_mini *mini, int i);
 void	ft_env(t_mini *mini, int fd);
 void	ft_exit(t_mini *mini, char **args);
 void	ft_pwd(int fd);
-void	ft_cd(t_mini *mini, char *path);
+void	ft_cd(t_mini *mini, char **cmd_args);
 
 // builtin_echo.c
 void	ft_echo(char **args);
 
 // builtin_export.c
-void	ft_export(t_mini *mini, char *cmd_arg);
+void	ft_export_single(t_mini *mini, char *cmd_arg);
+void	ft_export(t_mini *mini, char **cmd_args);
 
 // builtin_utils.c
 void	update_env_vars(t_mini *mini);
 char	**copy_env(char **env, ssize_t count);
+int		search_key_in_env(t_mini *mini, char *var);
+
 
 // builtin_export_utils.c
 char	*extract_key(char *cmd_arg);
 char	*extract_value(char *cmd_arg);
 int		add_env_pair(t_mini *mini, char *key, char *value, bool has_value);
-void	sort_env(char **env_copy, ssize_t size);
+
+// command_table_setup.c
+int		prepare_cmd_table(t_mini *mini);
+
+// close.c
+void	close_fds(int *fd);
+void	close_fd(int fd);
+
+// cmd_path_finder.c
+void	check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env);
+
+// execution
+int		builtin_only(t_cmd *cmd);
+int		check_pid(pid_t pid);
+int		cmd_table_size(t_mini *mini);
+void	execute(t_mini *mini);
+void	exec_no_pipes(t_mini *mini);
+int		is_there_type(t_mini *mini, t_type type, int i);
+int		process_cmd_files(t_mini *mini);
+int		wait_multi(t_mini *mini);
+int		wait_single(t_mini *mini, pid_t pid, int *status);
 
 // heredocs
 char	*get_filename(t_cmd *cmd);
@@ -178,6 +205,10 @@ void	tokenize_in_out(t_token *token, int token_count);
 void	tokenize_redir(t_token *token);
 int		validate_cmd(t_mini *mini, char *cmd);
 
+// print export
+void	print_export(t_mini *mini);
+void	sort_env(char **env_copy, ssize_t size);
+
 // signals
 void	sig_init(void);
 void	sig_handler_sigint(int sig);
@@ -206,9 +237,4 @@ bool	update_quote_flags(t_expansion *xp, char input);
 int		expand_exit_status(t_mini *mini, t_expansion *xp, char **input);
 void	copy_expantion_res(char **str, t_expansion xp);
 
-// command_table_setup.c
-int		prepare_cmd_table(t_mini *mini);
-
-// cmd_path_finder.c
-void	check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env);
 #endif

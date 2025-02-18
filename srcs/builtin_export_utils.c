@@ -88,33 +88,3 @@ int	add_env_pair(t_mini *mini, char *key, char *value, bool has_value)
 	mini->env = new_env;
 	return (SUCCESS);
 }
-
-// Sorts the env variable array in alphabetical order using bubble sort.
-void	sort_env(char **env_copy, ssize_t size)
-{
-	ssize_t	i;
-	ssize_t	j;
-	char	*temp;
-	int		swapped;
-
-	i = 0;
-	while (i < size - 1)
-	{
-		j = 0;
-		swapped = 0;
-		while (j < size - i - 1)
-		{
-			if (ft_strcmp(env_copy[j], env_copy[j + 1]) > 0)
-			{
-				temp = env_copy[j];
-				env_copy[j] = env_copy[j + 1];
-				env_copy[j + 1] = temp;
-				swapped = 1;
-			}
-			j++;
-		}
-		if (!swapped)
-			break ;
-		i++;
-	}
-}

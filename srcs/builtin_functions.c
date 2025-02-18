@@ -31,11 +31,12 @@ void	ft_pwd(int fd)
 	}
 }
 
-void	ft_cd(t_mini *mini, char *path)
+void	ft_cd(t_mini *mini, char **cmd_args)
 {
 	char	*home;
+	char	*path;
 
-	if (!path || *path == '\0')
+	if (!cmd_args[1] || *cmd_args[1] == '\0')
 	{
 		home = env_get_var(mini, "HOME");
 		if (!home)
@@ -45,6 +46,8 @@ void	ft_cd(t_mini *mini, char *path)
 		}
 		path = home;
 	}
+	else
+		path = cmd_args[1];
 	if (chdir(path) != 0)
 	{
 		ft_putstr_fd("mini: cd: ", 2);
@@ -57,26 +60,32 @@ void	ft_cd(t_mini *mini, char *path)
 	update_env_vars(mini);
 }
 
-void	handle_builtin(t_mini *mini)
+void	handle_builtin(t_mini *mini, int i)
 {
 	char	**cmd_arr;
 
-	if (!mini || !mini->input || *(mini->input) == '\0')
+	/* if (!mini || !mini->input || *(mini->input) == '\0')
 		return ;
 	cmd_arr = ft_split(mini->input, ' ');
 	if (!cmd_arr || !cmd_arr[0])
 	{
 		free_arr(cmd_arr);
 		return ;
+	} */
+	cmd_arr = mini->cmds_tbl[i];
+	if (!cmd_arr || !cmd_arr[0])
+	{
+		// free_arr(cmd_arr);
+		return ;
 	}
 	if (ft_strncmp(cmd_arr[0], "cd", 3) == 0)
-		return (ft_cd(mini, cmd_arr[1]));
+		return (ft_cd(mini, cmd_arr));
 	if (ft_strncmp(cmd_arr[0], "pwd", 4) == 0)
 		return (ft_pwd(STDOUT));
 	if (ft_strncmp(cmd_arr[0], "env", 4) == 0)
 		return (ft_env(mini, STDOUT));
 	if (ft_strncmp(cmd_arr[0], "export", 7) == 0)
-		return (ft_export(mini, cmd_arr[1]));
+		return (ft_export(mini, cmd_arr));
 	if (ft_strncmp(cmd_arr[0], "exit", 4) == 0)
 		return (ft_exit(mini, cmd_arr));
 	if (ft_strncmp(cmd_arr[0], "echo", 4) == 0)
