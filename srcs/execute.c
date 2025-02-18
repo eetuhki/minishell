@@ -193,7 +193,7 @@ void	exec_with_pipes(t_mini *mini)
 
 void	execute(t_mini *mini)
 {
-	if (mini->cmds_tbl)
+	if (mini && mini->cmds_tbl && *mini->cmds_tbl[0])
 	{
 		if (cmd_table_size(mini) == 1)
 			exec_no_pipes(mini);
