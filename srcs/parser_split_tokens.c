@@ -43,7 +43,7 @@ static int	store_word(t_cmd *cmd, t_token *token)
 			= ft_strndup(&cmd->og_str[start], cmd->i - start);
 		if (!token->content)
 			return (split_tokens_fail(&cmd->tokens[token->index]));
-		printf("store_word: token:%s i:%d token[%d]\n", token[token->index].content, cmd->i, token->index);
+		// printf("store_word: token:%s i:%d token[%d]\n", token[token->index].content, cmd->i, token->index);
 		token->index++;
 	}
 	return (SUCCESS);

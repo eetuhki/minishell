@@ -22,6 +22,7 @@ void	init_mini(t_mini *mini)
 	mini->heredoc_expand = true;
 	mini->cmds_tbl = NULL;
 	mini->pids = NULL;
+	mini->in_fd = STDIN;
 }
 
 int	main(int ac, char **av, char **env)
