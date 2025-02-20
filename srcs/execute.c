@@ -49,6 +49,7 @@ void	exec_no_pipes(t_mini *mini)
 	pid = fork();
 	if (check_pid(pid) == 0)
 	{
+		sig_init_child();
 		handle_redirs(mini->cmds[0]);
 		exec_command(mini, mini->cmds_tbl[0]);
 	}
@@ -57,6 +58,7 @@ void	exec_no_pipes(t_mini *mini)
 
 void	child_process(t_mini *mini, int i)
 {
+	sig_init_child();
 	if (mini->in_fd != STDIN) // If not first command, use previous pipe as stdin
 	{
 		dup2(mini->in_fd, STDIN);

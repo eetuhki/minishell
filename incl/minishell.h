@@ -215,7 +215,11 @@ void	sort_env(char **env_copy, ssize_t size);
 
 // signals
 void	sig_init(void);
-void	sig_handler_sigint(int sig);
+void	sig_init_child(void);
+void	sig_init_heredoc(void);
+void	sig_handler(int sig);
+void	sig_handler_heredoc(int sig);
+void	sig_handler_wait(int sig);
 
 // syntax
 int		input_is_whitespace(char *input);
