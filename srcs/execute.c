@@ -73,7 +73,6 @@ void	child_process(t_mini *mini, int i)
 		handle_builtin(mini, i);
 	else
 		exec_command(mini, mini->cmds_tbl[i]);
-	exit(0);
 }
 
 void	exec_with_pipes(t_mini *mini)
@@ -112,5 +111,5 @@ void	execute(t_mini *mini)
 		else if (cmd_table_size(mini) > 1)
 			exec_with_pipes(mini);
 	}
-	free_cmds_tbl(mini->cmds_tbl);
+	free_and_exit(mini);
 }

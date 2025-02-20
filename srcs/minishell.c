@@ -44,5 +44,6 @@ int	main(int ac, char **av, char **env)
 		//handle_builtin(mini, 0);
 		execute(mini);
 	}
+	free_and_exit(mini);
 	return (SUCCESS);
 }

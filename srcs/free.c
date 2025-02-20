@@ -6,14 +6,19 @@ void	free_arr(char **arr)
 	size_t	i;
 
 	if (!arr)
-		return ;
+		return;
 	i = 0;
 	while (arr[i])
 	{
 		free(arr[i]);
+		arr[i] = NULL;
 		i++;
 	}
-	free(arr);
+	if (arr)
+	{
+		free(arr);
+		arr = NULL;
+	}
 }
 
 // frees a * of any type if not NULL and sets it to NULL
@@ -51,13 +56,13 @@ void	free_cmds_tbl(char ***cmds_tbl)
 {
 	size_t	i;
 
-	if (!cmds_tbl)
+	if (!cmds_tbl || !*cmds_tbl)
 		return;
-
 	i = 0;
 	while (cmds_tbl[i])
 	{
 		free_arr(cmds_tbl[i]);
+		cmds_tbl[i] = NULL;
 		i++;
 	}
 	if (cmds_tbl)

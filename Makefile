@@ -23,6 +23,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		expansion.c \
 		expansion_utils.c \
 		free.c \
+		free2.c \
 		heredocs.c \
 		heredocs_utils.c \
 		minishell.c \

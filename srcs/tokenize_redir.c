@@ -7,7 +7,7 @@ void	tokenize_in_out(t_token *token, int token_count)
     int	i;
 
 	i = 0;
-    while (i < token_count)
+    while (i < token_count && token[i].content)
     {
         if (token[i].type == REDIR_IN || token[i].type == REDIR_OUT ||
             token[i].type == APPEND || token[i].type == HEREDOC)

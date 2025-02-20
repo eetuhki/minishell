@@ -18,6 +18,7 @@ static int	append_char_to_expansion(t_expansion *xp, char c)
 	xp->expanded_str = temp;
 	xp->expanded_str[len] = c;
 	xp->expanded_str[len + 1] = '\0';
+	// free_ptr(temp);
 	return (SUCCESS);
 }
 

@@ -30,6 +30,8 @@ int	is_there_type(t_mini *mini, t_type type, int i)
 
 int	builtin_only(t_cmd *cmd)
 {
+	if (!cmd || !cmd->tokens || !cmd->tokens[0].content)
+		return (false);
 	//$VAR after expansion is cat but type = arg
 	if (!ft_strcmp(cmd->tokens[0].content, "echo") || !ft_strcmp(cmd->tokens[0].content, "cd")
 		|| !ft_strcmp(cmd->tokens[0].content, "pwd") || !ft_strcmp(cmd->tokens[0].content, "export")

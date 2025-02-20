@@ -117,12 +117,16 @@ int		env_is_key_valid(char *var);
 char	**env_realloc(t_mini *mini, int size);
 int		env_set_var(t_mini *mini, char *var, char *new_val);
 
-// free.c
+// free
+void	free_and_exit(t_mini *mini);
 void	free_arr(char **arr);
+void	free_cmd(t_cmd *cmd);
+void	free_cmds(t_mini *mini);
 void	free_ptr(void *ptr);
 void	free_str(char **ptr);
 int		free_ptr_fail(void *ptr);
 void	free_cmds_tbl(char ***cmds_tbl);
+void	free_tokens(t_cmd *cmd, t_token *token);
 
 // builtin functions
 void	handle_builtin(t_mini *mini, int i);
