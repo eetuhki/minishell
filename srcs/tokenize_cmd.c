@@ -78,9 +78,6 @@ int	validate_cmd(t_mini *mini, char *cmd)
 // we then either assign type CMD to the token or return.
 void	tokenize_cmd(t_mini *mini, t_cmd *cmd, t_token *token)
 {
-	int	i;
-
-	i = 0;
 	if (!token->content || token->type || cmd->cmd_found)
 		return ;
 	if (ft_strchr(token->content, '/'))

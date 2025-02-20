@@ -92,6 +92,8 @@ typedef struct s_mini
 	char	**env;
 	int		exit_code;
 	char    ***cmds_tbl;
+	int		in_fd;
+	int		fd[2];
 	pid_t	*pids;
 }	t_mini;
 
@@ -160,8 +162,10 @@ void	check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env);
 // execution
 int		builtin_only(t_cmd *cmd);
 int		check_pid(pid_t pid);
+void	child_process(t_mini *mini, int i);
 int		cmd_table_size(t_mini *mini);
 void	execute(t_mini *mini);
+void	exec_fail(t_mini *mini, char *cmd);
 void	exec_no_pipes(t_mini *mini);
 int		is_there_type(t_mini *mini, t_type type, int i);
 int		process_cmd_files(t_mini *mini);
@@ -211,7 +215,11 @@ void	sort_env(char **env_copy, ssize_t size);
 
 // signals
 void	sig_init(void);
-void	sig_handler_sigint(int sig);
+void	sig_init_child(void);
+void	sig_init_heredoc(void);
+void	sig_handler(int sig);
+void	sig_handler_heredoc(int sig);
+void	sig_handler_wait(int sig);
 
 // syntax
 int		input_is_whitespace(char *input);

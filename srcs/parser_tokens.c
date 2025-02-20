@@ -3,10 +3,7 @@
 bool	is_redir(int c)
 {
 	if (ft_strchr(REDIRS, c))
-	{
-		// printf("redir activated by:_%c_\n", c);
 		return (true);
-	}
 	return (false);
 }
 

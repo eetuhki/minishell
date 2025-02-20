@@ -26,6 +26,7 @@ int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 
 	cmd->hd_fd = open(cmd->heredoc_name, O_RDWR | O_EXCL | O_CREAT, 0600);
 	check_fd(cmd->hd_fd);
+	sig_init_heredoc();
 	while (1)
 	{
 		write(0, "> ", 2);

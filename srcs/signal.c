@@ -1,6 +1,6 @@
 #include "../incl/minishell.h"
 
-void	sig_handler_sigint(int sig)
+void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -11,8 +11,32 @@ void	sig_handler_sigint(int sig)
 	}
 }
 
+void	sig_handler_heredoc(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		exit(1);
+	}
+}
+
+// init signals for the main/parent
 void	sig_init(void)
 {
-	signal(SIGINT, sig_handler_sigint);
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+// restore default signal behaviour for child process
+void	sig_init_child(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+// init signals for heredoc
+void	sig_init_heredoc(void)
+{
+	signal(SIGINT, sig_handler_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 }
