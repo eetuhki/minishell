@@ -108,7 +108,7 @@ int	prepare_cmd_table(t_mini *mini)
             if (mini->cmds_tbl[k][j][0] == ' ')  // Check if it's an empty string
                 printf("CMD_TABLE[%d][%d] is an EMPTY STRING\n", k, j);
             else
-                printf("CMD_TABLE[%d][%d] = %s\n", k, j, mini->cmds_tbl[k][j]);
+                printf("CMD_TABLE[%d][%d] = [%s]\n", k, j, mini->cmds_tbl[k][j]);
             j++;
         }
 

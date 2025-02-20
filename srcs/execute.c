@@ -1,12 +1,31 @@
 #include "../incl/minishell.h"
 
-void	exec_fail(t_mini *mini, char *cmd)
+/* void	exec_fail(t_mini *mini, char *cmd)
 {
 	ft_putstr_fd("mini: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(strerror(errno), 2);
 	mini->exit_code = errno;
+	exit(mini->exit_code);
+} */
+
+void exit_exec_error(char *cmd)
+{
+	printf("here [%s]", cmd);
+    if (errno == ENOENT) 
+        exit(127);
+	else if (errno == EACCES)
+	{
+		if (ft_strchr(cmd, '/'))
+        	exit(126);
+		else 
+			exit(127);
+	} 
+	else if (errno == EISDIR)
+		exit(126);
+	else 
+        exit(1);
 }
 
 void	exec_command(t_mini *mini, char **cmds)
@@ -15,12 +34,18 @@ void	exec_command(t_mini *mini, char **cmds)
 		exit(1);
 	if (execve(cmds[0], cmds, mini->env) == -1)
 	{
-		exec_fail(mini, cmds[0]);
+		//exec_fail(mini, cmds[0]);
+		printf("mini: execve failed with ERRNO [%d] [%s]\n", errno, strerror(errno));
+		exit_exec_error(cmds[0]);
 	}
 }
 
 void	handle_redirs(t_cmd *cmd)
 {
+	/* if (cmd->in_file == -2)
+	{
+		exit(1);
+	} */
 	if (cmd->in_file != -1)
 	{
 		if (dup2(cmd->in_file, STDIN) < 0)
@@ -41,7 +66,7 @@ void	exec_no_pipes(t_mini *mini)
 	int		status;
 
 	// printf("cmds[0][0]:%s\n", mini->cmds_tbl[0][0]);
-	if (builtin_only(mini->cmds[0]))
+	if (builtin_only(mini->cmds[0]->tokens[0].content))
 	{
 		handle_builtin(mini, 0);
 		return ;

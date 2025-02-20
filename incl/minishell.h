@@ -11,6 +11,7 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <stdbool.h>
+# include <sys/stat.h>
 
 // custom headers & libraries
 # include "../libft/incl/libft.h"
@@ -160,7 +161,7 @@ void	close_fd(int fd);
 void	check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env);
 
 // execution
-int		builtin_only(t_cmd *cmd);
+int		builtin_only(char *cmd);
 int		check_pid(pid_t pid);
 void	child_process(t_mini *mini, int i);
 int		cmd_table_size(t_mini *mini);
@@ -235,6 +236,9 @@ int		syntax_quotes(t_mini *mini);
 int		syntax_redir(t_mini *mini, char direction);
 int		validate_redir(t_mini *mini, size_t i, char direction);
 
+// validate cmds
+void	precheck_cmds(t_mini *mini);
+
 // variable expansion
 int		expand_variables(t_mini *mini, char **str);
 
@@ -244,5 +248,4 @@ void	extract_env_var_name(char *input, char *var_name, int size);
 bool	update_quote_flags(t_expansion *xp, char input);
 int		expand_exit_status(t_mini *mini, t_expansion *xp, char **input);
 void	copy_expantion_res(char **str, t_expansion xp);
-
 #endif

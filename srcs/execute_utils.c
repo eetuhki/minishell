@@ -28,13 +28,13 @@ int	is_there_type(t_mini *mini, t_type type, int i)
 	return (false);
 }
 
-int	builtin_only(t_cmd *cmd)
+int	builtin_only(char *cmd)
 {
 	//$VAR after expansion is cat but type = arg
-	if (!ft_strcmp(cmd->tokens[0].content, "echo") || !ft_strcmp(cmd->tokens[0].content, "cd")
-		|| !ft_strcmp(cmd->tokens[0].content, "pwd") || !ft_strcmp(cmd->tokens[0].content, "export")
-		|| !ft_strcmp(cmd->tokens[0].content, "exit") || !ft_strcmp(cmd->tokens[0].content, "unset")
-		|| !ft_strcmp(cmd->tokens[0].content, "env"))
+	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd")
+		|| !ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export")
+		|| !ft_strcmp(cmd, "exit") || !ft_strcmp(cmd, "unset")
+		|| !ft_strcmp(cmd, "env"))
 	{
 		return (true);
 	}

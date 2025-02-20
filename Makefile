@@ -32,6 +32,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		parser_split_cmds.c \
 		parser_split_tokens.c \
 		parser_tokens.c \
+		precheck_cmds.c \
 		process_cmd_files.c \
 		print_export.c \
 		signal.c \
