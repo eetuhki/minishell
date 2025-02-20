@@ -30,8 +30,10 @@ int	count_tokens(t_cmd *cmd)
 			if (is_redir(cmd->og_str[i]))
 				i++;
 		}
-		if (!ft_isspace(cmd->og_str[i]) && (ft_isspace(cmd->og_str[i + 1])
-			|| !cmd->og_str[i + 1] || is_redir(cmd->og_str[i + 1]))
+		if (!cmd->og_str[i + 1])
+			token_count++;
+		else if (!ft_isspace(cmd->og_str[i]) && (ft_isspace(cmd->og_str[i + 1])
+			|| is_redir(cmd->og_str[i + 1]))
 				&& !check_quotes(cmd->og_str, i + 1))
 			token_count++;
 		// printf("count_tokens: token count:%d at char:%c\n", token_count, cmd->og_str[i]);

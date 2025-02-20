@@ -6,7 +6,7 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 12:04:28 by eelaine           #+#    #+#             */
-/*   Updated: 2024/08/22 11:43:19 by eelaine          ###   ########.fr       */
+/*   Updated: 2025/02/20 16:14:23 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	*ft_realloc(void *ptr, size_t size)
 {
 	void	*new_ptr;
 
-	if (ptr == NULL)
-		return (malloc(size));
 	if (size == 0)
 	{
 		free(ptr);
 		return (NULL);
 	}
+	if (ptr == NULL)
+		return (malloc(size));
 	new_ptr = malloc(size);
 	if (!new_ptr)
 		return (NULL);
