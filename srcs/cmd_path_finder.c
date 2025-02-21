@@ -16,7 +16,6 @@ static char	*get_path_var(char **env)
 		if (ptr_path)
 		{
 			path = ft_substr(env[i], 5, ft_strlen(ptr_path));
-
 			break ;
 		}
 		i++;
