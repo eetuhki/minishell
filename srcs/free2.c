@@ -54,6 +54,7 @@ void	free_and_exit(t_mini *mini)
 	free_cmds(mini);
 	free_arr(mini->env);
 	free_cmds_tbl(mini->cmds_tbl);
+	free_ptr(mini->pids);
 	free_ptr(mini);
 	exit(exit_code);
 }
