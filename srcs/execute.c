@@ -10,33 +10,34 @@
 	exit(mini->exit_code);
 } */
 
-void exit_exec_error(char *cmd)
+/* void exit_exec_error(char *cmd)
 {
 	printf("here [%s]", cmd);
-    if (errno == ENOENT) 
+    if (errno == ENOENT)
         exit(127);
 	else if (errno == EACCES)
 	{
 		if (ft_strchr(cmd, '/'))
         	exit(126);
-		else 
+		else
 			exit(127);
-	} 
+	}
 	else if (errno == EISDIR)
 		exit(126);
-	else 
+	else
         exit(1);
-}
+} */
 
 void	exec_command(t_mini *mini, char **cmds)
 {
 	if (!cmds || !cmds[0])
 		exit(1);
+	precheck_cmds(mini, cmds[0]);
 	if (execve(cmds[0], cmds, mini->env) == -1)
 	{
 		//exec_fail(mini, cmds[0]);
 		printf("mini: execve failed with ERRNO [%d] [%s]\n", errno, strerror(errno));
-		exit_exec_error(cmds[0]);
+		//exit_exec_error(cmds[0]);
 	}
 }
 

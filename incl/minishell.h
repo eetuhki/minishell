@@ -237,7 +237,7 @@ int		syntax_redir(t_mini *mini, char direction);
 int		validate_redir(t_mini *mini, size_t i, char direction);
 
 // validate cmds
-void	precheck_cmds(t_mini *mini);
+void	precheck_cmds(t_mini *mini, char *cmd);
 
 // variable expansion
 int		expand_variables(t_mini *mini, char **str);
