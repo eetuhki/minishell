@@ -13,6 +13,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		close.c \
 		cmd_path_finder.c \
 		cmd_table_setup.c \
+		cmd_validation.c \
 		env_copy.c \
 		env_shlvl.c \
 		env_utils.c \
@@ -32,7 +33,6 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		parser_split_cmds.c \
 		parser_split_tokens.c \
 		parser_tokens.c \
-		precheck_cmds.c \
 		process_cmd_files.c \
 		print_export.c \
 		signal.c \

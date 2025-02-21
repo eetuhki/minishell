@@ -14,7 +14,7 @@ void	exec_command(t_mini *mini, char **cmds)
 {
 	if (!cmds || !cmds[0])
 		exit(1);
-	precheck_cmds(mini, cmds[0]);
+	validate_cmd_access(mini, cmds[0]);
 	if (execve(cmds[0], cmds, mini->env) == -1)
 	{
 		//printf("mini: execve failed with ERRNO [%d] [%s]\n", errno, strerror(errno));

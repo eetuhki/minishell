@@ -61,7 +61,7 @@ int	check_directory(char *cmd, struct stat *path_stat, int *exit_code)
 	return (SUCCESS);
 }
 
-int	validate_cmd_access(char *cmd)
+int	check_cmd_validity(char *cmd)
 {
 	struct stat path_stat;
 	int			exit_code;
@@ -83,11 +83,11 @@ int	validate_cmd_access(char *cmd)
 	return (0);
 }
 
-void	precheck_cmds(t_mini *mini, char *cmd)
+void	validate_cmd_access(t_mini *mini, char *cmd)
 {
 	int	exit_code;
 
-	exit_code = validate_cmd_access(cmd);
+	exit_code = check_cmd_validity(cmd);
 	if (exit_code != 0)
 	{
 		mini->exit_code = exit_code;
