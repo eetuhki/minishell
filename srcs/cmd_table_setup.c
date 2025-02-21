@@ -62,12 +62,12 @@ static char	**build_cmd_table(t_cmd *cmd, char **env)
 		return (NULL);
 	if (fill_cmd_table(cmd, cmd_table) == FAIL)
 		return (NULL);
- 	int t = 0;
+ 	/* int t = 0;
     while (t < cmd->token_count)
     {
         printf("Token[%d] = %s and TYPE= %d \n", t, cmd->tokens[t].content, cmd->tokens[t].type);
         t++;
-    }
+    } */
 	check_full_cmd_path(cmd_table, cmd, env);
 	return (cmd_table);
 }
@@ -98,7 +98,7 @@ int	prepare_cmd_table(t_mini *mini)
 		i++;
 	}
 	mini->cmds_tbl[i] = NULL;
-	int k = 0;
+	/* int k = 0;
     while (k < cmds_in_pipe && mini->cmds_tbl[k])
     {
         printf("CMD_TABLE[%d] exists\n", k);
@@ -108,11 +108,11 @@ int	prepare_cmd_table(t_mini *mini)
             if (mini->cmds_tbl[k][j][0] == ' ')  // Check if it's an empty string
                 printf("CMD_TABLE[%d][%d] is an EMPTY STRING\n", k, j);
             else
-                printf("CMD_TABLE[%d][%d] = %s\n", k, j, mini->cmds_tbl[k][j]);
+                printf("CMD_TABLE[%d][%d] = [%s]\n", k, j, mini->cmds_tbl[k][j]);
             j++;
         }
 
         k++;
-    }
+    } */
 	return (SUCCESS);
 }

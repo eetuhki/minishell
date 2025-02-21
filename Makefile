@@ -13,6 +13,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		close.c \
 		cmd_path_finder.c \
 		cmd_table_setup.c \
+		cmd_validation.c \
 		env_copy.c \
 		env_shlvl.c \
 		env_utils.c \

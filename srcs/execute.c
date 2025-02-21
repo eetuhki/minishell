@@ -6,15 +6,18 @@ void	exec_fail(t_mini *mini, char *cmd)
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(strerror(errno), 2);
-	mini->exit_code = errno;
+	mini->exit_code = 1;
+	exit(mini->exit_code);
 }
 
 void	exec_command(t_mini *mini, char **cmds)
 {
 	if (!cmds || !cmds[0])
 		exit(1);
+	validate_cmd_access(mini, cmds[0]);
 	if (execve(cmds[0], cmds, mini->env) == -1)
 	{
+		//printf("mini: execve failed with ERRNO [%d] [%s]\n", errno, strerror(errno));
 		exec_fail(mini, cmds[0]);
 	}
 }
@@ -41,7 +44,7 @@ void	exec_no_pipes(t_mini *mini)
 	int		status;
 
 	// printf("cmds[0][0]:%s\n", mini->cmds_tbl[0][0]);
-	if (builtin_only(mini->cmds[0]))
+	if (builtin_only(mini->cmds[0]->tokens[0].content))
 	{
 		handle_builtin(mini, 0);
 		return ;

@@ -42,6 +42,7 @@ int	main(int ac, char **av, char **env)
 		parser(mini);
 		prepare_cmd_table(mini);
 		//handle_builtin(mini, 0);
+		//precheck_cmds(mini);
 		execute(mini);
 	}
 	free_and_exit(mini);
