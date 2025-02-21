@@ -25,6 +25,7 @@ int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 	char	*line;
 
 	cmd->hd_fd = open(cmd->heredoc_name, O_RDWR | O_EXCL | O_CREAT, 0600);
+	printf ("@get_heredoc--name is =[%s] and cmd->hd_fd is [%d]\n", cmd->heredoc_name , cmd->hd_fd);
 	check_fd(cmd->hd_fd);
 	while (1)
 	{
@@ -57,6 +58,7 @@ int	handle_single_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 	}
 	trim_limiter(token);
 	cmd->heredoc_name = get_filename(cmd);
+	printf ("do we get here \n? %s", cmd->heredoc_name );
 	if (get_heredoc(mini, cmd, token) == FAIL)
 		return (FAIL);
 	return (SUCCESS);
