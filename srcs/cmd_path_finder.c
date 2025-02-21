@@ -59,6 +59,7 @@ static char	*get_full_cmd_path(char *cmd, char **env)
 	if (!path_var || path_var[0] == '\0')
 		return (NULL);
 	paths = ft_split(path_var, ':');
+	free_ptr(path_var);
 	if (!paths)
 		return (NULL);
 	full_path = get_valid_cmd_path(paths, cmd);

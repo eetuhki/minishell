@@ -42,6 +42,7 @@ int	validate_path(char *path_dir, char *cmd)
 	free_ptr(add_slash);
 	if (!access(full_path, F_OK | X_OK))
 	{
+		free_ptr(full_path);
 		return (SUCCESS);
 	}
 	free_ptr(full_path);

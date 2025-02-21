@@ -22,6 +22,7 @@ int	wait_multi(t_mini *mini)
     int	last_exit = 0;
 
     i = 0;
+	status = 0;
 	signal(SIGINT, sig_handler_wait);
     while (i <= mini->pipes)
     {
