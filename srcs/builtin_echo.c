@@ -22,7 +22,7 @@ static bool	n_flag(char *arg)
 // if -n flag: set the flag to true, write the next arguments and don't print '\n'
 // else: print out arguments one-bb
 // followed by the newline
-void	ft_echo(char **args)
+int	ft_echo(char **args)
 {
 	int	i;
 	int	flag;
@@ -40,4 +40,5 @@ void	ft_echo(char **args)
 	}
 	if (!flag)
 		printf("\n");
+	return (SUCCESS);
 }

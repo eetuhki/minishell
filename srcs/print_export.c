@@ -61,7 +61,7 @@ static void	print_variable(char *env_var)
 // Sorts the copied env't variables alphabetically.
 // Iterates through the sorted array, skipping the special "_=" variable.
 // Prints each env variable using the print_variable function.
-void	print_export(t_mini *mini)
+int	print_export(t_mini *mini)
 {
 	int		i;
 	size_t	count;
@@ -69,6 +69,8 @@ void	print_export(t_mini *mini)
 
 	count = env_count_variables(mini->env);
 	env_copy = copy_env(mini->env, count);
+	if (!env_copy)
+		return (FAIL);
 	sort_env(env_copy, count);
 	i = 0;
 	while (env_copy && env_copy[i] != NULL)
@@ -82,4 +84,5 @@ void	print_export(t_mini *mini)
 		i++;
 	}
 	free_arr(env_copy);
+	return (SUCCESS);
 }
