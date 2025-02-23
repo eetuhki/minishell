@@ -40,7 +40,7 @@ static long	check_exit_code(t_mini *mini, char *arg)
 }
 
 // handle built-in exit, check if there's more than 1 argument
-int	ft_exit(t_mini *mini, char **args)
+void	ft_exit(t_mini *mini, char **args)
 {
 	long	exit_code;
 
@@ -54,11 +54,11 @@ int	ft_exit(t_mini *mini, char **args)
 	{
 		ft_putstr_fd("mini: exit: too many arguments\n", 2);
 		mini->exit_code = 1;
-		return (FAIL);
+		return ;
 	}
 	else if (args[1] && !args[2])
 		exit_code = check_exit_code(mini, args[1]);
 	rl_clear_history();
 	mini->exit_code = exit_code;
-	return (SUCCESS);
+	exit(mini->exit_code);
 }
