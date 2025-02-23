@@ -16,7 +16,7 @@ void	close_fds(int *fd)
 		close(fd[1]);
 		fd[1] = -1;
 	}
-	if (fd[0] != -1  && fd[2] > 2)
+	if (fd[0] != -1  && fd[0] > 2)
 	{
 		close(fd[0]);
 		fd[0] = -1;

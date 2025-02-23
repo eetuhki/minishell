@@ -143,9 +143,6 @@ int		execute(t_mini *mini)
 	else if (cmd_table_size(mini) > 1)
 	{
 		/* ft_putstr_fd("EXEC with pipes\n", 2);
-		ft_putstr_fd("MINI->pipes here\n", 2);
-		ft_putnbr_fd(mini->pipes, 2);
-		ft_putstr_fd("\n", 2);
 		ft_putstr_fd("MINI->in_fd before exec_with_pipes()\n", 2);
 		ft_putnbr_fd(mini->in_fd, 2); */
 		exec_with_pipes(mini);
