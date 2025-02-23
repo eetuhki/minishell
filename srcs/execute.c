@@ -83,7 +83,7 @@ void	child_process(t_mini *mini, int i)
 	handle_redirs(mini->cmds[i]); // Handle file redirections
 	if (is_there_type(mini, BUILTIN, i))
 	{
-		if (handle_builtin(mini, 0) == FAIL)
+		if (handle_builtin(mini, i) == FAIL)
 			mini->exit_code = EXIT_FAILURE;
 		else
 			mini->exit_code = EXIT_SUCCESS;
