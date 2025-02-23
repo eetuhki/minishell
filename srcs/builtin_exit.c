@@ -60,4 +60,5 @@ void	ft_exit(t_mini *mini, char **args)
 		exit_code = check_exit_code(mini, args[1]);
 	rl_clear_history();
 	mini->exit_code = exit_code;
+	exit(mini->exit_code);
 }

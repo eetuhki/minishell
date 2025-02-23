@@ -91,9 +91,6 @@ void	validate_cmd_access(t_mini *mini, char *cmd)
 	if (exit_code != 0)
 	{
 		mini->exit_code = exit_code;
-		//ft_putstr_fd("PRECHECK exit\n", 2);
-		//ft_putnbr_fd(mini->exit_code, 2);
-		//ft_putstr_fd("\n", 2);
 		exit(mini->exit_code);
 	}
 }

@@ -1,9 +1,11 @@
 #include "minishell.h"
 
-void	ft_env(t_mini *mini, int fd)
+int	ft_env(t_mini *mini, int fd)
 {
 	char	**env;
 
+	if (!mini || !mini->env)
+		return (FAIL);
 	env = mini->env;
 	while (*env)
 	{
@@ -15,23 +17,23 @@ void	ft_env(t_mini *mini, int fd)
 		else
 			env++;
 	}
+	return (SUCCESS);
 }
 
-void	ft_pwd(int fd)
+int	ft_pwd(int fd)
 {
 	char	*curr_dir;
 
 	curr_dir = NULL;
 	curr_dir = getcwd(curr_dir, 0);
-	if (curr_dir != NULL)
-	{
-		ft_putstr_fd(curr_dir, fd);
-		ft_putchar_fd('\n', fd);
-		free(curr_dir);
-	}
+	if (!curr_dir)
+		return (FAIL);
+	ft_putendl_fd(curr_dir, fd);
+	free(curr_dir);
+	return (SUCCESS);
 }
 
-void	ft_cd(t_mini *mini, char **cmd_args)
+int	ft_cd(t_mini *mini, char **cmd_args)
 {
 	char	*home;
 	char	*path;
@@ -42,7 +44,7 @@ void	ft_cd(t_mini *mini, char **cmd_args)
 		if (!home)
 		{
 			ft_putstr_fd("mini: cd: HOME not set\n", 2);
-			return ;
+			return (FAIL);
 		}
 		path = home;
 	}
@@ -55,29 +57,21 @@ void	ft_cd(t_mini *mini, char **cmd_args)
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 2);
-		return ;
+		return (FAIL);
 	}
 	update_env_vars(mini);
+	return (SUCCESS);
 }
 
-void	handle_builtin(t_mini *mini, int i)
+int	handle_builtin(t_mini *mini, int i)
 {
 	char	**cmd_arr;
 
-	/* if (!mini || !mini->input || *(mini->input) == '\0')
-		return ;
-	cmd_arr = ft_split(mini->input, ' ');
-	if (!cmd_arr || !cmd_arr[0])
-	{
-		free_arr(cmd_arr);
-		return ;
-	} */
+	if (!mini || !mini->cmds_tbl)
+		return (FAIL);
 	cmd_arr = mini->cmds_tbl[i];
 	if (!cmd_arr || !cmd_arr[0])
-	{
-		// free_arr(cmd_arr);
-		return ;
-	}
+		return (FAIL);
 	if (ft_strncmp(cmd_arr[0], "cd", 3) == 0)
 		return (ft_cd(mini, cmd_arr));
 	if (ft_strncmp(cmd_arr[0], "pwd", 4) == 0)
@@ -86,8 +80,9 @@ void	handle_builtin(t_mini *mini, int i)
 		return (ft_env(mini, STDOUT));
 	if (ft_strncmp(cmd_arr[0], "export", 7) == 0)
 		return (ft_export(mini, cmd_arr));
-	if (ft_strncmp(cmd_arr[0], "exit", 4) == 0)
-		return (ft_exit(mini, cmd_arr));
-	if (ft_strncmp(cmd_arr[0], "echo", 4) == 0)
+	if (ft_strncmp(cmd_arr[0], "exit", 5) == 0)
+		ft_exit(mini, cmd_arr);
+	if (ft_strncmp(cmd_arr[0], "echo", 5) == 0)
 		return (ft_echo(cmd_arr));
+	return (SUCCESS);
 }
