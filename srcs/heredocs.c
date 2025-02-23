@@ -72,7 +72,7 @@ int	handle_heredocs(t_mini *mini)
 	j = 0;
 	while (mini->cmds[i])
 	{
-		while (mini->cmds[i]->tokens[j].content)
+		while (j < mini->cmds[i]->token_count)
 		{
 			if (mini->cmds[i]->tokens[j].type == LIMITER)
 			{

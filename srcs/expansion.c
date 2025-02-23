@@ -4,7 +4,20 @@
 // Returns SUCCESS or FAIL on allocation failure.
 static int	append_char_to_expansion(t_expansion *xp, char c)
 {
-	size_t	len;
+	char	temp[2];
+	char	*new_xp_str;
+
+    temp[0] = c;
+    temp[1] = '\0';
+	new_xp_str = ft_strjoin(xp->expanded_str, temp);
+    if (new_xp_str == NULL)
+	{
+        free_ptr(xp->expanded_str);
+        return(FAIL);
+    }
+    free_ptr(xp->expanded_str);
+    xp->expanded_str = new_xp_str;
+	/* size_t	len;
 	char	*temp;
 
 	len = ft_strlen(xp->expanded_str);
@@ -18,7 +31,7 @@ static int	append_char_to_expansion(t_expansion *xp, char c)
 	xp->expanded_str = temp;
 	xp->expanded_str[len] = c;
 	xp->expanded_str[len + 1] = '\0';
-	// free_ptr(temp);
+	// free_ptr(temp); */
 	return (SUCCESS);
 }
 

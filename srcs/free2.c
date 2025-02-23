@@ -9,26 +9,31 @@ void	free_tokens(t_cmd *cmd, t_token *token)
 	i = 0;
 	while (i < cmd->token_count && &cmd->tokens[i])
 	{
-		free_ptr(token[i].content);
-		token[i].content = NULL;
+		if (token[i].content)
+		{
+			free(token[i].content);
+			token[i].content = NULL;
+		}
 		i++;
 	}
-	if (token)
-	{
-		free(token);
-		token = NULL;
-	}
+	free(token);
+	token = NULL;
 }
 
 void	free_cmd(t_cmd *cmd)
 {
 	if (!cmd)
 		return;
-	free_tokens(cmd, cmd->tokens);
-	free(cmd->cmd_name);
-	free(cmd->heredoc_name);
-	free(cmd->og_str);
+	if (cmd->tokens)
+		free_tokens(cmd, cmd->tokens);
+	if (cmd->cmd_name)
+		free(cmd->cmd_name);
+	if (cmd->heredoc_name)
+		free(cmd->heredoc_name);
+	if (cmd->og_str)
+		free(cmd->og_str);
 	free(cmd);
+	cmd = NULL;
 }
 
 void	free_cmds(t_mini *mini)
@@ -54,7 +59,9 @@ void	free_and_exit(t_mini *mini)
 	free_cmds(mini);
 	free_arr(mini->env);
 	free_cmds_tbl(mini->cmds_tbl);
+	mini->cmds_tbl = NULL;
 	free_ptr(mini->pids);
 	free_ptr(mini);
+	rl_clear_history();
 	exit(exit_code);
 }
