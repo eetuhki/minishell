@@ -30,7 +30,6 @@ int	check_file_exists(char *cmd, struct stat *path_stat, int *exit_code)
 		}
 		else
 		{
-			ft_putstr_fd("IS it here???", 2);
 			print_error(cmd, strerror(errno));
 			if (errno == EACCES || errno == ENOTDIR)
 				*exit_code = 126;
@@ -54,7 +53,6 @@ int	check_directory(char *cmd, struct stat *path_stat, int *exit_code)
 		}
 		else
 		{
-			ft_putstr_fd("ORRR EZI???", 2);
 			print_error(cmd, "Command not found");
 			*exit_code = 127;
 		}
@@ -77,7 +75,6 @@ int	check_cmd_validity(char *cmd)
 		return (exit_code);
 	if (!ft_strchr(cmd, '/'))
 	{
-		ft_putstr_fd("WEYSS EZI??", 2);
 		print_error(cmd, "Command not found");
 		return (127);
 	}
@@ -94,9 +91,6 @@ void	validate_cmd_access(t_mini *mini, char *cmd)
 	if (exit_code != 0)
 	{
 		mini->exit_code = exit_code;
-		//ft_putstr_fd("PRECHECK exit\n", 2);
-		//ft_putnbr_fd(mini->exit_code, 2);
-		//ft_putstr_fd("\n", 2);
 		exit(mini->exit_code);
 	}
 }

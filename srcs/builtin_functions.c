@@ -69,14 +69,9 @@ int	handle_builtin(t_mini *mini, int i)
 
 	if (!mini || !mini->cmds_tbl)
 		return (FAIL);
-	ft_putendl_fd("inside handle_builtin", 2);
-
 	cmd_arr = mini->cmds_tbl[i];
 	if (!cmd_arr || !cmd_arr[0])
 		return (FAIL);
-	ft_putendl_fd("After cmd_arr init", 2);
-	ft_putendl_fd(cmd_arr[0], 2);
-	ft_putendl_fd(" <--- cmd_arr[0] @handle_builtin", 2);
 	if (ft_strncmp(cmd_arr[0], "cd", 3) == 0)
 		return (ft_cd(mini, cmd_arr));
 	if (ft_strncmp(cmd_arr[0], "pwd", 4) == 0)
@@ -86,10 +81,7 @@ int	handle_builtin(t_mini *mini, int i)
 	if (ft_strncmp(cmd_arr[0], "export", 7) == 0)
 		return (ft_export(mini, cmd_arr));
 	if (ft_strncmp(cmd_arr[0], "exit", 5) == 0)
-	{
-		ft_putendl_fd("do we strcmp ???", 2);
 		ft_exit(mini, cmd_arr);
-	}
 	if (ft_strncmp(cmd_arr[0], "echo", 5) == 0)
 		return (ft_echo(cmd_arr));
 	return (SUCCESS);
