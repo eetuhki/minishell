@@ -87,6 +87,13 @@ void	validate_cmd_access(t_mini *mini, char *cmd)
 {
 	int	exit_code;
 
+	if (cmd && ft_strcmp(cmd, ".") == 0)
+	{
+		print_error(".", "filename argument required");
+		ft_putendl_fd(".: usage: . filename [arguments]", 2);
+		mini->exit_code = 2;
+		free_and_exit(mini);
+	} 
 	exit_code = check_cmd_validity(cmd);
 	if (exit_code != 0)
 	{

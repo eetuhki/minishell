@@ -68,7 +68,8 @@ static char	**build_cmd_table(t_cmd *cmd, char **env)
         printf("Token[%d] = %s and TYPE= %d \n", t, cmd->tokens[t].content, cmd->tokens[t].type);
         t++;
     } */
-	check_full_cmd_path(cmd_table, cmd, env);
+	if (ft_strcmp(cmd->tokens[0].content, ".") != 0)
+		check_full_cmd_path(cmd_table, cmd, env);
 	return (cmd_table);
 }
 
