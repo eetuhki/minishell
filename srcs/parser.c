@@ -45,6 +45,8 @@ int	init_cmd_structs(t_mini *mini)
 
 	i = 0;
 	cmd_count = count_pipes(mini) + 1;
+	if (mini->cmds)
+		free_cmds(mini);
 	mini->cmds = ft_calloc(cmd_count + 1, sizeof(t_cmd));
 	if (!mini->cmds)
 		return (FAIL);

@@ -91,7 +91,7 @@ void	child_process(t_mini *mini, int i)
 	}
 	else
 		exec_command(mini, mini->cmds_tbl[i]);
-	exit(mini->exit_code);
+	free_and_exit(mini);
 }
 
 void	exec_with_pipes(t_mini *mini)
