@@ -80,6 +80,8 @@ int	prepare_cmd_table(t_mini *mini)
 	cmds_in_pipe = 0;
 	while (mini && mini->cmds && mini->cmds[cmds_in_pipe])
 		cmds_in_pipe++;
+	if (mini->cmds_tbl)
+		free_cmds_tbl(mini->cmds_tbl);
 	mini->cmds_tbl = malloc(sizeof(char **) * (cmds_in_pipe + 1));
 	if (!mini->cmds_tbl)
 	{

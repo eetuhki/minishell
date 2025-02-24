@@ -15,8 +15,8 @@ void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token)
 	if (!token->type)
 	{
 		token->type = ARG;
-		if (!cmd->cmd_found)
-			err_cmd_not_found(token->content);
+		/* if (!cmd->cmd_found)
+			err_cmd_not_found(token->content); */
 	}
 }
 

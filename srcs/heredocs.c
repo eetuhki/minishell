@@ -41,6 +41,9 @@ int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 		ft_putstr_fd(line, cmd->hd_fd);
 		free_ptr(line);
 	}
+	close_fd(cmd->hd_fd);
+	cmd->hd_fd = open(cmd->heredoc_name, O_RDWR | O_EXCL | O_CREAT, 0600);
+	check_fd(cmd->hd_fd);
 	mini->heredoc_expand = false;
 	return (SUCCESS);
 }
@@ -60,6 +63,7 @@ int	handle_single_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 	cmd->heredoc_name = get_filename(cmd);
 	if (get_heredoc(mini, cmd, token) == FAIL)
 		return (FAIL);
+	cmd->in_file = cmd->hd_fd;
 	return (SUCCESS);
 }
 

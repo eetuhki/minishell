@@ -91,6 +91,6 @@ void	validate_cmd_access(t_mini *mini, char *cmd)
 	if (exit_code != 0)
 	{
 		mini->exit_code = exit_code;
-		exit(mini->exit_code);
+		free_and_exit(mini);
 	}
 }
