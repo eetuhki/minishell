@@ -49,6 +49,13 @@ static int	fill_cmd_table(t_cmd *cmd, char	**cmd_table)
 	return (SUCCESS);
 }
 
+static bool needs_full_path(char *cmd)
+{
+	if (ft_strcmp(cmd, ".") != 0 && ft_strcmp(cmd, "..") != 0 && !ft_strchr(cmd, '/'))
+		return (true);
+	return (false);
+}
+
 static char	**build_cmd_table(t_cmd *cmd, char **env)
 {
 	int		arg_count;
@@ -68,8 +75,9 @@ static char	**build_cmd_table(t_cmd *cmd, char **env)
         printf("Token[%d] = %s and TYPE= %d \n", t, cmd->tokens[t].content, cmd->tokens[t].type);
         t++;
     } */
-	if (ft_strcmp(cmd->tokens[0].content, ".") != 0 && ft_strcmp(cmd->tokens[0].content, "..") != 0)
-		check_full_cmd_path(cmd_table, cmd, env);
+
+	if (cmd->tokens[0].content && needs_full_path(cmd->tokens[0].content))
+			check_full_cmd_path(cmd_table, cmd, env);
 	return (cmd_table);
 }
 
