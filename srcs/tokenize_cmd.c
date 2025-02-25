@@ -31,7 +31,6 @@ int	cmd_is_full_path(t_mini *mini, char *cmd)
 	return (FAIL);
 }
 
-// 
 int	validate_path(char *path_dir, char *cmd)
 {
 	char	*full_path;

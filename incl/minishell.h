@@ -17,6 +17,8 @@
 # include "../libft/incl/libft.h"
 # include "macros.h"
 
+extern volatile sig_atomic_t	g_sig;
+
 /* typedef enum e_symbol_type
 {
 	PIPE,
@@ -71,6 +73,7 @@ typedef struct s_cmd
 	int		in_file;
 	int		out_file;
 	char	*og_str;
+	bool	eof_exit;
 }	t_cmd;
 
 typedef struct s_expansion
@@ -183,6 +186,7 @@ char	*get_filename(t_cmd *cmd);
 int		get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token);
 int		handle_heredocs(t_mini *mini);
 void	check_fd(int fd);
+int		process_heredoc(t_mini *mini, t_cmd *cmd, t_token *token);
 void	trim_limiter(t_token *token);
 
 // parsing
@@ -226,6 +230,7 @@ void	sig_init_heredoc(void);
 void	sig_handler(int sig);
 void	sig_handler_heredoc(int sig);
 void	sig_handler_wait(int sig);
+int		heredoc_sigint_hook(void);
 
 // syntax
 int		input_is_whitespace(char *input);

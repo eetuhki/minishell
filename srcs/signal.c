@@ -1,5 +1,15 @@
 #include "../incl/minishell.h"
 
+int	heredoc_sigint_hook(void)
+{
+	if (g_sig)
+	{
+		rl_replace_line("", 0);
+		rl_done = 1;
+	}
+	return (0);
+}
+
 void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
@@ -14,10 +24,7 @@ void	sig_handler(int sig)
 void	sig_handler_heredoc(int sig)
 {
 	if (sig == SIGINT)
-	{
-		printf("\n");
-		exit(1);
-	}
+		g_sig = 1;
 }
 
 // init signals for the main/parent
