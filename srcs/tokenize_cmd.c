@@ -20,7 +20,7 @@ int	cmd_is_full_path(t_mini *mini, char *cmd)
 	{
 		if (open(cmd, __O_DIRECTORY) != -1)
 		{
-			err_cmd_is_dir(cmd);
+			// err_cmd_is_dir(cmd);
 			mini->exit_code = 126;
 			return (FAIL);
 		}
@@ -31,7 +31,6 @@ int	cmd_is_full_path(t_mini *mini, char *cmd)
 	return (FAIL);
 }
 
-// 
 int	validate_path(char *path_dir, char *cmd)
 {
 	char	*full_path;

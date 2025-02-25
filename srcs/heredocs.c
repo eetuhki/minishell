@@ -20,31 +20,52 @@ char	*get_filename(t_cmd *cmd)
 	return (filename);
 }
 
-int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
+int	process_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 {
 	char	*line;
 
+	sig_init_heredoc();
+	if (g_sig)
+		return (FAIL);
+	line = readline("> ");
+	if (!line)
+	{
+		cmd->eof_exit = 1;
+		return (FAIL);
+	}
+	if (!ft_strcmp(line, token->content))
+	{
+		free_ptr(line);
+		return (FAIL);
+	}
+	if (mini->heredoc_expand == true)
+		expand_variables(mini, &line);
+	ft_putstr_fd(line, cmd->hd_fd);
+	ft_putstr_fd("\n", cmd->hd_fd);
+	free_ptr(line);
+	return (SUCCESS);
+}
+
+int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
+{
 	cmd->hd_fd = open(cmd->heredoc_name, O_RDWR | O_EXCL | O_CREAT, 0600);
 	check_fd(cmd->hd_fd);
-	sig_init_heredoc();
+	rl_event_hook = heredoc_sigint_hook;
 	while (1)
 	{
-		write(0, "> ", 2);
-		line = readline(STDIN);
-		if (!line || !ft_strcmp(line, token->content))
-		{
-			free_ptr(line);
-			break ;
-		}
-		if (mini->heredoc_expand == true)
-			expand_variables(mini, &line);
-		ft_putstr_fd(line, cmd->hd_fd);
-		free_ptr(line);
+		if (process_heredoc(mini, cmd, token) == FAIL)
+			break;
 	}
+	rl_event_hook = NULL;
+	g_sig = 0;
 	close_fd(cmd->hd_fd);
-	cmd->hd_fd = open(cmd->heredoc_name, O_RDWR | O_EXCL | O_CREAT, 0600);
-	check_fd(cmd->hd_fd);
 	mini->heredoc_expand = false;
+	if (cmd->eof_exit)
+	{
+		ft_putstr_fd("mini: warning: here-document delimited by end-of-file (wanted `", 2);
+		ft_putstr_fd(token->content, 2);
+		ft_putendl_fd("')", 2);
+	}
 	return (SUCCESS);
 }
 

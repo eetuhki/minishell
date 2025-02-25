@@ -35,6 +35,7 @@ void	init_cmd_elements(t_cmd *cmd)
 	cmd->cmd_found = false;
 	cmd->in_file = -1;
 	cmd->out_file = -1;
+	cmd->eof_exit = false;
 }
 
 // allocates memory and initialises command structs for each command
