@@ -22,20 +22,83 @@ void	exec_command(t_mini *mini, char **cmds)
 	}
 }
 
-void	handle_redirs(t_cmd *cmd)
+int	handle_redirs(t_cmd *cmd, bool in_pipe, t_mini *mini)
 {
+	if (cmd->out_file == -2 || cmd->in_file == -2)
+	{
+		mini->exit_code = 1;
+		if (in_pipe)
+		{
+			ft_putstr_fd("DO WE GET HERE WEYYY?\n", 2);
+			free_and_exit(mini);
+		}
+		else
+			return (FAIL);
+	}
 	if (cmd->in_file != -1)
 	{
 		if (dup2(cmd->in_file, STDIN) < 0)
+		{
 			ft_putstr_fd("mini : dup2 input redirection error\n", 2);
+			return (FAIL);
+		}
 		close_fd(cmd->in_file);
 	}
 	if (cmd->out_file != -1)
 	{
 		if (dup2(cmd->out_file, STDOUT) < 0)
+		{
 			ft_putstr_fd("mini : dup2 output redirection error\n", 2);
+			return (FAIL);
+		}
 		close_fd(cmd->out_file);
 	}
+	return (SUCCESS);
+}
+
+void reset_std_fds(int stdout_copy, int stdin_copy)
+{
+    if (stdout_copy != -1)
+    {
+        if (dup2(stdout_copy, STDOUT_FILENO) == -1)
+            ft_putstr_fd("mini : dup2 failed\n", 2);
+        close_fd(stdout_copy);
+    }
+    if (stdin_copy != -1)
+    {
+        if (dup2(stdin_copy, STDIN_FILENO) == -1)
+            ft_putstr_fd("mini : dup2 failed\n", 2);
+        close_fd(stdin_copy);
+    }
+}
+
+int	setup_redirs(t_mini *mini, t_cmd *cmd, int *stdout_copy, int *stdin_copy)
+{
+	if (cmd->out_file != -1 && cmd->out_file != -2)
+    {
+        *stdout_copy = dup(STDOUT);
+        if (*stdout_copy == -1)
+        {
+            ft_putstr_fd("mini : dup failed\n", 2);
+            return (FAIL);
+        }
+    }
+	if (cmd->in_file != -1 && cmd->in_file != -2)
+    {
+        *stdin_copy = dup(STDIN);
+        if (*stdin_copy == -1)
+        {
+            ft_putstr_fd("mini : dup failed\n", 2);
+            close_fd(*stdout_copy);
+            return (FAIL);
+        }
+    }
+	if	(handle_redirs(mini->cmds[0],false, mini) == FAIL)
+	{
+		reset_std_fds(*stdout_copy, *stdin_copy);
+		return (FAIL);
+	}
+	return (SUCCESS);
 }
 
 int		exec_no_pipes(t_mini *mini)
@@ -43,25 +106,34 @@ int		exec_no_pipes(t_mini *mini)
 	pid_t	pid;
 	int		status;
 	int		builtin_exit;
+	int		stdout_copy;
+	int		stdin_copy;
 
 	builtin_exit = 0;
-	//printf("cmds[0][0]:%s\n", mini->cmds_tbl[0][0]);
-	//if (builtin_only(mini->cmds[0]->tokens[0].content))
+	stdout_copy = -1;
+	stdin_copy = -1;
 	if (builtin_only(mini->cmds_tbl[0][0]))
 	{
+		if (setup_redirs(mini, mini->cmds[0], &stdout_copy, &stdin_copy) == FAIL)
+            return (FAIL);
 		builtin_exit = handle_builtin(mini, 0);
 		//printf ("Ret value from BUILTIN is [%d] \n", builtin_exit);
 		mini->exit_code = builtin_exit;
+		reset_std_fds(stdout_copy, stdin_copy);
 		return (builtin_exit);
 	}
-	pid = fork();
-	if (check_pid(pid) == 0)
+	else
 	{
-		sig_init_child();
-		handle_redirs(mini->cmds[0]);
-		exec_command(mini, mini->cmds_tbl[0]);
+		pid = fork();
+		if (check_pid(pid) == 0)
+		{
+			sig_init_child();
+			handle_redirs(mini->cmds[0], true, mini);
+			exec_command(mini, mini->cmds_tbl[0]);
+		}
+		else
+			wait_single(mini, pid, &status);
 	}
-	wait_single(mini, pid, &status);
 	return (0);
 }
 
@@ -80,7 +152,7 @@ void	child_process(t_mini *mini, int i)
 	}
 	close_fd(mini->fd[0]);
 	close_fd(mini->fd[1]);
-	handle_redirs(mini->cmds[i]); // Handle file redirections
+	handle_redirs(mini->cmds[i], true, mini); // Handle file redirections
 	if (is_there_type(mini, BUILTIN, i))
 	{
 		if (handle_builtin(mini, i) == FAIL)
@@ -138,6 +210,7 @@ int		execute(t_mini *mini)
 	if (cmd_table_size(mini) == 1)
 	{
 		//ft_putstr_fd("EXEC NO pipes \n", 2);
+		// TODO free everything here without exiting
 		return (exec_no_pipes(mini));
 	}
 	else if (cmd_table_size(mini) > 1)
