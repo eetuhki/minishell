@@ -98,6 +98,7 @@ typedef struct s_mini
 	char    ***cmds_tbl;
 	int		in_fd;
 	int		fd[2];
+	int		std_fds[2];
 	pid_t	*pids;
 }	t_mini;
 
@@ -180,6 +181,11 @@ int		is_there_type(t_mini *mini, t_type type, int i);
 int		process_cmd_files(t_mini *mini);
 int		wait_multi(t_mini *mini);
 int		wait_single(t_mini *mini, pid_t pid, int *status);
+
+//execution_redis
+int		setup_redirs(t_mini *mini, t_cmd *cmd);
+int		handle_redirs(t_cmd *cmd, bool in_pipe, t_mini *mini);
+void	reset_std_fds(t_mini *mini);
 
 // heredocs
 char	*get_filename(t_cmd *cmd);

@@ -17,7 +17,7 @@ int	open_infile(char *file_name, int *in_file)
 	if (*in_file != -1)
 	{
 		//printf("closing infile[%d]. [%s] <- new_file\n", *in_file, file_name);
-		close(*in_file);
+		close_fd(*in_file);
 	}
 	*in_file = open(file_name, O_RDONLY);
 	if (*in_file == -1)
@@ -43,7 +43,7 @@ int	open_outfiles(char *file_name, int *out_file, int type)
 	if (*out_file != -1)
 	{
 		//printf("closing prev outfile [%s] <- newfile \n", file_name);
-		close(*out_file);
+		close_fd(*out_file);
 	}
 	if (type == OUTFILE)
 		flags = O_CREAT | O_WRONLY | O_TRUNC;
@@ -73,13 +73,19 @@ int	handle_cmd_files(t_cmd *cmd)
 		if (cmd->tokens[i].type == INFILE)
 		{
 			if (open_infile(cmd->tokens[i].content, &cmd->in_file) == FAIL)
+			{
+				cmd->in_file = -2;
 				return (FAIL);
+			}
 			//printf("INFILE opened [%d] , %s \n", cmd->in_file, cmd->tokens[i].content);
 		}
 		else if (cmd->tokens[i].type == OUTFILE || cmd->tokens[i].type == APP_OUT)
 		{
 			if (open_outfiles(cmd->tokens[i].content, &cmd->out_file, cmd->tokens[i].type) == FAIL)
+			{
+				cmd->out_file = -2;
 				return (FAIL);
+			}
 			//printf("OUTFILE opened [%d] , %s\n", cmd->out_file, cmd->tokens[i].content);
 		}
 		i++;
@@ -90,13 +96,15 @@ int	handle_cmd_files(t_cmd *cmd)
 int	process_cmd_files(t_mini *mini)
 {
 	int	i;
+	int ret;
 
 	i = 0;
+	ret = SUCCESS;
 	while (mini && mini->cmds[i] != NULL)
 	{
 		if (handle_cmd_files(mini->cmds[i]) == FAIL)
-			return (FAIL);
+			ret = FAIL;
 		i++;
 	}
-	return (SUCCESS);
+	return (ret);
 }

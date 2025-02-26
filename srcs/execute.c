@@ -22,22 +22,6 @@ void	exec_command(t_mini *mini, char **cmds)
 	}
 }
 
-void	handle_redirs(t_cmd *cmd)
-{
-	if (cmd->in_file != -1)
-	{
-		if (dup2(cmd->in_file, STDIN) < 0)
-			ft_putstr_fd("mini : dup2 input redirection error\n", 2);
-		close_fd(cmd->in_file);
-	}
-	if (cmd->out_file != -1)
-	{
-		if (dup2(cmd->out_file, STDOUT) < 0)
-			ft_putstr_fd("mini : dup2 output redirection error\n", 2);
-		close_fd(cmd->out_file);
-	}
-}
-
 int		exec_no_pipes(t_mini *mini)
 {
 	pid_t	pid;
@@ -45,23 +29,25 @@ int		exec_no_pipes(t_mini *mini)
 	int		builtin_exit;
 
 	builtin_exit = 0;
-	//printf("cmds[0][0]:%s\n", mini->cmds_tbl[0][0]);
-	//if (builtin_only(mini->cmds[0]->tokens[0].content))
 	if (builtin_only(mini->cmds_tbl[0][0]))
 	{
+		if (setup_redirs(mini, mini->cmds[0]) == FAIL)
+            return (FAIL);
 		builtin_exit = handle_builtin(mini, 0);
 		//printf ("Ret value from BUILTIN is [%d] \n", builtin_exit);
 		mini->exit_code = builtin_exit;
+		reset_std_fds(mini);
 		return (builtin_exit);
 	}
 	pid = fork();
 	if (check_pid(pid) == 0)
 	{
 		sig_init_child();
-		handle_redirs(mini->cmds[0]);
+		handle_redirs(mini->cmds[0], true, mini);
 		exec_command(mini, mini->cmds_tbl[0]);
 	}
-	wait_single(mini, pid, &status);
+	else
+		wait_single(mini, pid, &status);
 	return (0);
 }
 
@@ -80,7 +66,7 @@ void	child_process(t_mini *mini, int i)
 	}
 	close_fd(mini->fd[0]);
 	close_fd(mini->fd[1]);
-	handle_redirs(mini->cmds[i]); // Handle file redirections
+	handle_redirs(mini->cmds[i], true, mini); // Handle file redirections
 	if (is_there_type(mini, BUILTIN, i))
 	{
 		if (handle_builtin(mini, i) == FAIL)
@@ -110,7 +96,7 @@ void	exec_with_pipes(t_mini *mini)
 			return(perror("mini: pipe failed"));
         pid = fork();
 		if (pid == 0)  // Child process
-			child_process(mini, i);
+			child_process(mini, i); 
 		else
 		{
 			mini->pids[i] = pid;
@@ -138,6 +124,7 @@ int		execute(t_mini *mini)
 	if (cmd_table_size(mini) == 1)
 	{
 		//ft_putstr_fd("EXEC NO pipes \n", 2);
+		// TODO free everything here without exiting
 		return (exec_no_pipes(mini));
 	}
 	else if (cmd_table_size(mini) > 1)
