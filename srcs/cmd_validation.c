@@ -30,7 +30,7 @@ int	check_file_exists(char *cmd, struct stat *path_stat, int *exit_code)
 		}
 		else
 		{
-			print_error(cmd, strerror(errno));
+			// print_error(cmd, strerror(errno));
 			if (errno == EACCES || errno == ENOTDIR)
 				*exit_code = 126;
 			else

@@ -1,5 +1,7 @@
 #include "../incl/minishell.h"
 
+volatile sig_atomic_t	g_sig = 0;
+
 void	get_input(t_mini *mini)
 {
 	if (isatty(fileno(stdin)))
