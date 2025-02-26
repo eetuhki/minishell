@@ -182,6 +182,11 @@ int		process_cmd_files(t_mini *mini);
 int		wait_multi(t_mini *mini);
 int		wait_single(t_mini *mini, pid_t pid, int *status);
 
+//execution_redis
+int		setup_redirs(t_mini *mini, t_cmd *cmd);
+int		handle_redirs(t_cmd *cmd, bool in_pipe, t_mini *mini);
+void	reset_std_fds(t_mini *mini);
+
 // heredocs
 char	*get_filename(t_cmd *cmd);
 int		get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token);
