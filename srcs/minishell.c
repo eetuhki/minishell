@@ -25,6 +25,8 @@ void	init_mini(t_mini *mini)
 	mini->cmds_tbl = NULL;
 	mini->pids = NULL;
 	mini->in_fd = STDIN;
+	mini->std_fds[0] = -1;
+	mini->std_fds[1] = -1;
 }
 
 int	main(int ac, char **av, char **env)

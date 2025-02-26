@@ -98,6 +98,7 @@ typedef struct s_mini
 	char    ***cmds_tbl;
 	int		in_fd;
 	int		fd[2];
+	int		std_fds[2];
 	pid_t	*pids;
 }	t_mini;
 
