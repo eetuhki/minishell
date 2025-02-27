@@ -29,7 +29,7 @@ int	setup_heredocs_redir(t_mini *mini)
 	i = 0;
 	while (mini && mini->cmds[i] != NULL)
 	{
-		if (is_heredoc_last(mini->cmds[i]))
+		if (is_heredoc_last(mini->cmds[i]) && mini->cmds[i]->in_file != -2)
 		{
 			/* printf("mini->cmds[i]->in_file BEFORE [%d]\n", mini->cmds[i]->in_file);
 			ft_putstr_fd("here doc is last\n", 2);

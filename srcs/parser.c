@@ -89,8 +89,7 @@ int	parser(t_mini *mini)
 		return (FAIL);
 	if (handle_heredocs(mini))
 		return (FAIL);
-	if (process_cmd_files(mini))
-		return(FAIL);
+	process_cmd_files(mini);
 	if (setup_heredocs_redir(mini))
 		return (FAIL);
 	return (SUCCESS);
