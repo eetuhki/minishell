@@ -27,6 +27,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		free.c \
 		free2.c \
 		heredocs.c \
+		heredocs_redir.c \
 		heredocs_utils.c \
 		minishell.c \
 		parser.c \

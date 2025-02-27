@@ -16,7 +16,7 @@ int	open_infile(char *file_name, int *in_file)
 {
 	if (*in_file != -1)
 	{
-		//printf("closing infile[%d]. [%s] <- new_file\n", *in_file, file_name);
+		//printf("closing infile FD: [%d] before opening new infile [%s]\n", *in_file, file_name);
 		close_fd(*in_file);
 	}
 	*in_file = open(file_name, O_RDONLY);
@@ -65,11 +65,6 @@ int	handle_cmd_files(t_cmd *cmd)
 	i = 0;
 	while (cmd && cmd->tokens && cmd->tokens[i].content)
 	{
-		/* if (cmd->tokens[i].type == LIMITER)
-		{
-			if (cmd->hd_fd != -1)
-				cmd->in_file = cmd->hd_fd;
-		} */
 		if (cmd->tokens[i].type == INFILE)
 		{
 			if (open_infile(cmd->tokens[i].content, &cmd->in_file) == FAIL)

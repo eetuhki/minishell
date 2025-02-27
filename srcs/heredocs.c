@@ -49,6 +49,8 @@ int	process_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 {
 	cmd->hd_fd = open(cmd->heredoc_name, O_RDWR | O_EXCL | O_CREAT, 0600);
+	//printf("opened heredoc name -> [%s] with cmd->hd_fd FD: [%d]\n", cmd->heredoc_name, cmd->hd_fd);
+
 	check_fd(cmd->hd_fd);
 	rl_event_hook = heredoc_sigint_hook;
 	while (1)
@@ -59,6 +61,8 @@ int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 	rl_event_hook = NULL;
 	g_sig = 0;
 	close_fd(cmd->hd_fd);
+	cmd->hd_fd = -1;
+	//printf("closed heredoc cmd->hd_fd  FD: [%d]\n", cmd->hd_fd);
 	mini->heredoc_expand = false;
 	if (cmd->eof_exit)
 	{
@@ -84,7 +88,7 @@ int	handle_single_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 	cmd->heredoc_name = get_filename(cmd);
 	if (get_heredoc(mini, cmd, token) == FAIL)
 		return (FAIL);
-	cmd->in_file = cmd->hd_fd;
+	//cmd->in_file = cmd->hd_fd;
 	return (SUCCESS);
 }
 
