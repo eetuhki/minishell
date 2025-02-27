@@ -33,11 +33,20 @@ int	ft_pwd(int fd)
 	return (SUCCESS);
 }
 
+static int	cd_too_many_args(t_mini *mini)
+{
+	mini->exit_code = 1;
+	ft_putendl_fd("mini: cd: too many arguments", 2);
+	return (FAIL);
+}
+
 int	ft_cd(t_mini *mini, char **cmd_args)
 {
 	char	*home;
 	char	*path;
 
+	if (cmd_args[1] && cmd_args[2])
+		return (cd_too_many_args(mini));
 	if (!cmd_args[1] || *cmd_args[1] == '\0')
 	{
 		home = env_get_var(mini, "HOME");
@@ -51,14 +60,7 @@ int	ft_cd(t_mini *mini, char **cmd_args)
 	else
 		path = cmd_args[1];
 	if (chdir(path) != 0)
-	{
-		ft_putstr_fd("mini: cd: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
-		return (FAIL);
-	}
+		return (cd_path_error(path));
 	update_env_vars(mini);
 	return (SUCCESS);
 }
@@ -81,7 +83,7 @@ int	handle_builtin(t_mini *mini, int i)
 	if (ft_strncmp(cmd_arr[0], "export", 7) == 0)
 		return (ft_export(mini, cmd_arr));
 	if (ft_strncmp(cmd_arr[0], "exit", 5) == 0)
-		ft_exit(mini, cmd_arr);
+		return (ft_exit(mini, cmd_arr));
 	if (ft_strncmp(cmd_arr[0], "echo", 5) == 0)
 		return (ft_echo(cmd_arr));
 	return (SUCCESS);

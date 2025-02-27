@@ -8,6 +8,8 @@ static int	num_only(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
+		if (str[i] == '-' || str[i] == '+')
+			i++;
 		if (!ft_isdigit(str[i]))
 			return (FAIL);
 		i++;
@@ -40,7 +42,7 @@ static long	check_exit_code(t_mini *mini, char *arg)
 }
 
 // handle built-in exit, check if there's more than 1 argument
-void	ft_exit(t_mini *mini, char **args)
+int	ft_exit(t_mini *mini, char **args)
 {
 	long	exit_code;
 
@@ -49,16 +51,21 @@ void	ft_exit(t_mini *mini, char **args)
 	if (!args[1])
 		exit_code = mini->exit_code;
 	if (args[1] && num_only(args[1]) == FAIL)
+	{
 		arg_not_num(mini, args[1]);
+		return (FAIL);
+	}
 	else if (args[1] && args[2])
 	{
+		mini->exit_code = 1;
 		ft_putstr_fd("mini: exit: too many arguments\n", 2);
 		mini->exit_code = 1;
-		return ;
+		return (FAIL);
 	}
 	else if (args[1] && !args[2])
 		exit_code = check_exit_code(mini, args[1]);
 	rl_clear_history();
 	mini->exit_code = exit_code;
 	free_and_exit(mini);
+	return (SUCCESS);
 }

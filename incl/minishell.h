@@ -136,9 +136,10 @@ void	free_tokens(t_cmd *cmd, t_token *token);
 // builtin functions
 int		handle_builtin(t_mini *mini, int i);
 int		ft_env(t_mini *mini, int fd);
-void	ft_exit(t_mini *mini, char **args);
+int		ft_exit(t_mini *mini, char **args);
 int		ft_pwd(int fd);
 int		ft_cd(t_mini *mini, char **cmd_args);
+int		cd_path_error(char *path);
 
 // builtin_echo.c
 int		ft_echo(char **args);
