@@ -25,7 +25,7 @@ int	check_file_exists(char *cmd, struct stat *path_stat, int *exit_code)
 	{
 		if (!ft_strchr(cmd, '/') && (access(cmd, F_OK) != 0))
 		{
-			print_error(cmd, "Command not found");
+			print_error(cmd, "command not found");
 			*exit_code = 127;
 		}
 		else
@@ -53,7 +53,7 @@ int	check_directory(char *cmd, struct stat *path_stat, int *exit_code)
 		}
 		else
 		{
-			print_error(cmd, "Command not found");
+			print_error(cmd, "command not found");
 			*exit_code = 127;
 		}
 		return (FAIL);
@@ -75,7 +75,7 @@ int	check_cmd_validity(char *cmd)
 		return (exit_code);
 	if (!ft_strchr(cmd, '/'))
 	{
-		print_error(cmd, "Command not found");
+		print_error(cmd, "command not found");
 		return (127);
 	}
 	if (check_executable(cmd) == FAIL)
