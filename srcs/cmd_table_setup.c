@@ -10,7 +10,7 @@ static int	count_cmd_args(t_cmd *cmd)
 	while (i < cmd->token_count)
 	{
 		if (cmd->tokens[i].content != NULL
-			/* && !input_is_whitespace(cmd->tokens[i].content) */)
+			&& !input_is_whitespace(cmd->tokens[i].content))
 		{
 			if (cmd->tokens[i].type == CMD || cmd->tokens[i].type == BUILTIN)
 				count++;
@@ -33,7 +33,7 @@ static int	fill_cmd_table(t_cmd *cmd, char	**cmd_table)
 	{
 		if ((cmd->tokens[i].type == CMD || cmd->tokens[i].type == BUILTIN
 				|| cmd->tokens[i].type == ARG) && cmd->tokens[i].content != NULL
-			/* && !input_is_whitespace(cmd->tokens[i].content)*/)
+			&& !input_is_whitespace(cmd->tokens[i].content))
 		{
 			cmd_table[j] = ft_strdup(cmd->tokens[i].content);
 			if (!cmd_table[j])
