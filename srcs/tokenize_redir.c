@@ -41,16 +41,19 @@ void	tokenize_redir(t_token *token)
 	len = ft_strlen(token->content);
 	while (i < len)
 	{
-		if (token->content[i] == '<' && ((i + 1 < len)
-			&& (token->content[i + 1] == '<')))
-			token->type = HEREDOC;
-		else if ((i + 1 < len) && (token->content[i] == '>'
-			&& token->content[i + 1] == '>'))
-			token->type = APPEND;
-		else if (token->content[i] == '<' && !token->type)
-			token->type = REDIR_IN;
-		else if (token->content[i] == '>' && !token->type)
-			token->type = REDIR_OUT;
+		if (!check_quotes(token->content, i))
+		{
+			if (token->content[i] == '<' && ((i + 1 < len)
+				&& (token->content[i + 1] == '<')))
+				token->type = HEREDOC;
+			else if ((i + 1 < len) && (token->content[i] == '>'
+				&& token->content[i + 1] == '>'))
+				token->type = APPEND;
+			else if (token->content[i] == '<' && !token->type)
+				token->type = REDIR_IN;
+			else if (token->content[i] == '>' && !token->type)
+				token->type = REDIR_OUT;
+		}
 		i++;
 	}
 }
