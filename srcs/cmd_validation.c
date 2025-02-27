@@ -30,7 +30,7 @@ int	check_file_exists(char *cmd, struct stat *path_stat, int *exit_code)
 		}
 		else
 		{
-			// print_error(cmd, strerror(errno));
+			print_error(cmd, strerror(errno));
 			if (errno == EACCES || errno == ENOTDIR)
 				*exit_code = 126;
 			else
@@ -93,7 +93,7 @@ void	validate_cmd_access(t_mini *mini, char *cmd)
 		ft_putendl_fd(".: usage: . filename [arguments]", 2);
 		mini->exit_code = 2;
 		free_and_exit(mini);
-	} 
+	}
 	exit_code = check_cmd_validity(cmd);
 	if (exit_code != 0)
 	{

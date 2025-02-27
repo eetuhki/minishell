@@ -98,9 +98,9 @@ int	handle_heredocs(t_mini *mini)
 	int	j;
 
 	i = 0;
-	j = 0;
 	while (mini->cmds[i])
 	{
+		j = 0;
 		while (j < mini->cmds[i]->token_count)
 		{
 			if (mini->cmds[i]->tokens[j].type == LIMITER)
