@@ -23,7 +23,7 @@ int	count_tokens(t_cmd *cmd)
 	token_count = 0;
 	while (cmd->og_str[i])
 	{
-		if (is_redir(cmd->og_str[i]))
+		if (is_redir(cmd->og_str[i]) && !check_quotes(cmd->og_str, i))
 		{
 			token_count++;
 			i++;
