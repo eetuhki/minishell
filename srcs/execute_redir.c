@@ -14,12 +14,14 @@ int	handle_redirs(t_cmd *cmd, bool in_pipe, t_mini *mini)
 	}
 	if (cmd->in_file != -1)
 	{
+		//printf("Redirecting STDIN to in_file FD: [%d]\n", cmd->in_file);
 		if (dup2(cmd->in_file, STDIN) < 0)
 		{
 			ft_putstr_fd("mini : dup2 input redirection error\n", 2);
 			return (FAIL);
 		}
 		close_fd(cmd->in_file);
+		//printf("STDIN redirected to in_file FD: [%d] \n", cmd->in_file);
 	}
 	if (cmd->out_file != -1)
 	{

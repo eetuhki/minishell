@@ -178,7 +178,6 @@ int		execute(t_mini *mini);
 void	exec_fail(t_mini *mini, char *cmd);
 int		exec_no_pipes(t_mini *mini);
 int		is_there_type(t_mini *mini, t_type type, int i);
-int		process_cmd_files(t_mini *mini);
 int		wait_multi(t_mini *mini);
 int		wait_single(t_mini *mini, pid_t pid, int *status);
 
@@ -194,6 +193,7 @@ int		handle_heredocs(t_mini *mini);
 void	check_fd(int fd);
 int		process_heredoc(t_mini *mini, t_cmd *cmd, t_token *token);
 void	trim_limiter(t_token *token);
+int		setup_heredocs_redir(t_mini *mini);
 
 // parsing
 void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token);
@@ -228,6 +228,10 @@ int		validate_cmd(t_mini *mini, char *cmd);
 // print export
 int		print_export(t_mini *mini);
 void	sort_env(char **env_copy, ssize_t size);
+
+// process cmd files
+int		process_cmd_files(t_mini *mini);
+void	err_opening_file(char *file_name, int err_no);
 
 // signals
 void	sig_init(void);
