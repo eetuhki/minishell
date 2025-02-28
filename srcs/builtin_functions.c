@@ -86,5 +86,7 @@ int	handle_builtin(t_mini *mini, int i)
 		return (ft_exit(mini, cmd_arr));
 	if (ft_strncmp(cmd_arr[0], "echo", 5) == 0)
 		return (ft_echo(cmd_arr));
+	if (ft_strncmp(cmd_arr[0], "unset", 6) == 0)
+		return (ft_unset(mini, cmd_arr));
 	return (SUCCESS);
 }
