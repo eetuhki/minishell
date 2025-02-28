@@ -41,8 +41,14 @@ void	free_cmds(t_mini *mini)
 	int	i;
 
 	i = 0;
+	if (!mini->cmds)
+		return ;
 	while (mini->cmds[i])
 	{
+		if (mini->cmds[i]->in_file)
+			close_fd(mini->cmds[i]->in_file);
+		if (mini->cmds[i]->out_file)
+			close_fd(mini->cmds[i]->out_file);
 		free_cmd(mini->cmds[i]);
 		i++;
 	}
@@ -61,6 +67,8 @@ void	free_and_exit(t_mini *mini)
 	free_cmds_tbl(mini->cmds_tbl);
 	mini->cmds_tbl = NULL;
 	free_ptr(mini->pids);
+	close_fd(mini->std_fds[1]);
+	close_fd(mini->std_fds[0]);
 	free_ptr(mini);
 	rl_clear_history();
 	exit(exit_code);

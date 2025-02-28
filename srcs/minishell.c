@@ -8,8 +8,12 @@ void	get_input(t_mini *mini)
 		sig_init();
 	mini->input = readline("mini> ");
 	if (!mini->input)
-		exit(0);
-	addhistory(mini);
+	{	
+		free_ptr(mini->input);
+		free_and_exit(mini);
+	}
+	if (mini->input)
+		addhistory(mini);
 }
 
 void	init_mini(t_mini *mini)
