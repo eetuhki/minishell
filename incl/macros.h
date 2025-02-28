@@ -25,7 +25,7 @@
 # define WRITE 1
 
 // heredoc tmp
-# define TMP_PATH "/tmp/heredoc"
+# define TMP_PATH "srcs/heredoc"
 # define TMP_EXT ".tmp"
 
 #endif

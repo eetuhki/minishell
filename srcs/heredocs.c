@@ -50,7 +50,6 @@ int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 {
 	cmd->hd_fd = open(cmd->heredoc_name, O_RDWR | O_EXCL | O_CREAT, 0600);
 	//printf("opened heredoc name -> [%s] with cmd->hd_fd FD: [%d]\n", cmd->heredoc_name, cmd->hd_fd);
-
 	check_fd(cmd->hd_fd);
 	rl_event_hook = heredoc_sigint_hook;
 	while (1)
