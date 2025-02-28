@@ -250,7 +250,6 @@ int		pipe_is_whitespace(char *input, int i);
 char	*redir_special_chars(char direction);
 size_t	skip_quotes(char *input);
 void	syntax_check(t_mini *mini);
-void	syntax_fail(t_mini *mini);
 int		syntax_pipes(t_mini *mini);
 int		syntax_print_error(char token);
 int		syntax_quotes(t_mini *mini);
