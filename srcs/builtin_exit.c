@@ -47,7 +47,8 @@ int	ft_exit(t_mini *mini, char **args)
 	long	exit_code;
 
 	exit_code = 0;
-	ft_putstr_fd("exit\n", 0);
+	if (mini->in_pipe == false)
+		ft_putstr_fd("exit\n", 0);
 	if (!args[1])
 		exit_code = mini->exit_code;
 	if (args[1] && num_only(args[1]) == FAIL)

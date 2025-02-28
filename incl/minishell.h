@@ -90,6 +90,7 @@ typedef struct s_mini
 	int		redir_open;
 	int		redir_count;
 	bool	heredoc_expand;
+	bool	in_pipe;
 	int		pipes;
 	char	*input;
 	char	*prev_input;

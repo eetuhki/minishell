@@ -71,7 +71,7 @@ int	setup_redirs(t_mini *mini, t_cmd *cmd)
 		close_fd(mini->std_fds[1]);
 		return (FAIL);
 	}
-	if	(handle_redirs(mini->cmds[0],false, mini) == FAIL)
+	if	(handle_redirs(mini->cmds[0], false, mini) == FAIL)
 	{
 		reset_std_fds(mini);
 		return (FAIL);
