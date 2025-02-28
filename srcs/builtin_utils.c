@@ -16,20 +16,28 @@ void	update_env_vars(t_mini *mini)
 {
 	char	*old_pwd;
 	char	*new_pwd;
+	char	*oldpwd_var;
 
 	old_pwd = env_get_var(mini, "PWD");
+	oldpwd_var = env_get_var(mini, "OLDPWD");
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
-		return ;
-	if (old_pwd)
+		return (EXIT_FAILURE);
+	if (old_pwd && oldpwd_var)
 	{
+		//missing a check if OLDPWD exists !
 		if (env_set_var(mini, "OLDPWD", old_pwd) == FAIL)
 			print_err_builtin("cd: " , NULL, "Failed to update OLDPWD");
+		
+		/* if (new_pwd)
+			free_ptr(new_pwd); */
+	}
+	if (old_pwd)
+	{
 		if (env_set_var(mini, "PWD", new_pwd) == FAIL)
 			print_err_builtin("cd: ", NULL, "Failed to update PWD");
-		if (new_pwd)
-			free_ptr(new_pwd);
 	}
+	
 	if (new_pwd)
 		free_ptr(new_pwd);
 }
