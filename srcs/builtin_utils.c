@@ -14,21 +14,27 @@ void print_err_builtin(char *cmd, char *arg, char *msg)
 //updates env variables PWD and OLDPWD after executing the cd command
 void	update_env_vars(t_mini *mini)
 {
-	char	*old_pwd;
+	char	*pwd_var;
 	char	*new_pwd;
+	char	*oldpwd_var;
 
-	old_pwd = env_get_var(mini, "PWD");
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 		return ;
-	if (old_pwd)
+	pwd_var = env_get_var(mini, "PWD");
+	oldpwd_var = env_get_var(mini, "OLDPWD");
+	if (pwd_var && oldpwd_var)
 	{
-		if (env_set_var(mini, "OLDPWD", old_pwd) == FAIL)
+		if (env_set_var(mini, "OLDPWD", pwd_var) == FAIL)
 			print_err_builtin("cd: " , NULL, "Failed to update OLDPWD");
+	}
+	if (pwd_var)
+	{
 		if (env_set_var(mini, "PWD", new_pwd) == FAIL)
 			print_err_builtin("cd: ", NULL, "Failed to update PWD");
-		free_ptr(new_pwd);
 	}
+	if (new_pwd)
+		free_ptr(new_pwd);
 }
 
 //returns a copy of the env str_array or NULL incase of error

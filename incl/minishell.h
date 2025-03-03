@@ -161,6 +161,9 @@ char	*extract_key(char *cmd_arg);
 char	*extract_value(char *cmd_arg);
 int		add_env_pair(t_mini *mini, char *key, char *value, bool has_value);
 
+// builtin unset
+int		ft_unset(t_mini *mini, char **cmd_args);
+
 // command_table_setup.c
 int		prepare_cmd_table(t_mini *mini);
 

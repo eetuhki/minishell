@@ -9,6 +9,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		builtin_functions.c \
 		builtin_export.c \
 		builtin_export_utils.c \
+		builtin_unset.c \
 		builtin_utils.c \
 		close.c \
 		cmd_path_finder.c \
