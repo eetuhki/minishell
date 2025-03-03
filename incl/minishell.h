@@ -50,6 +50,8 @@ typedef struct	s_token
 	t_type	type;
 	int		index;
 	char	*content;
+	int		is_unset;
+
 }	t_token;
 
 /* typedef struct	s_redir
@@ -264,7 +266,7 @@ int		validate_redir(t_mini *mini, size_t i, char direction);
 void	validate_cmd_access(t_mini *mini, char *cmd);
 
 // variable expansion
-int		expand_variables(t_mini *mini, char **str);
+int		expand_variables(t_mini *mini, t_token *token, char **str);
 
 // variable expansion utils
 int		xp_init(t_expansion *xp);

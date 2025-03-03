@@ -39,7 +39,7 @@ int	process_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 		return (FAIL);
 	}
 	if (mini->heredoc_expand == true)
-		expand_variables(mini, &line);
+		expand_variables(mini, token, &line);
 	ft_putstr_fd(line, cmd->hd_fd);
 	ft_putstr_fd("\n", cmd->hd_fd);
 	free_ptr(line);

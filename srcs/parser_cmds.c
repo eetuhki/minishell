@@ -53,8 +53,12 @@ int expand_tokens(t_mini *mini, t_cmd *cmd)
     {
         if (cmd->tokens[i].type != LIMITER)
         {
-            if (expand_variables(mini, &cmd->tokens[i].content) == FAIL)
+            if (expand_variables(mini, &cmd->tokens[i], &cmd->tokens[i].content) == FAIL)
 				return (FAIL);
+			if (cmd->tokens[i].is_unset)
+			{
+				cmd->tokens[i].content = NULL;
+			}
         }
         i++;
     }
