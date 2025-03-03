@@ -9,7 +9,7 @@ void	ft_unset_single(t_mini *mini, char *var)
 	char	**new_env;
 	int		i;
 	int		j;
-	
+
 	key = extract_key(var);
 	env_var_index = search_key_in_env(mini, key);
 	if (env_var_index == -1)
@@ -19,9 +19,12 @@ void	ft_unset_single(t_mini *mini, char *var)
 	}
 	count = env_count_variables(mini->env);
 	//count bcoz num of var -1 + NULL
-	new_env = ft_calloc(count, sizeof(char **));
+	new_env = ft_calloc(count, sizeof(char *));
 	if (!new_env)
+	{
+		free_str(&key);
 		return ;
+	}
 	i = 0;
 	j = 0;
 	while (mini->env[i])
@@ -34,7 +37,9 @@ void	ft_unset_single(t_mini *mini, char *var)
 		new_env[j] = ft_strdup(mini->env[i]);
 		if (!new_env[j])
 		{
-			//free the things here then
+			free_arr(new_env);
+			free_str(&key);
+			return ;
 		}
 		j++;
 		i++;
@@ -47,13 +52,9 @@ int	ft_unset(t_mini *mini, char **cmd_args)
 {
 	int	i;
 
-	i = 1;
 	if (!mini || !mini->env || !*mini->env || !cmd_args || !*cmd_args)
 		return (0);
-	if (*(cmd_args + 1) == NULL)
-	{
-		//do I unset anything here ?
-	}
+	i = 1;
 	while (cmd_args[i])
 	{
 		ft_unset_single(mini, cmd_args[i]);
