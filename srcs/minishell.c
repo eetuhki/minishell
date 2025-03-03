@@ -2,7 +2,7 @@
 
 volatile sig_atomic_t	g_sig = 0;
 
-void	get_input(t_mini *mini)
+static void	get_input(t_mini *mini)
 {
 	if (isatty(fileno(stdin)))
 		sig_init();
@@ -16,7 +16,7 @@ void	get_input(t_mini *mini)
 		addhistory(mini);
 }
 
-void	init_mini(t_mini *mini)
+static void	init_mini(t_mini *mini)
 {
 	mini->env = NULL;
 	mini->input = NULL;

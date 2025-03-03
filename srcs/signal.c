@@ -10,7 +10,7 @@ int	heredoc_sigint_hook(void)
 	return (0);
 }
 
-void	sig_handler(int sig)
+static void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -21,7 +21,7 @@ void	sig_handler(int sig)
 	}
 }
 
-void	sig_handler_heredoc(int sig)
+static void	sig_handler_heredoc(int sig)
 {
 	if (sig == SIGINT)
 		g_sig = 1;

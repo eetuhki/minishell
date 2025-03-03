@@ -7,14 +7,14 @@ bool	is_redir(int c)
 	return (false);
 }
 
-void	init_token_elements(t_token *token)
+static void	init_token_elements(t_token *token)
 {
 	token->type = 0;
 	token->index = 0;
 	token->content = NULL;
 }
 
-int	count_tokens(t_cmd *cmd)
+static int	count_tokens(t_cmd *cmd)
 {
 	int	i;
 	int	token_count;

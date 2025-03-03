@@ -62,6 +62,7 @@ void	free_and_exit(t_mini *mini)
 
 	exit_code = mini->exit_code;
 	free_ptr(mini->input);
+	clean_hd_temps(mini);
 	free_cmds(mini);
 	free_arr(mini->env);
 	free_cmds_tbl(mini->cmds_tbl);

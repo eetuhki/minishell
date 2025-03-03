@@ -1,7 +1,7 @@
 #include "../incl/minishell.h"
 
 // find special characters for given redirection type < or >
-char	*redir_special_chars(char direction)
+static char	*redir_special_chars(char direction)
 {
 	char	*specials;
 
@@ -13,7 +13,7 @@ char	*redir_special_chars(char direction)
 }
 
 // check for invalid characters following a redirection
-int	invalid_chars(t_mini *mini, size_t i, char direction)
+static int	invalid_chars(t_mini *mini, size_t i, char direction)
 {
 	char	*specials;
 
@@ -34,7 +34,7 @@ int	invalid_chars(t_mini *mini, size_t i, char direction)
 // validates redirection characters in more detail, allowing for << or >>, 
 // redirection not allowed at end of input 
 // or followed by invalid characters, return SUCCESS or FAIL
-int	validate_redir(t_mini *mini, size_t i, char direction)
+static int	validate_redir(t_mini *mini, size_t i, char direction)
 {
 	if (mini->input[i] == direction)
 	{

@@ -21,12 +21,27 @@ int	parse_cmds(t_mini *mini)
 	return (SUCCESS);
 }*/
 
+// count the number of pipes within the input prompt (if unquoted)
+static int	count_pipes(t_mini *mini)
+{
+	int	i;
+
+	i = -1;
+	mini->pipes = 0;
+	while (mini->input[++i])
+	{
+		if (mini->input[i] == '|' && !check_quotes(mini->input, i))
+			mini->pipes++;
+	}
+	return (mini->pipes);
+}
+
 // init values for command struct elements
-void	init_cmd_elements(t_cmd *cmd)
+static void	init_cmd_elements(t_cmd *cmd)
 {
 	cmd->cmd_name = NULL;
 	cmd->heredoc_name = NULL;
-	cmd->heredoc_index = 0;
+	//cmd->heredoc_index = 0;
 	cmd->hd_fd = -1;
 	cmd->og_str = NULL;
 	cmd->cmd_num = 0;
@@ -39,7 +54,7 @@ void	init_cmd_elements(t_cmd *cmd)
 }
 
 // allocates memory and initialises command structs for each command
-int	init_cmd_structs(t_mini *mini)
+static int	init_cmd_structs(t_mini *mini)
 {
 	int	i;
 	int	cmd_count;
@@ -61,21 +76,6 @@ int	init_cmd_structs(t_mini *mini)
 	}
 	mini->cmds[cmd_count] = NULL;
 	return (SUCCESS);
-}
-
-// count the number of pipes within the input prompt (if unquoted)
-int	count_pipes(t_mini *mini)
-{
-	int	i;
-
-	i = -1;
-	mini->pipes = 0;
-	while (mini->input[++i])
-	{
-		if (mini->input[i] == '|' && !check_quotes(mini->input, i))
-			mini->pipes++;
-	}
-	return (mini->pipes);
 }
 
 // calls functions that init parsing

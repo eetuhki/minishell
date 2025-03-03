@@ -1,6 +1,6 @@
 #include "../incl/minishell.h"
 
-void	sig_handler_wait(int sig)
+static void	sig_handler_wait(int sig)
 {
 	if (sig == SIGINT)
 		printf("\n");

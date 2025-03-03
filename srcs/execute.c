@@ -1,15 +1,5 @@
 #include "../incl/minishell.h"
 
-void	exec_fail(t_mini *mini, char *cmd)
-{
-	ft_putstr_fd("mini: ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putendl_fd(strerror(errno), 2);
-	mini->exit_code = 1;
-	//exit(mini->exit_code);
-}
-
 void	exec_command(t_mini *mini, char **cmds)
 {
 	if (!cmds || !cmds[0])
@@ -89,7 +79,6 @@ void	exec_with_pipes(t_mini *mini)
     mini->pids = ft_calloc((size_t)(mini->pipes + 1), sizeof(pid_t));
     if (!mini->pids)
         return;
-	//mini->in_fd = STDIN;
     while (i <= mini->pipes && mini->cmds[i])
     {
         if (i < mini->pipes && pipe(mini->fd) == -1)  // Create a new pipe for all except last command
@@ -98,21 +87,11 @@ void	exec_with_pipes(t_mini *mini)
 		if (pid == 0)  // Child process
 			child_process(mini, i); 
 		else
-		{
-			mini->pids[i] = pid;
-			close_fd(mini->fd[1]); // Parent closes write end immediately
-			if (mini->in_fd != STDIN) // Close the old read end
-			{
-				close_fd(mini->in_fd);
-			}
-    		mini->in_fd = mini->fd[0]; // Store the read end for the next iteration
-		}
+			handle_fds(mini, pid, i);
         i++;
     }
 	if (mini->in_fd != STDIN)
-	{
     	close_fd(mini->in_fd); // Close last read end after loop
-	}
     wait_multi(mini);
 	mini->in_fd = STDIN;
 }
