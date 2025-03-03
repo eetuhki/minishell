@@ -10,9 +10,11 @@ static int	count_cmd_args(t_cmd *cmd)
 	while (i < cmd->token_count)
 	{
 		if (cmd->tokens[i].content != NULL
-			&& !input_is_whitespace(cmd->tokens[i].content))
+			/* && !input_is_whitespace(cmd->tokens[i].content) */)
 		{
-			if (cmd->tokens[i].type == CMD || cmd->tokens[i].type == BUILTIN)
+			if (cmd->tokens[i].type == CMD && !input_is_whitespace(cmd->tokens[i].content))
+				count++;
+			else if ( cmd->tokens[i].type == BUILTIN && !input_is_whitespace(cmd->tokens[i].content))
 				count++;
 			else if (cmd->tokens[i].type == ARG)
 				count++;
@@ -21,7 +23,7 @@ static int	count_cmd_args(t_cmd *cmd)
 	}
 	return (count);
 }
-
+//perhaps have a check that if the arg comes as the first element we dont want a white space anything else is fine
 static int	fill_cmd_table(t_cmd *cmd, char	**cmd_table)
 {
 	int	i;
@@ -31,17 +33,20 @@ static int	fill_cmd_table(t_cmd *cmd, char	**cmd_table)
 	j = 0;
 	while (i < cmd->token_count)
 	{
-		if ((cmd->tokens[i].type == CMD || cmd->tokens[i].type == BUILTIN
-				|| cmd->tokens[i].type == ARG) && cmd->tokens[i].content != NULL
-			&& !input_is_whitespace(cmd->tokens[i].content))
+		if (cmd->tokens[i].content != NULL)
 		{
-			cmd_table[j] = ft_strdup(cmd->tokens[i].content);
-			if (!cmd_table[j])
+			if ((cmd->tokens[i].type == CMD && !input_is_whitespace(cmd->tokens[i].content))
+				|| (cmd->tokens[i].type == BUILTIN && !input_is_whitespace(cmd->tokens[i].content))
+					|| (cmd->tokens[i].type == ARG))
 			{
-				ft_putstr_fd("mini: exec: memory allocation failed\n", 2);
-				return (FAIL);
+				cmd_table[j] = ft_strdup(cmd->tokens[i].content);
+				if (!cmd_table[j])
+				{
+					ft_putstr_fd("mini: exec: memory allocation failed\n", 2);
+					return (FAIL);
+				}
+				j++;
 			}
-			j++;
 		}
 		i++;
 	}
@@ -51,7 +56,7 @@ static int	fill_cmd_table(t_cmd *cmd, char	**cmd_table)
 
 static bool needs_full_path(char *cmd)
 {
-	if (ft_strcmp(cmd, ".") != 0 && ft_strcmp(cmd, "..") != 0 && !ft_strchr(cmd, '/'))
+	if (ft_strcmp(cmd, ".") != 0 && ft_strcmp(cmd, "..") != 0 && !ft_strchr(cmd, '/') && !input_is_whitespace(cmd))
 		return (true);
 	return (false);
 }
@@ -69,12 +74,12 @@ static char	**build_cmd_table(t_cmd *cmd, char **env)
 		return (NULL);
 	if (fill_cmd_table(cmd, cmd_table) == FAIL)
 		return (NULL);
- 	/* int t = 0;
+ 	int t = 0;
     while (t < cmd->token_count)
     {
-        printf("Token[%d] = %s and TYPE= %d \n", t, cmd->tokens[t].content, cmd->tokens[t].type);
+        printf("Token[%d] = -%s- and TYPE= %d \n", t, cmd->tokens[t].content, cmd->tokens[t].type);
         t++;
-    } */
+    }
 
 	if (cmd->tokens[0].content && needs_full_path(cmd->tokens[0].content))
 			check_full_cmd_path(cmd_table, cmd, env);
