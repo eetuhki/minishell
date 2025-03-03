@@ -36,7 +36,7 @@ int	setup_heredocs_redir(t_mini *mini)
 			ft_putnbr_fd(mini->cmds[i]->hd_fd, 2);
 			ft_putstr_fd(" = hd_fd \n", 2); */
 			if (mini->cmds[i]->in_file != -1)
-				close_fd(mini->cmds[i]->in_file);
+				close_fd(&mini->cmds[i]->in_file);
 			mini->cmds[i]->in_file = open(mini->cmds[i]->heredoc_name, O_RDONLY);
 			if (mini->cmds[i]->in_file == -1)
 			{

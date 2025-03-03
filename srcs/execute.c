@@ -47,15 +47,15 @@ void	child_process(t_mini *mini, int i)
 	if (mini->in_fd != STDIN) // If not first command, use previous pipe as stdin
 	{
 		dup2(mini->in_fd, STDIN);
-		close_fd(mini->in_fd);
+		close_fd(&mini->in_fd);
 	}
 	if (i < mini->pipes)  // If it's NOT the last command, redirect stdout to pipe
 	{
 		dup2(mini->fd[1], STDOUT);
-		close_fd(mini->fd[1]);
+		close_fd(&mini->fd[1]);
 	}
-	close_fd(mini->fd[0]);
-	close_fd(mini->fd[1]);
+	close_fd(&mini->fd[0]);
+	close_fd(&mini->fd[1]);
 	handle_redirs(mini->cmds[i], true, mini); // Handle file redirections
 	if (is_there_type(mini, BUILTIN, i))
 	{
@@ -91,7 +91,7 @@ void	exec_with_pipes(t_mini *mini)
         i++;
     }
 	if (mini->in_fd != STDIN)
-    	close_fd(mini->in_fd); // Close last read end after loop
+    	close_fd(&mini->in_fd); // Close last read end after loop
     wait_multi(mini);
 	mini->in_fd = STDIN;
 }

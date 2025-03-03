@@ -168,7 +168,7 @@ int		prepare_cmd_table(t_mini *mini);
 
 // close.c
 void	close_fds(int *fd);
-void	close_fd(int fd);
+void	close_fd(int *fd);
 
 // cmd_path_finder.c
 void	check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env);

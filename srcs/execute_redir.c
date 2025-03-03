@@ -20,7 +20,7 @@ int	handle_redirs(t_cmd *cmd, bool in_pipe, t_mini *mini)
 			ft_putstr_fd("mini : dup2 input redirection error\n", 2);
 			return (FAIL);
 		}
-		close_fd(cmd->in_file);
+		close_fd(&cmd->in_file);
 		//printf("STDIN redirected to in_file FD: [%d] \n", cmd->in_file);
 	}
 	if (cmd->out_file != -1)
@@ -30,7 +30,7 @@ int	handle_redirs(t_cmd *cmd, bool in_pipe, t_mini *mini)
 			ft_putstr_fd("mini : dup2 output redirection error\n", 2);
 			return (FAIL);
 		}
-		close_fd(cmd->out_file);
+		close_fd(&cmd->out_file);
 	}
 	return (SUCCESS);
 }
@@ -41,13 +41,13 @@ void reset_std_fds(t_mini *mini)
     {
         if (dup2(mini->std_fds[1], STDOUT) == -1)
             ft_putstr_fd("mini : dup2 failed\n", 2);
-        close_fd(mini->std_fds[1]);
+        close_fd(&mini->std_fds[1]);
     }
     if (mini->std_fds[0] != -1)
     {
         if (dup2(mini->std_fds[0], STDIN) == -1)
             ft_putstr_fd("mini : dup2 failed\n", 2);
-        close_fd(mini->std_fds[0]);
+        close_fd(&mini->std_fds[0]);
     }
 }
 
@@ -68,7 +68,7 @@ int	setup_redirs(t_mini *mini, t_cmd *cmd)
 	if (mini->std_fds[0] == -1)
 	{
 		ft_putstr_fd("mini : dup failed\n", 2);
-		close_fd(mini->std_fds[1]);
+		close_fd(&mini->std_fds[1]);
 		return (FAIL);
 	}
 	if	(handle_redirs(mini->cmds[0], false, mini) == FAIL)
