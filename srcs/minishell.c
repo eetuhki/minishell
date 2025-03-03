@@ -8,8 +8,12 @@ void	get_input(t_mini *mini)
 		sig_init();
 	mini->input = readline("mini> ");
 	if (!mini->input)
-		exit(0);
-	addhistory(mini);
+	{	
+		free_ptr(mini->input);
+		free_and_exit(mini);
+	}
+	if (mini->input)
+		addhistory(mini);
 }
 
 void	init_mini(t_mini *mini)
@@ -27,6 +31,7 @@ void	init_mini(t_mini *mini)
 	mini->in_fd = STDIN;
 	mini->std_fds[0] = -1;
 	mini->std_fds[1] = -1;
+	mini->in_pipe = false;
 }
 
 int	main(int ac, char **av, char **env)

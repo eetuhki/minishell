@@ -125,6 +125,7 @@ int		execute(t_mini *mini)
 	{
 		//ft_putstr_fd("EXEC NO pipes \n", 2);
 		// TODO free everything here without exiting
+		mini->in_pipe = false;
 		return (exec_no_pipes(mini));
 	}
 	else if (cmd_table_size(mini) > 1)
@@ -132,6 +133,7 @@ int		execute(t_mini *mini)
 		/* ft_putstr_fd("EXEC with pipes\n", 2);
 		ft_putstr_fd("MINI->in_fd before exec_with_pipes()\n", 2);
 		ft_putnbr_fd(mini->in_fd, 2); */
+		mini->in_pipe = true;
 		exec_with_pipes(mini);
 	}
 	return (0);

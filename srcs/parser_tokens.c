@@ -36,7 +36,7 @@ int	count_tokens(t_cmd *cmd)
 			|| is_redir(cmd->og_str[i + 1]))
 				&& !check_quotes(cmd->og_str, i + 1))
 			token_count++;
-		// printf("count_tokens: token count:%d at char:%c\n", token_count, cmd->og_str[i]);
+		//printf("count_tokens: token count:%d at char:%c\n", token_count, cmd->og_str[i]);
 		i++;
 	}
 	return (token_count);
