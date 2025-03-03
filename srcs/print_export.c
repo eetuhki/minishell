@@ -1,7 +1,7 @@
 #include "../incl/minishell.h"
 
 // Sorts the env variable array in alphabetical order using bubble sort.
-void	sort_env(char **env_copy, ssize_t size)
+static void	sort_env(char **env_copy, ssize_t size)
 {
 	ssize_t	i;
 	ssize_t	j;

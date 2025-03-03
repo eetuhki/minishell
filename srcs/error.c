@@ -30,3 +30,13 @@ int	cd_path_error(char *path)
 	ft_putstr_fd("\n", 2);
 	return (FAIL);
 }
+
+void	exec_fail(t_mini *mini, char *cmd)
+{
+	ft_putstr_fd("mini: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(strerror(errno), 2);
+	mini->exit_code = 1;
+	//exit(mini->exit_code);
+}

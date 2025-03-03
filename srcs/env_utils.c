@@ -1,8 +1,8 @@
 #include "../incl/minishell.h"
 
-// check if env var key is valid: first character must be alpha or _, 
+/* // check if env var key is valid: first character must be alpha or _, 
 // the rest alpha, num or _. Return: SUCCESS or FAIL
-int	env_is_key_valid(char *var)
+static int	env_is_key_valid(char *var)
 {
 	int	i;
 
@@ -16,7 +16,7 @@ int	env_is_key_valid(char *var)
 		i++;
 	}
 	return (SUCCESS);
-}
+} */
 
 // returns the values for a given env variable, returns NULL if fail
 char	*env_get_var(t_mini *mini, char *var)
@@ -44,7 +44,7 @@ char	*env_get_var(t_mini *mini, char *var)
 }
 
 // returns the index/location of given env key, return index or -1 if fail
-int	env_find_index(t_mini *mini, char *var)
+static int	env_find_index(t_mini *mini, char *var)
 {
 	int		i;
 	char	*path;
@@ -67,7 +67,7 @@ int	env_find_index(t_mini *mini, char *var)
 }
 
 //reallocate memory for new size env, return new **env or NULL if fail
-char	**env_realloc(t_mini *mini, int size)
+static char	**env_realloc(t_mini *mini, int size)
 {
 	int		i;
 	char	**new_env;

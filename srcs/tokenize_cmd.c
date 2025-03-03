@@ -14,7 +14,7 @@ void	check_for_builtins(t_cmd *cmd, t_token *token)
 	}
 }
 
-int	cmd_is_full_path(t_mini *mini, char *cmd)
+static int	cmd_is_full_path(t_mini *mini, char *cmd)
 {
 	if (!access(cmd, F_OK))
 	{
@@ -31,7 +31,7 @@ int	cmd_is_full_path(t_mini *mini, char *cmd)
 	return (FAIL);
 }
 
-int	validate_path(char *path_dir, char *cmd)
+static int	validate_path(char *path_dir, char *cmd)
 {
 	char	*full_path;
 	char	*add_slash;
@@ -50,7 +50,7 @@ int	validate_path(char *path_dir, char *cmd)
 
 // looks into the env to validate the command, returns SUCCESS if
 // valid cmd or FAIL
-int	validate_cmd(t_mini *mini, char *cmd)
+static int	validate_cmd(t_mini *mini, char *cmd)
 {
 	int		i;
 	char	**path_dirs;

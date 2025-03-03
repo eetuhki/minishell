@@ -1,7 +1,7 @@
 #include "../incl/minishell.h"
 
 // trim whitespace from the start and end of the command string
-char	*skip_whitespace(char *og_str)
+static char	*skip_whitespace(char *og_str)
 {
 	int	start;
 	int	end;
@@ -21,7 +21,7 @@ char	*skip_whitespace(char *og_str)
 }
 
 // store and trim individual command to cmd->og_string
-int	handle_individual_cmd(t_mini *mini, t_cmd *cmd, int start, int end)
+static int	handle_individual_cmd(t_mini *mini, t_cmd *cmd, int start, int end)
 {
 	char	*trim_cmd;
 	int		len;

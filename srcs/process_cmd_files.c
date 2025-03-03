@@ -12,7 +12,7 @@ void	err_opening_file(char *file_name, int err_no)
 	}
 }
 
-int	open_infile(char *file_name, int *in_file)
+static int	open_infile(char *file_name, int *in_file)
 {
 	if (*in_file != -1)
 	{
@@ -28,7 +28,7 @@ int	open_infile(char *file_name, int *in_file)
 	return (SUCCESS);
 }
 
-int	open_outfiles(char *file_name, int *out_file, int type)
+static int	open_outfiles(char *file_name, int *out_file, int type)
 {
 	int temp_fd;
 	int flags;
@@ -58,7 +58,7 @@ int	open_outfiles(char *file_name, int *out_file, int type)
 	return (SUCCESS);
 }
 
-int	handle_cmd_files(t_cmd *cmd)
+static int	handle_cmd_files(t_cmd *cmd)
 {
 	int i;
 
