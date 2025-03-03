@@ -3,9 +3,9 @@
 void	handle_fds(t_mini *mini, pid_t pid, int i)
 {
 	mini->pids[i] = pid;
-	close_fd(mini->fd[1]); // Parent closes write end immediately
+	close_fd(&mini->fd[1]); // Parent closes write end immediately
 	if (mini->in_fd != STDIN) // Close the old read end
-		close_fd(mini->in_fd);
+		close_fd(&mini->in_fd);
 	mini->in_fd = mini->fd[0]; // Store the read end for the next iteration
 }
 

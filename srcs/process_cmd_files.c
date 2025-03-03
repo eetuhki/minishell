@@ -17,7 +17,7 @@ static int	open_infile(char *file_name, int *in_file)
 	if (*in_file != -1)
 	{
 		//printf("closing infile FD: [%d] before opening new infile [%s]\n", *in_file, file_name);
-		close_fd(*in_file);
+		close_fd(in_file);
 	}
 	*in_file = open(file_name, O_RDONLY);
 	if (*in_file == -1)
@@ -43,7 +43,7 @@ static int	open_outfiles(char *file_name, int *out_file, int type)
 	if (*out_file != -1)
 	{
 		//printf("closing prev outfile [%s] <- newfile \n", file_name);
-		close_fd(*out_file);
+		close_fd(out_file);
 	}
 	if (type == OUTFILE)
 		flags = O_CREAT | O_WRONLY | O_TRUNC;

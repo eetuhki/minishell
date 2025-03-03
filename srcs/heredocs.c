@@ -60,7 +60,7 @@ static int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 	}
 	rl_event_hook = NULL;
 	g_sig = 0;
-	close_fd(cmd->hd_fd);
+	close_fd(&cmd->hd_fd);
 	cmd->hd_fd = -1;
 	//printf("closed heredoc cmd->hd_fd  FD: [%d]\n", cmd->hd_fd);
 	mini->heredoc_expand = false;
