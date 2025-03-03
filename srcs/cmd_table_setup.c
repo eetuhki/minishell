@@ -23,7 +23,7 @@ static int	count_cmd_args(t_cmd *cmd)
 	}
 	return (count);
 }
-//perhaps have a check that if the arg comes as the first element we dont want a white space anything else is fine
+
 static int	fill_cmd_table(t_cmd *cmd, char	**cmd_table)
 {
 	int	i;
