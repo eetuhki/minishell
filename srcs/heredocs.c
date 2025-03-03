@@ -1,26 +1,26 @@
 #include "../incl/minishell.h"
 
-char	*get_filename(t_cmd *cmd)
+static char	*get_filename(t_cmd *cmd)
 {
-	char	*suffix;
-	char	*tmp;
+	//char	*suffix;
+	//char	*tmp;
 	char	*filename;
 
 	if (cmd->heredoc_name)
 	{
-		unlink(cmd->heredoc_name);
-		return (cmd->heredoc_name);
+		free_ptr(cmd->heredoc_name);
+		cmd->heredoc_name = NULL;
 	}
-	suffix = ft_itoa(cmd->heredoc_index);
-	tmp = ft_strjoin(TMP_PATH, suffix);
-	free_ptr(suffix);
-	filename = ft_strjoin(tmp, TMP_EXT);
-	free_ptr(tmp);
+	//suffix = ft_itoa(cmd->heredoc_index);
+	//tmp = ft_strjoin(TMP_PATH, suffix);
+	//free_ptr(suffix);
+	filename = ft_strdup(TMP_PATH);
+	//free_ptr(tmp);
 	unlink(filename);
 	return (filename);
 }
 
-int	process_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
+static int	process_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 {
 	char	*line;
 
@@ -33,6 +33,7 @@ int	process_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 		cmd->eof_exit = 1;
 		return (FAIL);
 	}
+	add_history(line);
 	if (!ft_strcmp(line, token->content))
 	{
 		free_ptr(line);
@@ -46,7 +47,7 @@ int	process_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 	return (SUCCESS);
 }
 
-int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
+static int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 {
 	cmd->hd_fd = open(cmd->heredoc_name, O_RDWR | O_EXCL | O_CREAT, 0600);
 	//printf("opened heredoc name -> [%s] with cmd->hd_fd FD: [%d]\n", cmd->heredoc_name, cmd->hd_fd);
@@ -72,7 +73,7 @@ int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 	return (SUCCESS);
 }
 
-int	handle_single_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
+static int	handle_single_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 {
 	int		i;
 
@@ -104,7 +105,7 @@ int	handle_heredocs(t_mini *mini)
 		{
 			if (mini->cmds[i]->tokens[j].type == LIMITER)
 			{
-				mini->cmds[i]->heredoc_index++;
+				//mini->cmds[i]->heredoc_index++;
 				if (handle_single_heredoc(mini, mini->cmds[i], &mini->cmds[i]->tokens[j]) == FAIL)
 					return (FAIL);
 			}

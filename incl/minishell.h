@@ -70,7 +70,7 @@ typedef struct s_cmd
 	bool	cmd_found;
 	char	*cmd_name;
 	char	*heredoc_name;
-	int		heredoc_index;
+	//int		heredoc_index;
 	int		hd_fd;
 	int		in_file;
 	int		out_file;
@@ -119,10 +119,7 @@ size_t	env_count_variables(char **env);
 int		env_shlvl(t_mini *mini);
 
 // env_utils.c
-int		env_find_index(t_mini *mini, char *var);
 char	*env_get_var(t_mini *mini, char *var);
-int		env_is_key_valid(char *var);
-char	**env_realloc(t_mini *mini, int size);
 int		env_set_var(t_mini *mini, char *var, char *new_val);
 
 // free
@@ -184,6 +181,7 @@ int		cmd_table_size(t_mini *mini);
 int		execute(t_mini *mini);
 void	exec_fail(t_mini *mini, char *cmd);
 int		exec_no_pipes(t_mini *mini);
+void	handle_fds(t_mini *mini, pid_t pid, int i);
 int		is_there_type(t_mini *mini, t_type type, int i);
 int		wait_multi(t_mini *mini);
 int		wait_single(t_mini *mini, pid_t pid, int *status);
@@ -194,47 +192,33 @@ int		handle_redirs(t_cmd *cmd, bool in_pipe, t_mini *mini);
 void	reset_std_fds(t_mini *mini);
 
 // heredocs
-char	*get_filename(t_cmd *cmd);
-int		get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token);
 int		handle_heredocs(t_mini *mini);
 void	check_fd(int fd);
-int		process_heredoc(t_mini *mini, t_cmd *cmd, t_token *token);
+void	clean_hd_temps(t_mini *mini);
 void	trim_limiter(t_token *token);
 int		setup_heredocs_redir(t_mini *mini);
 
 // parsing
-void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token);
 void	check_for_builtins(t_cmd *cmd, t_token *token);
 int		check_quotes(char *input, int limiter);
-int		cmd_is_full_path(t_mini *mini, char *cmd);
-int		count_pipes(t_mini *mini);
-int		count_tokens(t_cmd *cmd);
 void	err_cmd_is_dir(char *cmd);
 void	err_cmd_not_found(char *cmd);
-void	init_cmd_elements(t_cmd *cmd);
-int		init_cmd_structs(t_mini *mini);
-void	init_token_elements(t_token *token);
 int		init_tokens(t_cmd *cmd);
 bool	is_redir(int c);
 int		parser(t_mini *mini);
 int		parse_cmds(t_mini *mini);
-char	*skip_whitespace(char *og_str);
 int		skip_redir(char *str, int i);
-void	skip_space(t_cmd *cmd);
 int		skip_word(char *str, int i);
 int		split_cmds(t_mini *mini);
 int		split_redir(char *str, int i);
 int		split_tokens(t_cmd *cmd);
-int		split_tokens_fail(t_token *token);
 int     tokenize_cmd_segment(t_mini *mini, t_cmd *cmd);
 void	tokenize_cmd(t_mini *mini, t_cmd *cmd, t_token *token);
 void	tokenize_in_out(t_token *token, int token_count);
 void	tokenize_redir(t_token *token);
-int		validate_cmd(t_mini *mini, char *cmd);
 
 // print export
 int		print_export(t_mini *mini);
-void	sort_env(char **env_copy, ssize_t size);
 
 // process cmd files
 int		process_cmd_files(t_mini *mini);
@@ -244,23 +228,17 @@ void	err_opening_file(char *file_name, int err_no);
 void	sig_init(void);
 void	sig_init_child(void);
 void	sig_init_heredoc(void);
-void	sig_handler(int sig);
-void	sig_handler_heredoc(int sig);
-void	sig_handler_wait(int sig);
 int		heredoc_sigint_hook(void);
 
 // syntax
 int		input_is_whitespace(char *input);
-int		invalid_chars(t_mini *mini, size_t i, char direction);
 int		pipe_is_whitespace(char *input, int i);
-char	*redir_special_chars(char direction);
 size_t	skip_quotes(char *input);
 void	syntax_check(t_mini *mini);
 int		syntax_pipes(t_mini *mini);
 int		syntax_print_error(char token);
 int		syntax_quotes(t_mini *mini);
 int		syntax_redir(t_mini *mini, char direction);
-int		validate_redir(t_mini *mini, size_t i, char direction);
 
 // validate cmds
 void	validate_cmd_access(t_mini *mini, char *cmd);

@@ -1,6 +1,14 @@
 #include "../incl/minishell.h"
 
-void	skip_space(t_cmd *cmd)
+// prints error message and frees the given token str, returns FAIL
+static int	split_tokens_fail(t_token *token)
+{
+	ft_putstr_fd("Failed to store token to token struct.\n", 2);
+	free_ptr(token->content);
+	return (FAIL);
+}
+
+static void	skip_space(t_cmd *cmd)
 {
 	while (cmd->og_str[cmd->i] && ft_isspace(cmd->og_str[cmd->i]))
 		cmd->i++;
@@ -48,14 +56,6 @@ static int	store_word(t_cmd *cmd, t_token *token)
 		token->index++;
 	}
 	return (SUCCESS);
-}
-
-// prints error message and frees the given token str, returns FAIL
-int	split_tokens_fail(t_token *token)
-{
-	ft_putstr_fd("Failed to store token to token struct.\n", 2);
-	free_ptr(token->content);
-	return (FAIL);
 }
 
 // splits whitespace delimited characters to tokens

@@ -3,7 +3,7 @@
 // checks whether a token is a redir, filename/delimiter after a redir or if it's
 // the first token we validate if it's a command/builtin. in every other case we
 // assign token type ARG
-void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token)
+static void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token)
 {
 	tokenize_redir(token);
 	tokenize_in_out(token, cmd->token_count);
@@ -22,7 +22,7 @@ void	assign_token_types(t_mini *mini, t_cmd *cmd, t_token *token)
 
 // initializes and splits the tokens and then runs the tokens
 // one-by-one in a while loop and assigns the token types to every token
-int	tokenize_cmd_string(t_mini *mini, t_cmd *cmd)
+static int	tokenize_cmd_string(t_mini *mini, t_cmd *cmd)
 {
 	int	i;
 
@@ -43,7 +43,7 @@ int	tokenize_cmd_string(t_mini *mini, t_cmd *cmd)
 	return (SUCCESS);
 }
 
-int expand_tokens(t_mini *mini, t_cmd *cmd)
+static int expand_tokens(t_mini *mini, t_cmd *cmd)
 {
     int		i;
 
