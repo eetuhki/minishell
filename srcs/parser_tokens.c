@@ -12,6 +12,7 @@ static void	init_token_elements(t_token *token)
 	token->type = 0;
 	token->index = 0;
 	token->content = NULL;
+	token->is_unset = 0;
 }
 
 static int	count_tokens(t_cmd *cmd)

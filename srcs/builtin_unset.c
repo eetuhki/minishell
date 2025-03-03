@@ -31,7 +31,7 @@ void	ft_unset_single(t_mini *mini, char *var)
 	{
 		if (env_var_index == i)
 		{
-			i++;
+			i++; 
 			continue;
 		}
 		new_env[j] = ft_strdup(mini->env[i]);
