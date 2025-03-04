@@ -128,6 +128,7 @@ void	free_and_exit(t_mini *mini);
 void	free_arr(char **arr);
 void	free_cmd(t_cmd *cmd);
 void	free_cmds(t_mini *mini);
+void	free_env(t_mini *mini);
 void	free_ptr(void *ptr);
 void	free_str(char **ptr);
 int		free_ptr_fail(void *ptr);

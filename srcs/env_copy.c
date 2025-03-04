@@ -28,7 +28,7 @@ int	env_copy(t_mini *mini, char **env)
 		mini->env[i] = ft_strdup(env[i]);
 		if (!mini->env[i])
 		{
-			free_arr(mini->env);
+			free_env(mini);
 			return (FAIL);
 		}
 	}
