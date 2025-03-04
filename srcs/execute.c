@@ -85,7 +85,7 @@ void	exec_with_pipes(t_mini *mini)
 			return(perror("mini: pipe failed"));
         pid = fork();
 		if (pid == 0)  // Child process
-			child_process(mini, i); 
+			child_process(mini, i);
 		else
 			handle_fds(mini, pid, i);
         i++;
@@ -98,7 +98,7 @@ void	exec_with_pipes(t_mini *mini)
 
 int		execute(t_mini *mini)
 {
-	if (!mini || !mini->cmds_tbl || !*mini->cmds_tbl[0])
+	if (!mini || !mini->cmds_tbl || !*mini->cmds_tbl || !*mini->cmds_tbl[0])
 		return (0);
 	if (cmd_table_size(mini) == 1)
 	{

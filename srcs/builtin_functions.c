@@ -47,7 +47,7 @@ int	ft_cd(t_mini *mini, char **cmd_args)
 
 	if (cmd_args[1] && cmd_args[2])
 		return (cd_too_many_args(mini));
-	if (!cmd_args[1] || *cmd_args[1] == '\0')
+	if (!cmd_args[1])
 	{
 		home = env_get_var(mini, "HOME");
 		if (!home)
@@ -57,6 +57,8 @@ int	ft_cd(t_mini *mini, char **cmd_args)
 		}
 		path = home;
 	}
+	else if (*cmd_args[1] == '\0')
+		return (SUCCESS);
 	else
 		path = cmd_args[1];
 	if (chdir(path) != 0)
