@@ -85,31 +85,24 @@ char	**copy_env(char **env, ssize_t count)
 	return (env_copy);
 }
 
-int	search_key_in_env(t_mini *mini, char *var)
+int	search_key_in_env(t_mini *mini, char *key)
 {
 	int		i;
-	char	*path;
-	char	*key;
+	char	*current_key;
 
-	path = ft_strdup(var);
-	if (!path)
-		return (-1);
 	i = 0;
 	while (mini->env[i])
 	{
-		key = extract_key(mini->env[i]);
-		if (!key)
+		current_key = extract_key(mini->env[i]);
+		if (!current_key)
 			return(-1);
-		if (ft_strcmp(path, key) == 0)
+		if (ft_strcmp(key, current_key) == 0)
 		{
-			free_str(&path);
-			free_str(&key);
+			free_str(&current_key);
 			return (i);
 		}
-		free_str(&key);
+		free_str(&current_key);
 		i++;
 	}
-	free_str(&key);
-	free_str(&path);
 	return (-1);
 }
