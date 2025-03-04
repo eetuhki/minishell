@@ -80,9 +80,10 @@ static char	**env_realloc(t_mini *mini, int size)
 	{
 		new_env[i] = ft_strdup(mini->env[i]);
 		free_ptr(mini->env[i]);
+		mini->env[i] = NULL;
 		i++;
 	}
-	free_arr(mini->env);
+	free_env(mini);
 	return (new_env);
 }
 
