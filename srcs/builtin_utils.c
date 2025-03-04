@@ -11,6 +11,31 @@ void print_err_builtin(char *cmd, char *arg, char *msg)
 		ft_putendl_fd(msg, 2);
 }
 
+// Checks if the string has a valid env variable key.
+// A valid key must start with an underscore or a letter,
+// and can only include alphanumeric characters or underscores.
+// A valid unset key can not include '=' sign.
+int	valid_key(char *cmd_arg, bool is_unset)
+{
+	int		i;
+	char	*equals_sign;
+
+	i = 0;
+	if ((cmd_arg[i] != '_') && !ft_isalpha(cmd_arg[i]))
+		return (0);
+	i++;
+	equals_sign = ft_strchr(cmd_arg, '=');
+	if (is_unset && ft_strchr(cmd_arg, '='))
+		return (0);
+	while (cmd_arg[i] && (equals_sign == NULL || &cmd_arg[i] < equals_sign))
+	{
+		if (cmd_arg[i] != '_' && !ft_isalnum(cmd_arg[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 //updates env variables PWD and OLDPWD after executing the cd command
 void	update_env_vars(t_mini *mini)
 {

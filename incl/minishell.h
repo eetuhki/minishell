@@ -154,7 +154,7 @@ void	update_env_vars(t_mini *mini);
 char	**copy_env(char **env, ssize_t count);
 int		search_key_in_env(t_mini *mini, char *var);
 void	print_err_builtin(char *cmd, char *arg, char *msg);
-
+int		valid_key(char *cmd_arg, bool is_unset);
 
 // builtin_export_utils.c
 char	*extract_key(char *cmd_arg);
