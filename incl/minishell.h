@@ -50,7 +50,8 @@ typedef struct	s_token
 	t_type	type;
 	int		index;
 	char	*content;
-	int		is_unset;
+	bool	is_var_empty;
+	bool	is_var_only;
 
 }	t_token;
 

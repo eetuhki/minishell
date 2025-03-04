@@ -41,8 +41,8 @@ static int	append_str_to_expansion(t_expansion *xp, char *str, t_token *token)
 {
 	char	*temp;
 
-	if (token->is_unset)
-		return (SUCCESS);
+	if (token->is_var_empty)
+        str = "";
 	temp = ft_strjoin(xp->expanded_str, str);
 	if (!temp)
 	{
@@ -79,10 +79,8 @@ static int	expand_env_variable(t_mini *mini, t_expansion *xp, char **input, t_to
 	if (!xp->env_value)
 	{
 		xp->env_value = NULL;
-		token->is_unset = 1;
+		token->is_var_empty = true;
 	}
-	else
-        token->is_unset = 0;
 	if (append_str_to_expansion(xp, xp->env_value, token) == FAIL)
 		return (FAIL);
 	(*input) += var_len;
