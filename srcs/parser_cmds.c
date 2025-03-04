@@ -43,6 +43,20 @@ static int	tokenize_cmd_string(t_mini *mini, t_cmd *cmd)
 	return (SUCCESS);
 }
 
+static void	is_token_var_only(t_token *token, char *var)
+{
+	char *temp;
+
+	if (*var == '$' && var[1] != '\0' && var[1] != ' ')
+	{
+		temp = var + 1;
+		while (*temp && (ft_isalnum(*temp) || *temp == '_'))
+			temp++;
+		if (*temp == '\0')
+			token->is_var_only = true;
+    }
+}
+
 static int expand_tokens(t_mini *mini, t_cmd *cmd)
 {
     int		i;
@@ -53,10 +67,12 @@ static int expand_tokens(t_mini *mini, t_cmd *cmd)
     {
         if (cmd->tokens[i].type != LIMITER)
         {
+			is_token_var_only(&cmd->tokens[i], cmd->tokens[i].content);
             if (expand_variables(mini, &cmd->tokens[i], &cmd->tokens[i].content) == FAIL)
 				return (FAIL);
-			if (cmd->tokens[i].is_unset)
+			if (cmd->tokens[i].is_var_empty && cmd->tokens[i].is_var_only)
 			{
+				free_ptr(cmd->tokens[i].content);
 				cmd->tokens[i].content = NULL;
 			}
         }
