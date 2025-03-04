@@ -39,7 +39,6 @@ static int	process_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 		free_ptr(line);
 		return (FAIL);
 	}
-	printf("hd expand:%d", mini->heredoc_expand);
 	if (mini->heredoc_expand == true)
 		expand_variables(mini, token, &line);
 	ft_putstr_fd(line, cmd->hd_fd);
