@@ -32,7 +32,7 @@ static int	free_return(char **key, char **value, int ret_value)
 	return (ret_value);
 }
 
-static	int	check_valid_key(char *cmd_arg)
+static	int	validate_export_key(char *cmd_arg)
 {
 	if (!valid_key(cmd_arg, false))
 	{
@@ -51,7 +51,7 @@ int	ft_export_single(t_mini *mini, char *cmd_arg)
 	char	*value;
 	int		env_var_index;
 
-	if (check_valid_key(cmd_arg) == FAIL)
+	if (validate_export_key(cmd_arg) == FAIL)
 		return (FAIL);
 	key = extract_key(cmd_arg);
 	value = extract_value(cmd_arg);
