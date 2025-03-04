@@ -191,6 +191,8 @@ int		wait_single(t_mini *mini, pid_t pid, int *status);
 int		setup_redirs(t_mini *mini, t_cmd *cmd);
 int		handle_redirs(t_cmd *cmd, bool in_pipe, t_mini *mini);
 void	reset_std_fds(t_mini *mini);
+int		handle_infile_redir(t_cmd *cmd);
+int		handle_outfile_redir(t_cmd *cmd);
 
 // heredocs
 int		handle_heredocs(t_mini *mini);
