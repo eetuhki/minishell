@@ -1,5 +1,22 @@
 #include "../incl/minishell.h"
 
+void	free_env(t_mini *mini)
+{
+	int	i;
+
+	if (!mini->env)
+		return;
+	i = 0;
+	while (mini->env[i])
+	{
+		free(mini->env[i]);
+		mini->env[i] = NULL;
+		i++;
+	}
+	free(mini->env);
+	mini->env = NULL;
+}
+
 void	free_tokens(t_cmd *cmd, t_token *token)
 {
 	int	i;
@@ -64,7 +81,7 @@ void	free_and_exit(t_mini *mini)
 	free_ptr(mini->input);
 	clean_hd_temps(mini);
 	free_cmds(mini);
-	free_arr(mini->env);
+	free_env(mini);
 	free_cmds_tbl(mini->cmds_tbl);
 	mini->cmds_tbl = NULL;
 	free_ptr(mini->pids);
