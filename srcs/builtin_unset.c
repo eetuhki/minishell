@@ -61,7 +61,6 @@ int	ft_unset(t_mini *mini, char **cmd_args)
 	int	i;
 	int	ret;
 
-
 	if (!mini || !mini->env || !*mini->env || !cmd_args || !*cmd_args)
 		return (0);
 	i = 1;
@@ -70,7 +69,8 @@ int	ft_unset(t_mini *mini, char **cmd_args)
 	{
 		if (!valid_key(cmd_args[i], true))
 		{
-			print_err_builtin("unset: `",cmd_args[i], "': not a valid identifier");
+			print_err_builtin("unset: `", cmd_args[i],
+				"': not a valid identifier");
 			ret = FAIL;
 			i++;
 			continue ;

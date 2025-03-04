@@ -21,6 +21,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		error.c \
 		execute.c \
 		execute_redir.c \
+		execute_redir_utils.c \
 		execute_utils.c \
 		execute_wait.c \
 		expansion.c \
