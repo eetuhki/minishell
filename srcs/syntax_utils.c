@@ -39,14 +39,16 @@ size_t	skip_quotes(char *input)
 	if (input[i] == SQUOTE)
 	{
 		i++;
-		while (input[i] && input[i] != SQUOTE)
+		while (input[i] != '\0' && input[i] != SQUOTE)
 			i++;
 	}
 	else if (input[i] == DQUOTE)
 	{
 		i++;
-		while (input[i] && input[i] != DQUOTE)
+		while (input[i] != '\0' && input[i] != DQUOTE)
 			i++;
 	}
+	if (input[i] == '\0')
+		return (i - 1);
 	return (i);
 }

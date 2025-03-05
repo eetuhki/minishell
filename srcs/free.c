@@ -6,7 +6,7 @@ void	free_arr(char **arr)
 	size_t	i;
 
 	if (!arr)
-		return;
+		return ;
 	i = 0;
 	while (arr[i])
 	{
@@ -30,6 +30,7 @@ void	free_ptr(void *ptr)
 		ptr = NULL;
 	}
 }
+
 // frees a char * if not NULL and sets it to NULL
 void	free_str(char **ptr)
 {
@@ -39,6 +40,7 @@ void	free_str(char **ptr)
 		*ptr = NULL;
 	}
 }
+
 // frees a * of any type if not NULL and sets it to NULL
 // returns FAIL
 int	free_ptr_fail(void *ptr)
@@ -57,7 +59,7 @@ void	free_cmds_tbl(char ***cmds_tbl)
 	size_t	i;
 
 	if (!cmds_tbl || !*cmds_tbl)
-		return;
+		return ;
 	i = 0;
 	while (cmds_tbl[i])
 	{

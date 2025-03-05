@@ -11,30 +11,29 @@ int	wait_single(t_mini *mini, pid_t pid, int *status)
 	signal(SIGINT, sig_handler_wait);
 	waitpid(pid, status, 0);
 	mini->exit_code = WEXITSTATUS(*status);
-	//printf("EXIT CODE at SINGLE mini->exitcode = [%d]\n ", mini->exit_code);
 	sig_init();
 	return (SUCCESS);
 }
 
 int	wait_multi(t_mini *mini)
 {
-    int	i;
-    int	status;
-    int	last_exit = 0;
+	int	i;
+	int	status;
+	int	last_exit;
 
-    i = 0;
+	i = 0;
 	status = 0;
+	last_exit = 0;
 	signal(SIGINT, sig_handler_wait);
-    while (i <= mini->pipes)
-    {
-        waitpid(mini->pids[i], &status, 0);
-        last_exit = WEXITSTATUS(status); // Store only the last command's exit status
-        i++;
-    }
-    mini->exit_code = last_exit;
-	//printf("EXIT CODE at MULTI last_exit=[%d] and mini->exitcode = [%d]\n ", last_exit, mini->exit_code);
+	while (i <= mini->pipes)
+	{
+		waitpid(mini->pids[i], &status, 0);
+		last_exit = WEXITSTATUS(status);
+		i++;
+	}
+	mini->exit_code = last_exit;
 	sig_init();
-    return (SUCCESS);
+	return (SUCCESS);
 }
 
 // int	wait_multi(t_mini *mini)
