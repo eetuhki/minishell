@@ -93,8 +93,10 @@ void	exec_with_pipes(t_mini *mini)
 		i++;
 	}
 	if (mini->in_fd != STDIN)
-		close_fd(&mini->in_fd); // Close last read end after loop
-	wait_multi(mini);
+    	close_fd(&mini->in_fd); // Close last read end after loop
+	close_fd(&mini->cmds[i]->in_file);
+	close_fd(&mini->cmds[i]->out_file);
+    wait_multi(mini);
 	mini->in_fd = STDIN;
 }
 

@@ -7,6 +7,8 @@ void	handle_fds(t_mini *mini, pid_t pid, int i)
 	if (mini->in_fd != STDIN)
 		close_fd(&mini->in_fd);
 	mini->in_fd = mini->fd[0];
+	close_fd(&mini->cmds[i]->in_file);
+	close_fd(&mini->cmds[i]->out_file);
 }
 
 int	check_pid(pid_t pid)
