@@ -6,7 +6,7 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:14:51 by eelaine           #+#    #+#             */
-/*   Updated: 2025/02/03 15:22:17 by eelaine          ###   ########.fr       */
+/*   Updated: 2025/03/05 11:21:02 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*ft_strndup(const char *s, size_t n)
 	char	*s2;
 
 	i = 0;
-
 	while (s[i] && i < n)
 		i++;
 	s2 = (char *)malloc(sizeof(char) * (i + 1));

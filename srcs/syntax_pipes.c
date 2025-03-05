@@ -7,20 +7,16 @@
 int	syntax_pipes(t_mini *mini)
 {
 	size_t	i;
-	size_t	skip;
 
 	if (mini->input[0] == '|')
 		return (syntax_print_error(mini->input[0]));
 	i = 0;
-	skip = 0;
 	while (mini->input[i])
 	{
-		skip = skip_quotes(&mini->input[i]);
-		if (skip)
-			i += skip;
-		if (mini->input[i] == '|')
+		if (mini->input[i] && mini->input[i] == '|'
+			&& !check_quotes(mini->input, i))
 		{
-			if (mini->input[i + 1] == '|' || mini->input[i + 1] == '\0'
+			if (mini->input[i + 1] == '\0' || mini->input[i + 1] == '|'
 				|| pipe_is_whitespace(mini->input, i))
 				return (syntax_print_error('|'));
 		}

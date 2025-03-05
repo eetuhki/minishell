@@ -1,26 +1,5 @@
 #include "../incl/minishell.h"
 
-/*
-int	parse_cmds(t_mini *mini)
-{
-	int	i;
-
-	i = 0;
-	while (mini->cmds[i])
-	{
-		if (parse_individual_cmd(mini, mini->cmds[i]) == FAIL)
-		{
-			mini->exit_code = 1;
-			return (FAIL);
-		}
-		expand_variables(mini, mini->cmds[i]->og_str, &mini->cmds[i]->expd_str);
-		if (mini->cmds[i]->expd_str != NULL && mini->cmds[i]->expd_str[0] != '\0')
-			printf("The expanded var = %s\n", mini->cmds[i]->expd_str);
-		i++;
-	}
-	return (SUCCESS);
-}*/
-
 // count the number of pipes within the input prompt (if unquoted)
 static int	count_pipes(t_mini *mini)
 {
@@ -41,7 +20,6 @@ static void	init_cmd_elements(t_cmd *cmd)
 {
 	cmd->cmd_name = NULL;
 	cmd->heredoc_name = NULL;
-	//cmd->heredoc_index = 0;
 	cmd->hd_fd = -1;
 	cmd->og_str = NULL;
 	cmd->cmd_num = 0;

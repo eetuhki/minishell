@@ -2,8 +2,6 @@
 
 static char	*get_filename(t_cmd *cmd)
 {
-	//char	*suffix;
-	//char	*tmp;
 	char	*filename;
 
 	if (cmd->heredoc_name)
@@ -11,11 +9,7 @@ static char	*get_filename(t_cmd *cmd)
 		free_ptr(cmd->heredoc_name);
 		cmd->heredoc_name = NULL;
 	}
-	//suffix = ft_itoa(cmd->heredoc_index);
-	//tmp = ft_strjoin(TMP_PATH, suffix);
-	//free_ptr(suffix);
 	filename = ft_strdup(TMP_PATH);
-	//free_ptr(tmp);
 	unlink(filename);
 	return (filename);
 }
@@ -50,23 +44,21 @@ static int	process_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 static int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 {
 	cmd->hd_fd = open(cmd->heredoc_name, O_RDWR | O_EXCL | O_CREAT, 0600);
-	//printf("opened heredoc name -> [%s] with cmd->hd_fd FD: [%d]\n", cmd->heredoc_name, cmd->hd_fd);
 	check_fd(cmd->hd_fd);
 	rl_event_hook = heredoc_sigint_hook;
 	while (1)
 	{
 		if (process_heredoc(mini, cmd, token) == FAIL)
-			break;
+			break ;
 	}
 	rl_event_hook = NULL;
 	g_sig = 0;
 	close_fd(&cmd->hd_fd);
 	cmd->hd_fd = -1;
-	//printf("closed heredoc cmd->hd_fd  FD: [%d]\n", cmd->hd_fd);
-	//mini->heredoc_expand = false;
 	if (cmd->eof_exit)
 	{
-		ft_putstr_fd("mini: warning: here-document delimited by end-of-file (wanted `", 2);
+		ft_putstr_fd("mini: warning: here-document delimited by ", 2);
+		ft_putstr_fd("by end-of-file (wanted `", 2);
 		ft_putstr_fd(token->content, 2);
 		ft_putendl_fd("')", 2);
 	}
@@ -88,7 +80,6 @@ static int	handle_single_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 	cmd->heredoc_name = get_filename(cmd);
 	if (get_heredoc(mini, cmd, token) == FAIL)
 		return (FAIL);
-	//cmd->in_file = cmd->hd_fd;
 	return (SUCCESS);
 }
 
@@ -105,8 +96,8 @@ int	handle_heredocs(t_mini *mini)
 		{
 			if (mini->cmds[i]->tokens[j].type == LIMITER)
 			{
-				//mini->cmds[i]->heredoc_index++;
-				if (handle_single_heredoc(mini, mini->cmds[i], &mini->cmds[i]->tokens[j]) == FAIL)
+				if (handle_single_heredoc(mini, mini->cmds[i],
+						&mini->cmds[i]->tokens[j]) == FAIL)
 					return (FAIL);
 			}
 			j++;

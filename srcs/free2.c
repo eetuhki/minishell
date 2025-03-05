@@ -5,7 +5,7 @@ void	free_env(t_mini *mini)
 	int	i;
 
 	if (!mini->env)
-		return;
+		return ;
 	i = 0;
 	while (mini->env[i])
 	{
@@ -22,7 +22,7 @@ void	free_tokens(t_cmd *cmd, t_token *token)
 	int	i;
 
 	if (!token)
-		return;
+		return ;
 	i = 0;
 	while (i < cmd->token_count && &cmd->tokens[i])
 	{
@@ -40,7 +40,7 @@ void	free_tokens(t_cmd *cmd, t_token *token)
 void	free_cmd(t_cmd *cmd)
 {
 	if (!cmd)
-		return;
+		return ;
 	if (cmd->tokens)
 		free_tokens(cmd, cmd->tokens);
 	if (cmd->cmd_name)

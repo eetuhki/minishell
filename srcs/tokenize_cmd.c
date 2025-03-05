@@ -5,8 +5,10 @@ void	check_for_builtins(t_cmd *cmd, t_token *token)
 	if (!token->content || token->type || cmd->cmd_found)
 		return ;
 	if (!ft_strcmp(token->content, "echo") || !ft_strcmp(token->content, "cd")
-		|| !ft_strcmp(token->content, "pwd") || !ft_strcmp(token->content, "export")
-		|| !ft_strcmp(token->content, "exit") || !ft_strcmp(token->content, "unset")
+		|| !ft_strcmp(token->content, "pwd")
+		|| !ft_strcmp(token->content, "export")
+		|| !ft_strcmp(token->content, "exit")
+		|| !ft_strcmp(token->content, "unset")
 		|| !ft_strcmp(token->content, "env"))
 	{
 		token->type = BUILTIN;

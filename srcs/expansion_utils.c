@@ -93,9 +93,9 @@ int	expand_exit_status(t_mini *mini, t_expansion *xp, char **input)
 }
 
 //copies expantion result to the str pointer
-void copy_expantion_res(char **str, t_expansion xp)
+void	copy_expantion_res(char **str, t_expansion xp)
 {
 	if (*str)
 		free_ptr(*str);
-    *str = xp.expanded_str;
+	*str = xp.expanded_str;
 }

@@ -1,6 +1,6 @@
 #include "../incl/minishell.h"
 
-void err_cmd_is_dir(char *cmd)
+void	err_cmd_is_dir(char *cmd)
 {
 	if (cmd)
 	{
@@ -38,5 +38,4 @@ void	exec_fail(t_mini *mini, char *cmd)
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(strerror(errno), 2);
 	mini->exit_code = 1;
-	//exit(mini->exit_code);
 }

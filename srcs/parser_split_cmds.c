@@ -5,7 +5,6 @@ static char	*skip_whitespace(char *og_str)
 {
 	int	start;
 	int	end;
-	//int	len;
 
 	if (!og_str)
 		return (NULL);
@@ -15,7 +14,6 @@ static char	*skip_whitespace(char *og_str)
 		start++;
 	while (end >= start && ft_isspace(og_str[end]))
 		end--;
-	//len = end - start + 1;
 	ft_strcpy(og_str, og_str + start);
 	return (og_str);
 }

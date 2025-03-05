@@ -3,10 +3,10 @@
 void	handle_fds(t_mini *mini, pid_t pid, int i)
 {
 	mini->pids[i] = pid;
-	close_fd(&mini->fd[1]); // Parent closes write end immediately
-	if (mini->in_fd != STDIN) // Close the old read end
+	close_fd(&mini->fd[1]);
+	if (mini->in_fd != STDIN)
 		close_fd(&mini->in_fd);
-	mini->in_fd = mini->fd[0]; // Store the read end for the next iteration
+	mini->in_fd = mini->fd[0];
 	close_fd(&mini->cmds[i]->in_file);
 	close_fd(&mini->cmds[i]->out_file);
 }
@@ -43,7 +43,6 @@ int	builtin_only(char *cmd)
 {
 	if (!cmd)
 		return (false);
-	//$VAR after expansion is cat but type = arg
 	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd")
 		|| !ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export")
 		|| !ft_strcmp(cmd, "exit") || !ft_strcmp(cmd, "unset")
@@ -52,15 +51,6 @@ int	builtin_only(char *cmd)
 		return (true);
 	}
 	return (false);
- 	/* if (cmd->tokens[0].content)
-	{
-		printf("cmd->tokens[i].content")
-		if (cmd->tokens[i].type != BUILTIN && cmd->tokens[i].type != ARG
-			&& cmd->cmd_found)
-			return (false);
-		i++;
-	}
-	return (true); */
 }
 
 int	cmd_table_size(t_mini *mini)
