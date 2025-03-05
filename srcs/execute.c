@@ -100,7 +100,7 @@ void	exec_with_pipes(t_mini *mini)
 
 int		execute(t_mini *mini)
 {
-	if (!mini || !mini->cmds_tbl || !*mini->cmds_tbl[0])
+	if (!mini || !mini->cmds_tbl || !*mini->cmds_tbl || !*mini->cmds_tbl[0])
 		return (0);
 	if (cmd_table_size(mini) == 1)
 	{
