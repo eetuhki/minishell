@@ -76,6 +76,8 @@ void	exec_with_pipes(t_mini *mini)
 	pid_t	pid;
 
 	i = 0;
+	if (mini->pids)
+		free_ptr(mini->pids);
     mini->pids = ft_calloc((size_t)(mini->pipes + 1), sizeof(pid_t));
     if (!mini->pids)
         return;
