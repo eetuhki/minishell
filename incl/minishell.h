@@ -45,7 +45,7 @@ typedef enum e_type
 	APP_OUT,
 }	t_type;
 
-typedef struct	s_token
+typedef struct s_token
 {
 	t_type	type;
 	int		index;
@@ -71,7 +71,6 @@ typedef struct s_cmd
 	bool	cmd_found;
 	char	*cmd_name;
 	char	*heredoc_name;
-	//int		heredoc_index;
 	int		hd_fd;
 	int		in_file;
 	int		out_file;
@@ -85,7 +84,7 @@ typedef struct s_expansion
 	bool	in_double_quote;
 	char	*env_value;
 	char	*expanded_str;
-} t_expansion;
+}	t_expansion;
 
 typedef struct s_mini
 {
@@ -99,7 +98,7 @@ typedef struct s_mini
 	char	*prev_input;
 	char	**env;
 	int		exit_code;
-	char    ***cmds_tbl;
+	char	***cmds_tbl;
 	int		in_fd;
 	int		fd[2];
 	int		std_fds[2];
@@ -216,7 +215,7 @@ int		skip_word(char *str, int i);
 int		split_cmds(t_mini *mini);
 int		split_redir(char *str, int i);
 int		split_tokens(t_cmd *cmd);
-int     tokenize_cmd_segment(t_mini *mini, t_cmd *cmd);
+int		tokenize_cmd_segment(t_mini *mini, t_cmd *cmd);
 void	tokenize_cmd(t_mini *mini, t_cmd *cmd, t_token *token);
 void	tokenize_in_out(t_token *token, int token_count);
 void	tokenize_redir(t_token *token);

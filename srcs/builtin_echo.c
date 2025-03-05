@@ -19,8 +19,8 @@ static bool	n_flag(char *arg)
 }
 
 // checks whether the argument following echo is the -n option
-// if -n flag: set the flag to true, write the next arguments and don't print '\n'
-// else: print out arguments one-bb
+// if -n flag: set the flag to true, write the next arguments
+// and don't print '\n'. else: print out arguments one-bb
 // followed by the newline
 int	ft_echo(char **args)
 {

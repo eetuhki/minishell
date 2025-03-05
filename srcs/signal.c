@@ -1,15 +1,5 @@
 #include "../incl/minishell.h"
 
-int	heredoc_sigint_hook(void)
-{
-	if (g_sig)
-	{
-		rl_replace_line("", 0);
-		rl_done = 1;
-	}
-	return (0);
-}
-
 static void	sig_handler(int sig)
 {
 	if (sig == SIGINT)

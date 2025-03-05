@@ -72,7 +72,7 @@ void	child_process(t_mini *mini, int i)
 
 void	exec_with_pipes(t_mini *mini)
 {
-    int		i;
+	int		i;
 	pid_t	pid;
 
 	i = 0;
@@ -80,21 +80,21 @@ void	exec_with_pipes(t_mini *mini)
 		free_ptr(mini->pids);
     mini->pids = ft_calloc((size_t)(mini->pipes + 1), sizeof(pid_t));
     if (!mini->pids)
-        return;
+        return ;
     while (i <= mini->pipes && mini->cmds[i])
     {
-        if (i < mini->pipes && pipe(mini->fd) == -1)  // Create a new pipe for all except last command
+		if (i < mini->pipes && pipe(mini->fd) == -1)  // Create a new pipe for all except last command
 			return(perror("mini: pipe failed"));
-        pid = fork();
+		pid = fork();
 		if (pid == 0)  // Child process
 			child_process(mini, i); 
 		else
 			handle_fds(mini, pid, i);
-        i++;
-    }
+		i++;
+	}
 	if (mini->in_fd != STDIN)
-    	close_fd(&mini->in_fd); // Close last read end after loop
-    wait_multi(mini);
+		close_fd(&mini->in_fd); // Close last read end after loop
+	wait_multi(mini);
 	mini->in_fd = STDIN;
 }
 
