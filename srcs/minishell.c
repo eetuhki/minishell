@@ -47,7 +47,11 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		get_input(mini);
-		syntax_check(mini);
+		if (syntax_check(mini) == FAIL)
+		{
+			mini->exit_code = 2;
+			continue ;
+		}
 		parser(mini);
 		prepare_cmd_table(mini);
 		execute(mini);
