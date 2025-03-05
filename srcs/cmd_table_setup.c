@@ -54,9 +54,11 @@ static int	fill_cmd_table(t_cmd *cmd, char	**cmd_table)
 	return (SUCCESS);
 }
 
-static bool needs_full_path(char *cmd)
+static bool	needs_full_path(char *cmd)
 {
-	if (ft_strcmp(cmd, ".") != 0 && ft_strcmp(cmd, "..") != 0 && !ft_strchr(cmd, '/') && !input_is_whitespace(cmd))
+	if (ft_strcmp(cmd, ".") != 0 && ft_strcmp(cmd, "..") != 0
+		&& !ft_strchr(cmd, '/') && !input_is_whitespace(cmd)
+		&& !builtin_only(cmd))
 		return (true);
 	return (false);
 }
