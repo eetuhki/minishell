@@ -76,9 +76,11 @@ void	exec_with_pipes(t_mini *mini)
 	pid_t	pid;
 
 	i = 0;
-	mini->pids = ft_calloc((size_t)(mini->pipes + 1), sizeof(pid_t));
-	if (!mini->pids)
-		return ;
+	if (mini->pids)
+		free_ptr(mini->pids);
+    mini->pids = ft_calloc((size_t)(mini->pipes + 1), sizeof(pid_t));
+    if (!mini->pids)
+        return ;
     while (i <= mini->pipes && mini->cmds[i])
     {
 		if (i < mini->pipes && pipe(mini->fd) == -1)  // Create a new pipe for all except last command
