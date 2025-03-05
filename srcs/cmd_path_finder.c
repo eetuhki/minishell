@@ -70,10 +70,11 @@ static char	*get_full_cmd_path(char *cmd, char **env)
 void	check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env)
 {
 	char	*full_path;
+	(void)cmd;
 
 	full_path = NULL;
 	if (cmd_table && cmd_table[0]
-		&& (cmd->tokens[0].type == CMD || cmd->tokens[0].type == ARG))
+		/* && (cmd->tokens[0].type == CMD || cmd->tokens[0].type == ARG ) */)
 	{
 		full_path = get_full_cmd_path(cmd_table[0], env);
 		if (full_path)
