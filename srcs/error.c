@@ -35,3 +35,12 @@ void	exec_fail(t_mini *mini, char *cmd)
 	ft_putendl_fd(strerror(errno), 2);
 	mini->exit_code = 1;
 }
+
+void	print_error(char *cmd, char *msg)
+{
+	if (dup2(STDERR, STDOUT) < 0)
+	{
+		ft_putstr_fd("mini : dup2 failed\n", 2);
+	}
+	printf("mini: %s: %s\n", cmd, msg);
+}

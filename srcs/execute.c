@@ -65,7 +65,7 @@ void	child_process(t_mini *mini, int i)
 	{
 		if (dup2(mini->in_fd, STDIN) < 0)
 		{
-			ft_putstr_fd("mini : dup failed\n", 2);
+			ft_putstr_fd("mini : dup2 failed\n", 2);
 			mini->exit_code = 1;
 			free_and_exit(mini);
 		}
@@ -75,7 +75,7 @@ void	child_process(t_mini *mini, int i)
 	{
 		if (dup2(mini->fd[1], STDOUT) < 0)
 		{
-			ft_putstr_fd("mini : dup failed\n", 2);
+			ft_putstr_fd("mini : dup2 failed\n", 2);
 			mini->exit_code = 1;
 			free_and_exit(mini);
 		}

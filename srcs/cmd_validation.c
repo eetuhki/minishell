@@ -1,11 +1,5 @@
 #include "../incl/minishell.h"
 
-void print_error(char *cmd, char *msg)
-{
-	dup2(STDERR, STDOUT);
-	printf("mini: %s: %s\n", cmd, msg);
-}
-
 int	check_executable(char *cmd)
 {
 	if (access(cmd, X_OK) != 0)
@@ -61,7 +55,7 @@ int	check_directory(char *cmd, struct stat *path_stat, int *exit_code)
 
 int	check_cmd_validity(char *cmd)
 {
-	struct stat path_stat;
+	struct stat	path_stat;
 	int			exit_code;
 
 	exit_code = 0;
