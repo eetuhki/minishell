@@ -101,6 +101,7 @@ int	prepare_cmd_table(t_mini *mini)
 		if (!mini->cmds_tbl[i])
 		{
 			free_cmds_tbl(mini->cmds_tbl);
+			mini->exit_code = 1;
 			return (FAIL);
 		}
 		i++;

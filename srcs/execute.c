@@ -26,7 +26,9 @@ int	exec_no_pipes(t_mini *mini)
 		return (builtin_exit);
 	}
 	pid = fork();
-	if (check_pid(pid) == 0)
+	if (check_pid(pid, mini) < 0)
+		return (FAIL);
+	if (pid == 0)
 	{
 		sig_init_child();
 		handle_redirs(mini->cmds[0], true, mini);
@@ -61,12 +63,22 @@ void	child_process(t_mini *mini, int i)
 	sig_init_child();
 	if (mini->in_fd != STDIN)
 	{
-		dup2(mini->in_fd, STDIN);
+		if (dup2(mini->in_fd, STDIN) < 0)
+		{
+			ft_putstr_fd("mini : dup failed\n", 2);
+			mini->exit_code = 1;
+			free_and_exit(mini);
+		}
 		close_fd(&mini->in_fd);
 	}
 	if (i < mini->pipes)
 	{
-		dup2(mini->fd[1], STDOUT);
+		if (dup2(mini->fd[1], STDOUT) < 0)
+		{
+			ft_putstr_fd("mini : dup failed\n", 2);
+			mini->exit_code = 1;
+			free_and_exit(mini);
+		}
 		close_fd(&mini->fd[1]);
 	}
 	close_fd(&mini->fd[0]);
@@ -107,11 +119,8 @@ int	exec_with_pipes(t_mini *mini)
 			return (FAIL);
 		}
 		pid = fork();
-		if (pid < 0)
-		{
-			perror("mini: fork failed");
+		if (check_pid(pid, mini) < 0)
 			return (FAIL);
-		}
 		if (pid == 0)
 			child_process(mini, i);
 		else
@@ -132,12 +141,22 @@ int	execute(t_mini *mini)
 	if (cmd_table_size(mini) == 1)
 	{
 		mini->in_pipe = false;
-		return (exec_no_pipes(mini));
+		if (exec_no_pipes(mini) == FAIL)
+		{
+			mini->exit_code = 1;
+			return (FAIL);
+		}
+		return (SUCCESS);
 	}
 	else if (cmd_table_size(mini) > 1)
 	{
 		mini->in_pipe = true;
-		exec_with_pipes(mini);
+		if (exec_with_pipes(mini) == FAIL)
+		{
+			mini->exit_code = 1;
+			return (FAIL);
+		}
+		return (SUCCESS);
 	}
-	return (0);
+	return (SUCCESS);
 }

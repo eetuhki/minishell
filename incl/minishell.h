@@ -177,7 +177,7 @@ void	check_full_cmd_path(char **cmd_table, char **env);
 
 // execution
 int		builtin_only(char *cmd);
-int		check_pid(pid_t pid);
+int		check_pid(pid_t pid, t_mini *mini);
 void	child_process(t_mini *mini, int i);
 int		cmd_table_size(t_mini *mini);
 int		execute(t_mini *mini);
