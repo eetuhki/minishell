@@ -61,7 +61,6 @@ int	ft_cd(t_mini *mini, char **cmd_args)
 		path = cmd_args[1];
 	if (chdir(path) != 0)
 		return (cd_path_error(path));
-	//here should be some check if dir has been deleted ?
 	update_env_vars(mini);
 	return (SUCCESS);
 }

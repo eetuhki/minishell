@@ -50,11 +50,15 @@ static int	get_heredoc(t_mini *mini, t_cmd *cmd, t_token *token)
 	{
 		if (process_heredoc(mini, cmd, token) == FAIL)
 			break ;
+		if (g_sig)
+			break ;
 	}
 	rl_event_hook = NULL;
-	g_sig = 0;
 	close_fd(&cmd->hd_fd);
 	cmd->hd_fd = -1;
+	if (g_sig)
+		return (handle_early_exit(mini, cmd));
+	g_sig = 0;
 	if (cmd->eof_exit)
 	{
 		ft_putstr_fd("mini: warning: here-document delimited by ", 2);
