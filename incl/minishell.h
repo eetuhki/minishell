@@ -183,7 +183,6 @@ int		execute(t_mini *mini);
 void	exec_fail(t_mini *mini, char *cmd);
 int		exec_no_pipes(t_mini *mini);
 void	handle_fds(t_mini *mini, pid_t pid, int i);
-int		is_there_type(t_mini *mini, t_type type, int i);
 int		wait_multi(t_mini *mini);
 int		wait_single(t_mini *mini, pid_t pid, int *status);
 
