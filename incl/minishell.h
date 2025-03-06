@@ -55,13 +55,6 @@ typedef struct s_token
 
 }	t_token;
 
-/* typedef struct	s_redir
-{
-	char	*file;
-	int		type;
-	bool	expand;
-}	t_redir; */
-
 typedef struct s_cmd
 {
 	t_token	*tokens;
@@ -206,7 +199,6 @@ int		setup_heredocs_redir(t_mini *mini);
 void	check_for_builtins(t_cmd *cmd, t_token *token);
 int		check_quotes(char *input, int limiter);
 void	err_cmd_is_dir(char *cmd);
-void	err_cmd_not_found(char *cmd);
 int		init_tokens(t_cmd *cmd);
 bool	is_redir(int c);
 int		parser(t_mini *mini);

@@ -75,8 +75,8 @@ static int	handle_cmd_files(t_cmd *cmd)
 		}
 		else if (cmd->tokens[i].type == OUTFILE || cmd->tokens[i].type == APP_OUT)
 		{
-			if (open_outfiles(cmd->tokens[i].content, &cmd->out_file, 
-				cmd->tokens[i].type) == FAIL)
+			if (open_outfiles(cmd->tokens[i].content, &cmd->out_file,
+					cmd->tokens[i].type) == FAIL)
 			{
 				cmd->out_file = -2;
 				return (FAIL);

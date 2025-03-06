@@ -20,10 +20,9 @@ static int	num_only(char *str)
 // print error message if argument is not num (or overflowing LONG)
 static void	arg_not_num(t_mini *mini, char *arg)
 {
-	ft_putstr_fd("mini: exit: ", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd("numeric argument required\n", 2);
+	dup2(STDERR, STDOUT);
+	printf("mini: exit: %s: numeric argument required\n", arg);
+	//dup2(STDOUT, STDOUT);
 	rl_clear_history();
 	mini->exit_code = 2;
 	free_and_exit(mini);
@@ -47,7 +46,6 @@ int	ft_exit(t_mini *mini, char **args)
 	long	exit_code;
 
 	exit_code = 0;
-	//reset_std_fds(mini);
 	if (mini->in_pipe == false)
 		ft_putstr_fd("exit\n", 0);
 	if (!args[1])

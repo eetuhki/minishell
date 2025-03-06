@@ -2,8 +2,8 @@
 
 static bool	is_heredoc_last(t_cmd *cmd)
 {
-	int i;
-	bool is_heredoc_last;
+	int		i;
+	bool	is_heredoc_last;
 
 	i = 0;
 	is_heredoc_last = false;
@@ -31,19 +31,15 @@ int	setup_heredocs_redir(t_mini *mini)
 	{
 		if (is_heredoc_last(mini->cmds[i]) && mini->cmds[i]->in_file != -2)
 		{
-			/* printf("mini->cmds[i]->in_file BEFORE [%d]\n", mini->cmds[i]->in_file);
-			ft_putstr_fd("here doc is last\n", 2);
-			ft_putnbr_fd(mini->cmds[i]->hd_fd, 2);
-			ft_putstr_fd(" = hd_fd \n", 2); */
 			if (mini->cmds[i]->in_file != -1)
 				close_fd(&mini->cmds[i]->in_file);
-			mini->cmds[i]->in_file = open(mini->cmds[i]->heredoc_name, O_RDONLY);
+			mini->cmds[i]->in_file = open(mini->cmds[i]->heredoc_name,
+					O_RDONLY);
 			if (mini->cmds[i]->in_file == -1)
 			{
 				err_opening_file(mini->cmds[i]->heredoc_name, errno);
 				return (FAIL);
 			}
-			//printf("mini->cmds[i]->in_file AFTER [%d]\n", mini->cmds[i]->in_file);
 		}
 		i++;
 	}

@@ -2,10 +2,8 @@
 
 void print_error(char *cmd, char *msg)
 {
-    ft_putstr_fd("mini: ", 2);
-    ft_putstr_fd(cmd, 2);
-    ft_putstr_fd(": ", 2);
-    ft_putendl_fd(msg, 2);
+	dup2(STDERR, STDOUT);
+	printf("mini: %s: %s\n", cmd, msg);
 }
 
 int	check_executable(char *cmd)
