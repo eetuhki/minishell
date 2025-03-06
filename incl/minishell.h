@@ -166,13 +166,14 @@ int		ft_unset(t_mini *mini, char **cmd_args);
 
 // command_table_setup.c
 int		prepare_cmd_table(t_mini *mini);
+int		err_exec_malloc(void);
 
 // close.c
 void	close_fds(int *fd);
 void	close_fd(int *fd);
 
 // cmd_path_finder.c
-void	check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env);
+void	check_full_cmd_path(char **cmd_table, char **env);
 
 // execution
 int		builtin_only(char *cmd);
@@ -194,6 +195,7 @@ int		handle_infile_redir(t_cmd *cmd);
 int		handle_outfile_redir(t_cmd *cmd);
 
 // heredocs
+int		handle_early_exit(t_mini *mini, t_cmd *cmd);
 int		handle_heredocs(t_mini *mini);
 void	check_fd(int fd);
 void	clean_hd_temps(t_mini *mini);

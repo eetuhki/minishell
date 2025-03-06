@@ -72,16 +72,15 @@ static int	handle_cmd_files(t_cmd *cmd)
 				cmd->in_file = -2;
 				return (FAIL);
 			}
-			//printf("INFILE opened [%d] , %s \n", cmd->in_file, cmd->tokens[i].content);
 		}
 		else if (cmd->tokens[i].type == OUTFILE || cmd->tokens[i].type == APP_OUT)
 		{
-			if (open_outfiles(cmd->tokens[i].content, &cmd->out_file, cmd->tokens[i].type) == FAIL)
+			if (open_outfiles(cmd->tokens[i].content, &cmd->out_file, 
+				cmd->tokens[i].type) == FAIL)
 			{
 				cmd->out_file = -2;
 				return (FAIL);
 			}
-			//printf("OUTFILE opened [%d] , %s\n", cmd->out_file, cmd->tokens[i].content);
 		}
 		i++;
 	}
@@ -91,7 +90,7 @@ static int	handle_cmd_files(t_cmd *cmd)
 int	process_cmd_files(t_mini *mini)
 {
 	int	i;
-	int ret;
+	int	ret;
 
 	i = 0;
 	ret = SUCCESS;
@@ -101,5 +100,7 @@ int	process_cmd_files(t_mini *mini)
 			ret = FAIL;
 		i++;
 	}
+	if (ret == SUCCESS)
+		mini->exit_code = 0;
 	return (ret);
 }

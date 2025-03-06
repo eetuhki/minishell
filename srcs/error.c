@@ -1,5 +1,11 @@
 #include "../incl/minishell.h"
 
+int	err_exec_malloc(void)
+{
+	ft_putendl_fd("mini: exec: memory allocation failed\n", 2);
+	return (FAIL);
+}
+
 void	err_cmd_is_dir(char *cmd)
 {
 	if (cmd)

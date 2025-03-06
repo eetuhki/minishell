@@ -40,6 +40,21 @@ int		exec_no_pipes(t_mini *mini)
 		wait_single(mini, pid, &status);
 	return (0);
 }
+void	close_inherited_fds(t_mini *mini, int pipe_i)
+{
+	int	i;
+
+	i = 0;
+	while (mini && mini->cmds[i])
+	{
+		if (i != pipe_i)
+		{
+			close_fd(&mini->cmds[i]->in_file);
+			close_fd(&mini->cmds[i]->out_file);
+		}
+		i++;
+	}
+}
 
 void	child_process(t_mini *mini, int i)
 {
@@ -56,6 +71,7 @@ void	child_process(t_mini *mini, int i)
 	}
 	close_fd(&mini->fd[0]);
 	close_fd(&mini->fd[1]);
+	close_inherited_fds(mini , i);
 	handle_redirs(mini->cmds[i], true, mini); // Handle file redirections
 	if (builtin_only(*mini->cmds_tbl[i]))
 	{
