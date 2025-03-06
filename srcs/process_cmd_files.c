@@ -16,7 +16,6 @@ static int	open_infile(char *file_name, int *in_file)
 {
 	if (*in_file != -1)
 	{
-		//printf("closing infile FD: [%d] before opening new infile [%s]\n", *in_file, file_name);
 		close_fd(in_file);
 	}
 	*in_file = open(file_name, O_RDONLY);
@@ -30,8 +29,8 @@ static int	open_infile(char *file_name, int *in_file)
 
 static int	open_outfiles(char *file_name, int *out_file, int type)
 {
-	int temp_fd;
-	int flags;
+	int	temp_fd;
+	int	flags;
 
 	temp_fd = open(file_name, __O_DIRECTORY);
 	if (temp_fd != -1)
@@ -42,7 +41,6 @@ static int	open_outfiles(char *file_name, int *out_file, int type)
 	}
 	if (*out_file != -1)
 	{
-		//printf("closing prev outfile [%s] <- newfile \n", file_name);
 		close_fd(out_file);
 	}
 	if (type == OUTFILE)
@@ -60,7 +58,7 @@ static int	open_outfiles(char *file_name, int *out_file, int type)
 
 static int	handle_cmd_files(t_cmd *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (cmd && cmd->tokens && cmd->tokens[i].content)
@@ -73,7 +71,7 @@ static int	handle_cmd_files(t_cmd *cmd)
 				return (FAIL);
 			}
 		}
-		else if (cmd->tokens[i].type == OUTFILE || cmd->tokens[i].type == APP_OUT)
+		if (cmd->tokens[i].type == OUTFILE || cmd->tokens[i].type == APP_OUT)
 		{
 			if (open_outfiles(cmd->tokens[i].content, &cmd->out_file,
 					cmd->tokens[i].type) == FAIL)
