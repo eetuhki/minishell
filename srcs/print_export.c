@@ -31,8 +31,8 @@ static void	sort_env(char **env_copy, ssize_t size)
 }
 
 // Prints an env't variable in the format => declare -x key="value"
-// If the env var has a value (indicated by '='), it's value will be printed in double quotes.
-// if not only the key is printed.
+// If the env var has a value (indicated by '='), it's value will be
+// printed in double quotes. if not only the key is printed.
 static void	print_variable(char *env_var)
 {
 	int	j;
