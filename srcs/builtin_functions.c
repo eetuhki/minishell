@@ -27,7 +27,10 @@ int	ft_pwd(int fd)
 	curr_dir = NULL;
 	curr_dir = getcwd(curr_dir, 0);
 	if (!curr_dir)
+	{
+		print_err_builtin("pwd: ", NULL, strerror(errno));
 		return (FAIL);
+	}
 	ft_putendl_fd(curr_dir, fd);
 	free(curr_dir);
 	return (SUCCESS);
@@ -47,7 +50,7 @@ int	ft_cd(t_mini *mini, char **cmd_args)
 
 	if (cmd_args[1] && cmd_args[2])
 		return (cd_too_many_args(mini));
-	if (!cmd_args[1] || *cmd_args[1] == '\0')
+	if (!cmd_args[1])
 	{
 		home = env_get_var(mini, "HOME");
 		if (!home)
@@ -57,6 +60,8 @@ int	ft_cd(t_mini *mini, char **cmd_args)
 		}
 		path = home;
 	}
+	else if (*cmd_args[1] == '\0')
+		return (SUCCESS);
 	else
 		path = cmd_args[1];
 	if (chdir(path) != 0)
