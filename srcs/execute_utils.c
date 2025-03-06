@@ -11,13 +11,14 @@ void	handle_fds(t_mini *mini, pid_t pid, int i)
 	close_fd(&mini->cmds[i]->out_file);
 }
 
-int	check_pid(pid_t pid)
+int	check_pid(pid_t pid, t_mini *mini)
 {
 	if (pid == -1)
 	{
 		ft_putstr_fd("mini: ", 2);
 		ft_putstr_fd("fork failed", 2);
 		ft_putstr_fd("\n", 2);
+		mini->exit_code = 1;
 	}
 	return (pid);
 }
