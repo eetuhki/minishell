@@ -73,7 +73,7 @@ void	child_process(t_mini *mini, int i)
 	close_fd(&mini->fd[1]);
 	close_inherited_fds(mini , i);
 	handle_redirs(mini->cmds[i], true, mini); // Handle file redirections
-	if (is_there_type(mini, BUILTIN, i))
+	if (builtin_only(*mini->cmds_tbl[i]))
 	{
 		if (handle_builtin(mini, i) == FAIL)
 			mini->exit_code = EXIT_FAILURE;
@@ -120,16 +120,11 @@ int		execute(t_mini *mini)
 		return (0);
 	if (cmd_table_size(mini) == 1)
 	{
-		//ft_putstr_fd("EXEC NO pipes \n", 2);
-		// TODO free everything here without exiting
 		mini->in_pipe = false;
 		return (exec_no_pipes(mini));
 	}
 	else if (cmd_table_size(mini) > 1)
 	{
-		/* ft_putstr_fd("EXEC with pipes\n", 2);
-		ft_putstr_fd("MINI->in_fd before exec_with_pipes()\n", 2);
-		ft_putnbr_fd(mini->in_fd, 2); */
 		mini->in_pipe = true;
 		exec_with_pipes(mini);
 	}
