@@ -67,10 +67,9 @@ static char	*get_full_cmd_path(char *cmd, char **env)
 	return (full_path);
 }
 
-void	check_full_cmd_path(char **cmd_table, t_cmd *cmd, char **env)
+void	check_full_cmd_path(char **cmd_table, char **env)
 {
 	char	*full_path;
-	(void)cmd;
 
 	full_path = NULL;
 	if (cmd_table && cmd_table[0]

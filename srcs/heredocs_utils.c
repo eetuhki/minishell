@@ -1,5 +1,13 @@
 #include "../incl/minishell.h"
 
+int	handle_early_exit(t_mini *mini, t_cmd *cmd)
+{
+	g_sig = 0;
+	unlink(cmd->heredoc_name);
+	mini->exit_code = 130;
+	return (FAIL);
+}
+
 int	heredoc_sigint_hook(void)
 {
 	if (g_sig)

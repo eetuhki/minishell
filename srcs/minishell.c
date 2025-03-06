@@ -52,7 +52,8 @@ int	main(int ac, char **av, char **env)
 			mini->exit_code = 2;
 			continue ;
 		}
-		parser(mini);
+		if (parser(mini) == FAIL)
+			continue ;
 		prepare_cmd_table(mini);
 		execute(mini);
 	}
