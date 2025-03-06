@@ -155,7 +155,6 @@ void	validate_cmd_access(t_mini *mini, char *cmd);
 void	print_error(char *cmd, char *msg);
 
 // close.c
-void	close_fds(int *fd);
 void	close_fd(int *fd);
 
 // cmd_path_finder.c
@@ -172,6 +171,10 @@ int		exec_no_pipes(t_mini *mini);
 void	handle_fds(t_mini *mini, pid_t pid, int i);
 int		wait_multi(t_mini *mini);
 int		wait_single(t_mini *mini, pid_t pid, int *status);
+void	close_inherited_fds(t_mini *mini, int pipe_i);
+int		allocate_pids(t_mini *mini);
+int		create_pipe(int fd[2]);
+void	pipe_redirect(t_mini *mini, int i);
 
 //execution_redis
 int		setup_redirs(t_mini *mini, t_cmd *cmd);
