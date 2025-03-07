@@ -36,9 +36,6 @@ static int	exec_no_pipes(t_mini *mini)
 	return (SUCCESS);
 }
 
-// If not first command, use previous pipe as stdin
-// If it's NOT the last command, redirect stdout to pipe
-// Handle file redirections
 static void	child_process(t_mini *mini, int i)
 {
 	sig_init_child();
@@ -57,8 +54,6 @@ static void	child_process(t_mini *mini, int i)
 	free_and_exit(mini);
 }
 
-// Create a new pipe for all except last command
-// Close last read end after loop
 static int	exec_with_pipes(t_mini *mini)
 {
 	int		i;
