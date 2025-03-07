@@ -22,7 +22,6 @@ static void	arg_not_num(t_mini *mini, char *arg)
 {
 	dup2(STDERR, STDOUT);
 	printf("mini: exit: %s: numeric argument required\n", arg);
-	//dup2(STDOUT, STDOUT);
 	rl_clear_history();
 	mini->exit_code = 2;
 	free_and_exit(mini);

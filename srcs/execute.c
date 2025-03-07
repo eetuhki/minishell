@@ -1,6 +1,6 @@
 #include "../incl/minishell.h"
 
-void	exec_command(t_mini *mini, char **cmds)
+static void	exec_command(t_mini *mini, char **cmds)
 {
 	validate_cmd_access(mini, cmds[0]);
 	if (execve(cmds[0], cmds, mini->env) == -1)
@@ -9,7 +9,7 @@ void	exec_command(t_mini *mini, char **cmds)
 	}
 }
 
-int	exec_no_pipes(t_mini *mini)
+static int	exec_no_pipes(t_mini *mini)
 {
 	pid_t	pid;
 	int		status;
@@ -36,7 +36,26 @@ int	exec_no_pipes(t_mini *mini)
 	return (SUCCESS);
 }
 
-void	child_process(t_mini *mini, int i)
+static void	close_inherited_fds(t_mini *mini, int pipe_i)
+{
+	int	i;
+
+	i = 0;
+	while (mini && mini->cmds[i])
+	{
+		if (i != pipe_i)
+		{
+			close_fd(&mini->cmds[i]->in_file);
+			close_fd(&mini->cmds[i]->out_file);
+		}
+		i++;
+	}
+}
+
+// If not first command, use previous pipe as stdin
+// If it's NOT the last command, redirect stdout to pipe
+// Handle file redirections
+static void	child_process(t_mini *mini, int i)
 {
 	sig_init_child();
 	pipe_redirect(mini, i);
@@ -56,7 +75,7 @@ void	child_process(t_mini *mini, int i)
 
 // Create a new pipe for all except last command
 // Close last read end after loop
-int	exec_with_pipes(t_mini *mini)
+static int	exec_with_pipes(t_mini *mini)
 {
 	int		i;
 	pid_t	pid;

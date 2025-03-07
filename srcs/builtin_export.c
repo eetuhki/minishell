@@ -45,7 +45,7 @@ static	int	validate_export_key(char *cmd_arg)
 // Processes a single export cmd arg by extracting the key-value pair
 // and updating or adding it to the environment.
 // If the key is invalid, an error is printed.
-int	ft_export_single(t_mini *mini, char *cmd_arg)
+static int	ft_export_single(t_mini *mini, char *cmd_arg)
 {
 	char	*key;
 	char	*value;

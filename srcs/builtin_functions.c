@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_env(t_mini *mini, int fd)
+static int	ft_env(t_mini *mini, int fd)
 {
 	char	**env;
 
@@ -20,7 +20,7 @@ int	ft_env(t_mini *mini, int fd)
 	return (SUCCESS);
 }
 
-int	ft_pwd(int fd)
+static int	ft_pwd(int fd)
 {
 	char	*curr_dir;
 
@@ -43,7 +43,7 @@ static int	cd_too_many_args(t_mini *mini)
 	return (FAIL);
 }
 
-int	ft_cd(t_mini *mini, char **cmd_args)
+static int	ft_cd(t_mini *mini, char **cmd_args)
 {
 	char	*home;
 	char	*path;

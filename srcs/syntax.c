@@ -1,13 +1,5 @@
 #include "../incl/minishell.h"
 
-/* void	syntax_fail(t_mini *mini)
-{
-	(void)mini;
-	//free_ptr(mini->input);
-	//ft_putendl_fd("program exited from function: syntax_fail", 2);
-	return ;
-} */
-
 // validate input syntax before proceeding to tokenization, 
 // return SUCCESS or FAIL
 int	syntax_check(t_mini *mini)
