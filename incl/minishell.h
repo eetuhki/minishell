@@ -118,28 +118,22 @@ int		env_set_var(t_mini *mini, char *var, char *new_val);
 // free
 void	free_and_exit(t_mini *mini);
 void	free_arr(char **arr);
-void	free_cmd(t_cmd *cmd);
 void	free_cmds(t_mini *mini);
 void	free_env(t_mini *mini);
 void	free_ptr(void *ptr);
 void	free_str(char **ptr);
 int		free_ptr_fail(void *ptr);
 void	free_cmds_tbl(char ***cmds_tbl);
-void	free_tokens(t_cmd *cmd, t_token *token);
 
 // builtin functions
 int		handle_builtin(t_mini *mini, int i);
-int		ft_env(t_mini *mini, int fd);
 int		ft_exit(t_mini *mini, char **args);
-int		ft_pwd(int fd);
-int		ft_cd(t_mini *mini, char **cmd_args);
 int		cd_path_error(char *path);
 
 // builtin_echo.c
 int		ft_echo(char **args);
 
 // builtin_export.c
-int		ft_export_single(t_mini *mini, char *cmd_arg);
 int		ft_export(t_mini *mini, char **cmd_args);
 
 // builtin_utils.c
@@ -162,7 +156,6 @@ int		prepare_cmd_table(t_mini *mini);
 int		err_exec_malloc(void);
 
 // close.c
-void	close_fds(int *fd);
 void	close_fd(int *fd);
 
 // cmd_path_finder.c
@@ -171,11 +164,9 @@ void	check_full_cmd_path(char **cmd_table, char **env);
 // execution
 int		builtin_only(char *cmd);
 int		check_pid(pid_t pid, t_mini *mini);
-void	child_process(t_mini *mini, int i);
 int		cmd_table_size(t_mini *mini);
 int		execute(t_mini *mini);
 void	exec_fail(t_mini *mini, char *cmd);
-int		exec_no_pipes(t_mini *mini);
 void	handle_fds(t_mini *mini, pid_t pid, int i);
 int		wait_multi(t_mini *mini);
 int		wait_single(t_mini *mini, pid_t pid, int *status);

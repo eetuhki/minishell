@@ -1,38 +1,5 @@
 #include "minishell.h"
 
-int	ft_env(t_mini *mini, int fd)
-{
-	char	**env;
-
-	if (!mini || !mini->env)
-		return (FAIL);
-	env = mini->env;
-	while (*env)
-	{
-		if (ft_strchr(*env, '='))
-		{
-			ft_putstr_fd(*env++, fd);
-			ft_putstr_fd("\n", fd);
-		}
-		else
-			env++;
-	}
-	return (SUCCESS);
-}
-
-int	ft_pwd(int fd)
-{
-	char	*curr_dir;
-
-	curr_dir = NULL;
-	curr_dir = getcwd(curr_dir, 0);
-	if (!curr_dir)
-		return (FAIL);
-	ft_putendl_fd(curr_dir, fd);
-	free(curr_dir);
-	return (SUCCESS);
-}
-
 static int	cd_too_many_args(t_mini *mini)
 {
 	mini->exit_code = 1;
@@ -40,7 +7,7 @@ static int	cd_too_many_args(t_mini *mini)
 	return (FAIL);
 }
 
-int	ft_cd(t_mini *mini, char **cmd_args)
+static int	ft_cd(t_mini *mini, char **cmd_args)
 {
 	char	*home;
 	char	*path;
@@ -62,6 +29,39 @@ int	ft_cd(t_mini *mini, char **cmd_args)
 	if (chdir(path) != 0)
 		return (cd_path_error(path));
 	update_env_vars(mini);
+	return (SUCCESS);
+}
+
+static int	ft_env(t_mini *mini, int fd)
+{
+	char	**env;
+
+	if (!mini || !mini->env)
+		return (FAIL);
+	env = mini->env;
+	while (*env)
+	{
+		if (ft_strchr(*env, '='))
+		{
+			ft_putstr_fd(*env++, fd);
+			ft_putstr_fd("\n", fd);
+		}
+		else
+			env++;
+	}
+	return (SUCCESS);
+}
+
+static int	ft_pwd(int fd)
+{
+	char	*curr_dir;
+
+	curr_dir = NULL;
+	curr_dir = getcwd(curr_dir, 0);
+	if (!curr_dir)
+		return (FAIL);
+	ft_putendl_fd(curr_dir, fd);
+	free(curr_dir);
 	return (SUCCESS);
 }
 
