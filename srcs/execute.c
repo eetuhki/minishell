@@ -36,22 +36,6 @@ static int	exec_no_pipes(t_mini *mini)
 	return (SUCCESS);
 }
 
-static void	close_inherited_fds(t_mini *mini, int pipe_i)
-{
-	int	i;
-
-	i = 0;
-	while (mini && mini->cmds[i])
-	{
-		if (i != pipe_i)
-		{
-			close_fd(&mini->cmds[i]->in_file);
-			close_fd(&mini->cmds[i]->out_file);
-		}
-		i++;
-	}
-}
-
 // If not first command, use previous pipe as stdin
 // If it's NOT the last command, redirect stdout to pipe
 // Handle file redirections
