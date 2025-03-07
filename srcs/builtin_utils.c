@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void print_err_builtin(char *cmd, char *arg, char *msg)
+void	print_err_builtin(char *cmd, char *arg, char *msg)
 {
 	ft_putstr_fd("mini: ", 2);
 	if (cmd)
@@ -51,7 +51,7 @@ void	update_env_vars(t_mini *mini)
 	if (pwd_var && oldpwd_var)
 	{
 		if (env_set_var(mini, "OLDPWD", pwd_var) == FAIL)
-			print_err_builtin("cd: " , NULL, "Failed to update OLDPWD");
+			print_err_builtin("cd: ", NULL, "Failed to update OLDPWD");
 	}
 	if (pwd_var)
 	{
@@ -95,7 +95,7 @@ int	search_key_in_env(t_mini *mini, char *key)
 	{
 		current_key = extract_key(mini->env[i]);
 		if (!current_key)
-			return(-1);
+			return (-1);
 		if (ft_strcmp(key, current_key) == 0)
 		{
 			free_str(&current_key);
