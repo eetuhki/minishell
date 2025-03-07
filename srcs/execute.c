@@ -13,17 +13,14 @@ int	exec_no_pipes(t_mini *mini)
 {
 	pid_t	pid;
 	int		status;
-	int		builtin_exit;
 
-	builtin_exit = 0;
 	if (builtin_only(mini->cmds_tbl[0][0]))
 	{
 		if (setup_redirs(mini, mini->cmds[0]) == FAIL)
 			return (FAIL);
-		builtin_exit = handle_builtin(mini, 0);
-		mini->exit_code = builtin_exit;
+		mini->exit_code = handle_builtin(mini, 0);
 		reset_std_fds(mini);
-		return (builtin_exit);
+		return (mini->exit_code);
 	}
 	pid = fork();
 	if (check_pid(pid, mini) < 0)
@@ -39,58 +36,17 @@ int	exec_no_pipes(t_mini *mini)
 	return (SUCCESS);
 }
 
-void	close_inherited_fds(t_mini *mini, int pipe_i)
-{
-	int	i;
-
-	i = 0;
-	while (mini && mini->cmds[i])
-	{
-		if (i != pipe_i)
-		{
-			close_fd(&mini->cmds[i]->in_file);
-			close_fd(&mini->cmds[i]->out_file);
-		}
-		i++;
-	}
-}
-
-// If not first command, use previous pipe as stdin
-// If it's NOT the last command, redirect stdout to pipe
-// Handle file redirections
 void	child_process(t_mini *mini, int i)
 {
 	sig_init_child();
-	if (mini->in_fd != STDIN)
-	{
-		if (dup2(mini->in_fd, STDIN) < 0)
-		{
-			ft_putstr_fd("mini : dup failed\n", 2);
-			mini->exit_code = 1;
-			free_and_exit(mini);
-		}
-		close_fd(&mini->in_fd);
-	}
-	if (i < mini->pipes)
-	{
-		if (dup2(mini->fd[1], STDOUT) < 0)
-		{
-			ft_putstr_fd("mini : dup failed\n", 2);
-			mini->exit_code = 1;
-			free_and_exit(mini);
-		}
-		close_fd(&mini->fd[1]);
-	}
+	pipe_redirect(mini, i);
 	close_fd(&mini->fd[0]);
 	close_fd(&mini->fd[1]);
 	close_inherited_fds(mini, i);
 	handle_redirs(mini->cmds[i], true, mini);
 	if (builtin_only(*mini->cmds_tbl[i]))
 	{
-		if (handle_builtin(mini, i) == FAIL)
-			mini->exit_code = EXIT_FAILURE;
-		else
-			mini->exit_code = EXIT_SUCCESS;
+		mini->exit_code = handle_builtin(mini, i);
 		free_and_exit(mini);
 	}
 	else
@@ -106,18 +62,12 @@ int	exec_with_pipes(t_mini *mini)
 	pid_t	pid;
 
 	i = 0;
-	if (mini->pids)
-		free_ptr(mini->pids);
-	mini->pids = ft_calloc((size_t)(mini->pipes + 1), sizeof(pid_t));
-	if (!mini->pids)
+	if (allocate_pids(mini) == FAIL)
 		return (FAIL);
 	while (i <= mini->pipes && mini->cmds[i])
 	{
-		if (i < mini->pipes && pipe(mini->fd) == -1)
-		{
-			perror("mini: pipe failed");
+		if (i < mini->pipes && create_pipe(mini->fd) == FAIL)
 			return (FAIL);
-		}
 		pid = fork();
 		if (check_pid(pid, mini) < 0)
 			return (FAIL);
@@ -146,7 +96,6 @@ int	execute(t_mini *mini)
 			mini->exit_code = 1;
 			return (FAIL);
 		}
-		return (SUCCESS);
 	}
 	else if (cmd_table_size(mini) > 1)
 	{
@@ -156,7 +105,6 @@ int	execute(t_mini *mini)
 			mini->exit_code = 1;
 			return (FAIL);
 		}
-		return (SUCCESS);
 	}
 	return (SUCCESS);
 }

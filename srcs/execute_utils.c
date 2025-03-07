@@ -46,3 +46,19 @@ int	cmd_table_size(t_mini *mini)
 		i++;
 	return (i);
 }
+
+void	close_inherited_fds(t_mini *mini, int pipe_i)
+{
+	int	i;
+
+	i = 0;
+	while (mini && mini->cmds[i])
+	{
+		if (i != pipe_i)
+		{
+			close_fd(&mini->cmds[i]->in_file);
+			close_fd(&mini->cmds[i]->out_file);
+		}
+		i++;
+	}
+}

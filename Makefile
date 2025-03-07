@@ -20,6 +20,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 		env_utils.c \
 		error.c \
 		execute.c \
+		execute_pipe_utils.c \
 		execute_redir.c \
 		execute_redir_utils.c \
 		execute_utils.c \

@@ -7,31 +7,16 @@ static int	append_char_to_expansion(t_expansion *xp, char c)
 	char	temp[2];
 	char	*new_xp_str;
 
-    temp[0] = c;
-    temp[1] = '\0';
+	temp[0] = c;
+	temp[1] = '\0';
 	new_xp_str = ft_strjoin(xp->expanded_str, temp);
-    if (new_xp_str == NULL)
+	if (new_xp_str == NULL)
 	{
-        free_ptr(xp->expanded_str);
-        return(FAIL);
-    }
-    free_ptr(xp->expanded_str);
-    xp->expanded_str = new_xp_str;
-	/* size_t	len;
-	char	*temp;
-
-	len = ft_strlen(xp->expanded_str);
-	temp = ft_realloc(xp->expanded_str, len + 2);
-	if (!temp)
-	{
-		ft_putstr_fd("mini: expansion: memory allocation failed\n", 2);
 		free_ptr(xp->expanded_str);
 		return (FAIL);
 	}
-	xp->expanded_str = temp;
-	xp->expanded_str[len] = c;
-	xp->expanded_str[len + 1] = '\0';
-	// free_ptr(temp); */
+	free_ptr(xp->expanded_str);
+	xp->expanded_str = new_xp_str;
 	return (SUCCESS);
 }
 
@@ -42,7 +27,7 @@ static int	append_str_to_expansion(t_expansion *xp, char *str, t_token *token)
 	char	*temp;
 
 	if (token->is_var_empty)
-        str = "";
+		str = "";
 	temp = ft_strjoin(xp->expanded_str, str);
 	if (!temp)
 	{
@@ -60,7 +45,8 @@ static int	append_str_to_expansion(t_expansion *xp, char *str, t_token *token)
 // the environment and appends it to the str being expanded.
 // Advances the input pointer by var_len
 // If no valid variable name was found, it appends only '$'
-static int	expand_env_variable(t_mini *mini, t_expansion *xp, char **input, t_token *token)
+static int	expand_env_variable(t_mini *mini, t_expansion *xp,
+								char **input, t_token *token)
 {
 	char	var[256];
 	size_t	var_len;
@@ -90,7 +76,8 @@ static int	expand_env_variable(t_mini *mini, t_expansion *xp, char **input, t_to
 // Process an expansion when a '$' is encountered
 // If the character following '$' is '?', expand the exit status
 // otherwise, expand an environment variable
-static int	handle_dollar_sign(t_mini *mini, t_expansion *xp, char **input, t_token *token)
+static int	handle_dollar_sign(t_mini *mini, t_expansion *xp,
+								char **input, t_token *token)
 {
 	if ((*(*input + 1)) == '?')
 	{
