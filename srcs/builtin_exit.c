@@ -20,7 +20,10 @@ static int	num_only(char *str)
 // print error message if argument is not num (or overflowing LONG)
 static void	arg_not_num(t_mini *mini, char *arg)
 {
-	dup2(STDERR, STDOUT);
+	if (dup2(STDERR, STDOUT) < 0)
+	{
+		ft_putstr_fd("mini: dup2 failed\n", 2);
+	}
 	printf("mini: exit: %s: numeric argument required\n", arg);
 	rl_clear_history();
 	mini->exit_code = 2;

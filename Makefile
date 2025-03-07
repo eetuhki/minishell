@@ -95,6 +95,6 @@ re: fclean all
 valgrind:
 	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all \
 	--track-origins=yes --track-fds=yes --trace-children=yes \
-	--suppressions=readline.supp ./minishell
+	--suppressions=readline.supp -s ./minishell
 
 .PHONY: all clean fclean re valgrind

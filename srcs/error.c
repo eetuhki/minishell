@@ -40,7 +40,7 @@ void	print_error(char *cmd, char *msg)
 {
 	if (dup2(STDERR, STDOUT) < 0)
 	{
-		ft_putstr_fd("mini : dup2 failed\n", 2);
+		ft_putstr_fd("mini: dup2 failed\n", 2);
 	}
 	printf("mini: %s: %s\n", cmd, msg);
 }
