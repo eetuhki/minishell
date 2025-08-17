@@ -51,4 +51,4 @@ Clone the repo and run `make`, then launch the program `./minishell`.
 
 [*Finnan Solomon*](https://github.com/finye)
 
-[*Eetu Laine*](https://github.com/eetuhki)
+[*Eetu Laine*](https://github.com/eetulaine)
